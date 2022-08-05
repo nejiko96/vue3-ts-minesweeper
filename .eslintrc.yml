@@ -1,13 +1,21 @@
+root: true
 env:
   browser: true
   es2021: true
 extends:
-  - plugin:vue/vue3-essential
+  - eslint:recommended
+  - plugin:@typescript-eslint/recommended
   - airbnb-base
+  - airbnb-typescript/base
+  - plugin:vue/vue3-recommended
+  - '@vue/typescript/recommended'
 parserOptions:
   ecmaVersion: latest
   parser: '@typescript-eslint/parser'
   sourceType: module
+  project: './tsconfig.json'
+ignorePatterns:
+  - dist
 plugins:
   - vue
   - '@typescript-eslint'
