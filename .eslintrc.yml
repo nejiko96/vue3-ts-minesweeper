@@ -19,4 +19,7 @@ ignorePatterns:
 plugins:
   - vue
   - '@typescript-eslint'
-rules: {}
+rules:
+  '@typescript-eslint/semi':
+    - error
+    - never
