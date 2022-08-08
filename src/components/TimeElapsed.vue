@@ -1,7 +1,16 @@
+<script lang="ts">
+export const TimerMode = {
+  READY: 'ready',
+  RUNNING: 'running',
+  STOPPED: 'stopped',
+} as const
+export type TimerModeType = typeof TimerMode[keyof typeof TimerMode]
+</script>
+
 <script setup lang="ts">
 import { ref, watchEffect } from 'vue'
 
-const props = defineProps<{ mode: string }>()
+const props = defineProps<{ mode: TimerModeType }>()
 
 const count = ref<number>(0)
 
@@ -13,9 +22,9 @@ const timerObj = {
   },
   stop() {
     if (this.intervalId > 0) {
-      // console.log(`timer ${this.intervalId} stopping`)
       window.clearInterval(this.intervalId)
       this.intervalId = 0
+      // console.log(`timer ${this.intervalId} stopped`)
     }
   },
 }
@@ -23,13 +32,14 @@ const timerObj = {
 watchEffect((onInvalidate) => {
   // console.log(props.mode)
   timerObj.stop()
-  if (props.mode === 'ready') {
+  if (props.mode === TimerMode.READY) {
     count.value = 0
-  } else if (props.mode === 'running') {
+  } else if (props.mode === TimerMode.RUNNING) {
     timerObj.start(() => { count.value += 1 }, 1000)
   }
   onInvalidate(() => timerObj.stop())
 })
+
 </script>
 
 <template>

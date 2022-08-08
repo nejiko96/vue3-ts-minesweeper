@@ -1,19 +1,19 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import TimeElapsed from './TimeElapsed.vue'
+import TimeElapsed, { TimerMode, TimerModeType } from './TimeElapsed.vue'
 
-const mode = ref('ready')
+const mode = ref<TimerModeType>('ready')
 </script>
 
 <template>
   <div>
-    <button @click="mode='ready'">
+    <button @click="mode=TimerMode.READY">
       ready
     </button>
-    <button @click="mode='running'">
+    <button @click="mode=TimerMode.RUNNING">
       running
     </button>
-    <button @click="mode='stopped'">
+    <button @click="mode=TimerMode.STOPPED">
       stopped
     </button>
     <TimeElapsed :mode="mode" />
