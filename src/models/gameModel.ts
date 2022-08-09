@@ -1,25 +1,47 @@
+import { fillArray, fillArray2D, noop } from '@/utils'
 import * as cell from './cellModel'
 import sizeGen from './sizeModel'
-import { fillArray, fillArray2D, noop } from '../utils'
 
-const STATUS = {
+type GameStateType = {
+  level: string,
+  width: number,
+  height: number,
+  mines: number,
+  status: number,
+  grid: number[][],
+  minePos: Record<string, number[]>,
+  markPos: Record<string, number[]>,
+  countDown: number,
+}
+
+const gameStatusEnum = {
   READY: 1,
   RUNNING: 2,
   CLEARED: 4,
   GAMEOVER: 8,
 }
 
-const STATUSES = {
-  ENABLED: STATUS.READY | STATUS.RUNNING,
+const gameStatusFlags = {
+  ...gameStatusEnum,
+  ENABLED: gameStatusEnum.READY | gameStatusEnum.RUNNING,
 }
 
-const isEnabled = (state) => (state.status & STATUSES.ENABLED)
+const isEnabled = (
+  state: GameStateType,
+) : boolean => (state.status & gameStatusFlags.ENABLED) > 0
 
-const isHidden = (state, i, j) => (cell.isHidden(state.grid[i][j]))
+const isHidden = (
+  state: GameStateType,
+  i: number,
+  j: number,
+): boolean => cell.isHidden(state.grid[i][j])
 
-const pos2key = ([i, j]) => (i << 8) | j
-
-const relatives = (state, i, j, diffs) => (
+const relatives = (
+  state: GameStateType,
+  i: number,
+  j: number,
+  diffs: number[][],
+): number[][] => (
   diffs
     .map(([di, dj]) => [i + di, j + dj])
     .filter(
@@ -27,7 +49,11 @@ const relatives = (state, i, j, diffs) => (
     )
 )
 
-const surroundings = (state, i, j) => (
+const surroundings = (
+  state: GameStateType,
+  i: number,
+  j: number,
+): number[][] => (
   relatives(
     state,
     i,
@@ -39,7 +65,11 @@ const surroundings = (state, i, j) => (
   )
 )
 
-const neighbors = (state, i, j) => (
+const neighbors = (
+  state: GameStateType,
+  i: number,
+  j: number,
+): number[][] => (
   relatives(
     state,
     i,
@@ -52,7 +82,11 @@ const neighbors = (state, i, j) => (
   )
 )
 
-const generateMines = (state, i, j) => {
+const generateMines = (
+  state: GameStateType,
+  i: number,
+  j: number,
+): void => {
   state.minePos = {}
   const w = state.width
   let n = w * state.height
@@ -69,78 +103,92 @@ const generateMines = (state, i, j) => {
     const [i2, j2] = [smp / w | 0, smp % w]
     state.grid[i2][j2] = cell.putMine(state.grid[i2][j2])
     const pos = [i2, j2]
-    state.minePos[pos2key(pos)] = pos
+    state.minePos[pos.toString()] = pos
     n -= 1;
     [samples[k], samples[n]] = [samples[n], samples[k]]
   }
 }
 
-const start = (state, i, j) => {
+const start = (
+  state: GameStateType,
+  i: number,
+  j: number,
+): void => {
   generateMines(state, i, j)
-  state.status = STATUS.RUNNING
+  state.status = gameStatusEnum.RUNNING
 }
 
-const toggleMark = (state, i, j) => {
-  const { f, result } = cell.toggleMark(state.grid[i][j])
+const toggleMark = (
+  state: GameStateType,
+  i: number,
+  j: number,
+): void => {
+  const [f, result] = cell.toggleMark(state.grid[i][j])
   state.grid[i][j] = f
-  if (result === cell.RESULT.NONE) {
+  if (result === cell.resultEnum.NONE) {
     return
   }
   const pos = [i, j]
-  const key = pos2key(pos)
-  if (result === cell.RESULT.MARKED) {
+  const key = pos.toString()
+  if (result === cell.resultEnum.MARKED) {
     state.markPos[key] = pos
   }
-  if (result === cell.RESULT.UNMARKED) {
+  if (result === cell.resultEnum.UNMARKED) {
     delete state.markPos[key]
   }
 }
 
-// eslint:no-use-before-define
-let postOpen
+const postOpen = (
+  state: GameStateType,
+  i: number,
+  j: number,
+): number[][] => {
+  const surr = surroundings(state, i, j)
+  const hint = surr
+    .filter((pos) => state.minePos[pos.toString()])
+    .length
+  state.grid[i][j] = cell.setHint(state.grid[i][j], hint)
+  return hint > 0 ? [] : surr
+}
 
-const open = (state, i, j) => {
-  const { f, result } = cell.open(state.grid[i][j])
+const open = (
+  state: GameStateType,
+  i: number,
+  j: number,
+): number => {
+  const [f, result] = cell.open(state.grid[i][j])
   state.grid[i][j] = f
-  if (result === cell.RESULT.OPENED) {
+  if (result === cell.resultEnum.OPENED) {
     state.countDown -= 1
-    postOpen(state, i, j)
+    postOpen(state, i, j).forEach(([i2, j2]) => open(state, i2, j2))
   }
   return result
 }
 
-postOpen = (state, i, j) => {
-  const surr = surroundings(state, i, j)
-  const hint = surr
-    .filter((pos) => state.minePos[pos2key(pos)])
-    .length
-  state.grid[i][j] = cell.setHint(state.grid[i][j], hint)
-  if (hint > 0) {
-    return
-  }
-  surr.forEach(([i2, j2]) => open(state, i2, j2))
-}
-
-const areaOpen = (state, i, j) => {
+const areaOpen = (
+  state: GameStateType,
+  i: number,
+  j: number,
+): number => {
   const hint = cell.getHint(state.grid[i][j])
   // exit if not empty
   if (hint < 0) {
-    return 0
+    return cell.resultEnum.NONE
   }
   const surr = surroundings(state, i, j)
   const marks = surr
-    .filter((pos) => state.markPos[pos2key(pos)])
+    .filter((pos) => state.markPos[pos.toString()])
     .length
   if (marks !== hint) {
-    return 0
+    return cell.resultEnum.NONE
   }
   return surr
     .map(([i2, j2]) => open(state, i2, j2))
-    .reduce((a, b) => a | b, 0)
+    .reduce((a, b) => a | b, cell.resultEnum.NONE)
 }
 
-const gameClear = (state) => {
-  state.status = STATUS.CLEARED
+const gameClear = (state: GameStateType): void => {
+  state.status = gameStatusEnum.CLEARED
   Object.entries(state.minePos)
     .forEach(([key, pos]) => {
       const [i, j] = pos
@@ -149,25 +197,25 @@ const gameClear = (state) => {
     })
 }
 
-const gameOver = (state) => {
-  state.status = STATUS.GAMEOVER
+const gameOver = (state: GameStateType): void => {
+  state.status = gameStatusEnum.GAMEOVER
   const mineMarkPos = {
     ...state.minePos,
     ...state.markPos,
   }
   Object.values(mineMarkPos)
     .forEach(([i, j]) => {
-      state.grid[i][j] = cell.open(state.grid[i][j], false).f
+      [state.grid[i][j]] = cell.open(state.grid[i][j], false)
     })
 }
 
-const init = (state) => {
+const init = (state: GameStateType): void => {
   const { width, height, mines } = sizeGen(state)
   Object.assign(state, {
     width,
     height,
     mines,
-    status: STATUS.READY,
+    status: gameStatusEnum.READY,
     grid: fillArray2D(width, height, cell.initialValue),
     minePos: {},
     markPos: {},
@@ -175,44 +223,64 @@ const init = (state) => {
   })
 }
 
-const handleLeftMouseDown = (state, i, j) => {
+const handleLeftMouseDown = (
+  state: GameStateType,
+  i: number,
+  j: number,
+): void => {
   if (!isEnabled(state)) {
     return
   }
   state.grid[i][j] = cell.press(state.grid[i][j])
 }
 
-const handleLeftMouseOver = (state, i, j) => {
+const handleLeftMouseOver = (
+  state: GameStateType,
+  i: number,
+  j: number,
+): void => {
   if (!isEnabled(state)) {
     return
   }
   state.grid[i][j] = cell.press(state.grid[i][j])
 }
 
-const handleLeftMouseOut = (state, i, j) => {
+const handleLeftMouseOut = (
+  state: GameStateType,
+  i: number,
+  j: number,
+): void => {
   if (!isEnabled(state)) {
     return
   }
   state.grid[i][j] = cell.release(state.grid[i][j])
 }
 
-const handleLeftMouseUp = (state, i, j) => {
+const handleLeftMouseUp = (
+  state: GameStateType,
+  i: number,
+  j: number,
+): void => {
   if (!isEnabled(state)) {
     return
   }
   state.grid[i][j] = cell.release(state.grid[i][j])
-  if (state.status === STATUS.READY) {
+  if (state.status === gameStatusEnum.READY) {
     start(state, i, j)
   }
   const result = open(state, i, j)
-  if (result === cell.RESULT.EXPLODED) {
+  if (result === cell.resultEnum.EXPLODED) {
     gameOver(state)
   } else if (state.countDown <= 0) {
     gameClear(state)
   }
 }
 
-const handleRightMouseDown = (state, i, j) => {
+const handleRightMouseDown = (
+  state: GameStateType,
+  i: number,
+  j: number,
+): void => {
   if (!isEnabled(state)) {
     return
   }
@@ -226,7 +294,11 @@ const handleRightMouseOut = noop
 
 const handleRightMouseUp = noop
 
-const handleBothMouseDown = (state, i, j) => {
+const handleBothMouseDown = (
+  state: GameStateType,
+  i: number,
+  j: number,
+): void => {
   if (!isEnabled(state)) {
     return
   }
@@ -235,7 +307,11 @@ const handleBothMouseDown = (state, i, j) => {
   )
 }
 
-const handleBothMouseOver = (state, i, j) => {
+const handleBothMouseOver = (
+  state: GameStateType,
+  i: number,
+  j: number,
+): void => {
   if (!isEnabled(state)) {
     return
   }
@@ -244,7 +320,11 @@ const handleBothMouseOver = (state, i, j) => {
   )
 }
 
-const handleBothMouseOut = (state, i, j) => {
+const handleBothMouseOut = (
+  state: GameStateType,
+  i: number,
+  j: number,
+): void => {
   if (!isEnabled(state)) {
     return
   }
@@ -255,7 +335,11 @@ const handleBothMouseOut = (state, i, j) => {
   )
 }
 
-const handleBothMouseUp = (state, i, j) => {
+const handleBothMouseUp = (
+  state: GameStateType,
+  i: number,
+  j: number,
+): void => {
   if (!isEnabled(state)) {
     return
   }
@@ -265,14 +349,18 @@ const handleBothMouseUp = (state, i, j) => {
     },
   )
   const result = areaOpen(state, i, j)
-  if (result & cell.RESULT.EXPLODED) {
+  if (result & cell.resultEnum.EXPLODED) {
     gameOver(state)
   } else if (state.countDown <= 0) {
     gameClear(state)
   }
 }
 
-const handleTouchStart = (state, i, j) => {
+const handleTouchStart = (
+  state: GameStateType,
+  i: number,
+  j: number,
+): void => {
   if (isHidden(state, i, j)) {
     handleLeftMouseDown(state, i, j)
   } else {
@@ -280,7 +368,11 @@ const handleTouchStart = (state, i, j) => {
   }
 }
 
-const handleTouchEnd = (state, i, j) => {
+const handleTouchEnd = (
+  state: GameStateType,
+  i: number,
+  j: number,
+): void => {
   if (isHidden(state, i, j)) {
     handleLeftMouseUp(state, i, j)
   } else {
@@ -288,7 +380,11 @@ const handleTouchEnd = (state, i, j) => {
   }
 }
 
-const handleLongPress = (state, i, j) => {
+const handleLongPress = (
+  state: GameStateType,
+  i: number,
+  j: number,
+): void => {
   if (isHidden(state, i, j)) {
     handleRightMouseDown(state, i, j)
   } else {
@@ -297,8 +393,7 @@ const handleLongPress = (state, i, j) => {
 }
 
 export {
-  STATUS,
-  STATUSES,
+  gameStatusFlags,
   init,
   handleLeftMouseDown,
   handleLeftMouseOver,

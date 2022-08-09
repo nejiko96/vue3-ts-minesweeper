@@ -23,12 +23,20 @@ rules:
   '@typescript-eslint/semi':
     - error
     - never
-  'import/first': 'off'
-  'import/prefer-default-export': 'off'
-  'no-bitwise':
+  import/first: off
+  import/prefer-default-export: off
+  no-bitwise:
     - warn
     -
-      'int32Hint': true
+      int32Hint: true
+  no-plusplus:
+    - error
+    -
+      allowForLoopAfterthoughts: true
+  no-param-reassign:
+    - error
+    -
+      props: false
 settings:
   import/resolver:
     typescript: []

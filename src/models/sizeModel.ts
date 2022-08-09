@@ -1,4 +1,27 @@
-const levelSettings = {
+type LevelParamType = {
+  level: 'easy' | 'medium' | 'hard',
+}
+
+type CustomParamType = {
+  level: 'custom',
+  width: number | undefined,
+  height: number | undefined,
+  mines: number | undefined,
+}
+
+type SizeType = {
+  width: number,
+  height: number,
+  mines: number,
+}
+
+type RangeType = {
+  min: number,
+  max: number,
+  default: number,
+}
+
+const levelDef = {
   easy: {
     width: 9,
     height: 9,
@@ -16,19 +39,21 @@ const levelSettings = {
   },
 }
 
-const widthSettings = {
+const levelToSize = (state: LevelParamType): SizeType => levelDef[state.level]
+
+const widthDef: RangeType = {
   min: 9,
   max: 30,
   default: 9,
 }
 
-const heightSettings = {
+const heightDef: RangeType = {
   min: 9,
   max: 24,
   default: 9,
 }
 
-const minesSettings = (n) => {
+const minesDef = (n: number): RangeType => {
   const pct = 10 + (n / 45 | 0)
   return {
     min: 10,
@@ -37,19 +62,19 @@ const minesSettings = (n) => {
   }
 }
 
-const initProperty = (value, def) => (
-  value ? Math.min(Math.max(value, def.min), def.max) : def.default
+const initParam = (value: number | undefined, rng: RangeType): number => (
+  value === undefined ? rng.default : Math.min(Math.max(value, rng.min), rng.max)
 )
 
-const defaultSize = (state) => levelSettings[state.level]
-
-const customSize = (state) => {
-  const width = initProperty(state.width, widthSettings)
-  const height = initProperty(state.height, heightSettings)
-  const mines = initProperty(state.mines, minesSettings(width * height))
+const customSize = (state: CustomParamType) => {
+  const width = initParam(state.width, widthDef)
+  const height = initParam(state.height, heightDef)
+  const mines = initParam(state.mines, minesDef(width * height))
   return { width, height, mines }
 }
 
-const sizeGen = (state) => defaultSize(state) || customSize(state)
+const sizeGen = (state: LevelParamType | CustomParamType): SizeType => (
+  state.level === 'custom' ? customSize(state) : levelToSize(state)
+)
 
 export default sizeGen

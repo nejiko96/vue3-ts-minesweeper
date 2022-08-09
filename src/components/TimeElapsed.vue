@@ -16,11 +16,11 @@ const count = ref<number>(0)
 
 const timerObj = {
   intervalId: 0,
-  start(handler: () => void, timeout: number) {
+  start(handler: () => void, timeout: number): void {
     this.intervalId = window.setInterval(handler, timeout)
     // console.log(`timer ${this.intervalId} started`)
   },
-  stop() {
+  stop(): void {
     if (this.intervalId > 0) {
       window.clearInterval(this.intervalId)
       this.intervalId = 0
