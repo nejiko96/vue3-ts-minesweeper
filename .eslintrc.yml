@@ -25,6 +25,10 @@ rules:
     - never
   'import/first': 'off'
   'import/prefer-default-export': 'off'
+  'no-bitwise':
+    - warn
+    -
+      'int32Hint': true
 settings:
   import/resolver:
     typescript: []
