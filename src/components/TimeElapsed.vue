@@ -1,10 +1,10 @@
 <script lang="ts">
-export const TimerMode = {
+export const timerModes = {
   READY: 'ready',
   RUNNING: 'running',
   STOPPED: 'stopped',
 } as const
-export type TimerModeType = typeof TimerMode[keyof typeof TimerMode]
+export type TimerModeType = typeof timerModes[keyof typeof timerModes]
 </script>
 
 <script setup lang="ts">
@@ -32,9 +32,9 @@ const timerObj = {
 watchEffect((onInvalidate) => {
   // console.log(props.mode)
   timerObj.stop()
-  if (props.mode === TimerMode.READY) {
+  if (props.mode === timerModes.READY) {
     count.value = 0
-  } else if (props.mode === TimerMode.RUNNING) {
+  } else if (props.mode === timerModes.RUNNING) {
     timerObj.start(() => { count.value += 1 }, 1000)
   }
   onInvalidate(() => timerObj.stop())

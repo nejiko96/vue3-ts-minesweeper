@@ -1,3 +1,4 @@
+// https://www.aska-ltd.jp/jp/blog/242
 import { defineStore } from 'pinia'
 
 export const useTestStore = defineStore('test', {

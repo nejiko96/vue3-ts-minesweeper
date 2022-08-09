@@ -1,3 +1,4 @@
+<!-- https://www.aska-ltd.jp/jp/blog/242 -->
 <script setup lang="ts">
 import { useTestStore } from '@/stores/test'
 import { storeToRefs } from 'pinia'
