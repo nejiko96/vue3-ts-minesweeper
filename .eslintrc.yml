@@ -24,3 +24,7 @@ rules:
     - error
     - never
   'import/first': 'off'
+  'import/prefer-default-export': 'off'
+settings:
+  import/resolver:
+    typescript: []
