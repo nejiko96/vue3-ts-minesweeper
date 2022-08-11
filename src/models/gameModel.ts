@@ -1,18 +1,16 @@
 import { fillArray, fillArray2D, noop } from '@/utils'
 import * as cell from './cellModel'
-import sizeGen from './sizeModel'
+import { initSize, SizeParamType, SizeType } from './sizeModel'
 
-type GameStateType = {
-  level: string,
-  width: number,
-  height: number,
-  mines: number,
+type BoardStateType = {
   status: number,
   grid: number[][],
   minePos: Record<string, number[]>,
   markPos: Record<string, number[]>,
   countDown: number,
 }
+
+export type GameStateType = SizeType & BoardStateType
 
 const gameStatusEnum = {
   READY: 1,
@@ -209,18 +207,28 @@ const gameOver = (state: GameStateType): void => {
     })
 }
 
-const init = (state: GameStateType): void => {
-  const { width, height, mines } = sizeGen(state)
-  Object.assign(state, {
-    width,
-    height,
-    mines,
-    status: gameStatusEnum.READY,
-    grid: fillArray2D(width, height, cell.initialValue),
-    minePos: {},
-    markPos: {},
-    countDown: width * height - mines,
-  })
+const initBoard = ({ width, height, mines }: SizeType): BoardStateType => ({
+  status: gameStatusEnum.READY,
+  grid: fillArray2D(width, height, cell.initialValue),
+  minePos: {},
+  markPos: {},
+  countDown: width * height - mines,
+})
+
+const initState = (param: SizeParamType): GameStateType => {
+  const size = initSize(param)
+  return {
+    ...size,
+    ...initBoard(size),
+  }
+}
+
+const setSize = (state: GameStateType, param: SizeParamType): void => {
+  Object.assign(state, initState(param))
+}
+
+const restart = (state: GameStateType): void => {
+  Object.assign(state, initBoard(state))
 }
 
 const handleLeftMouseDown = (
@@ -394,7 +402,9 @@ const handleLongPress = (
 
 export {
   gameStatusFlags,
-  init,
+  initState,
+  setSize,
+  restart,
   handleLeftMouseDown,
   handleLeftMouseOver,
   handleLeftMouseOut,

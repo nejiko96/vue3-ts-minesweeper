@@ -1,5 +1,7 @@
+type LevelType = 'easy' | 'medium' | 'hard'
+
 type LevelParamType = {
-  level: 'easy' | 'medium' | 'hard',
+  level: LevelType,
 }
 
 type CustomParamType = {
@@ -9,7 +11,9 @@ type CustomParamType = {
   mines: number | undefined,
 }
 
-type SizeType = {
+export type SizeParamType = LevelParamType | CustomParamType
+
+export type SizeType = {
   width: number,
   height: number,
   mines: number,
@@ -20,26 +24,6 @@ type RangeType = {
   max: number,
   default: number,
 }
-
-const levelDef = {
-  easy: {
-    width: 9,
-    height: 9,
-    mines: 10,
-  },
-  medium: {
-    width: 16,
-    height: 16,
-    mines: 40,
-  },
-  hard: {
-    width: 30,
-    height: 16,
-    mines: 99,
-  },
-}
-
-const levelToSize = (state: LevelParamType): SizeType => levelDef[state.level]
 
 const widthDef: RangeType = {
   min: 9,
@@ -66,15 +50,37 @@ const initParam = (value: number | undefined, rng: RangeType): number => (
   value === undefined ? rng.default : Math.min(Math.max(value, rng.min), rng.max)
 )
 
-const customSize = (state: CustomParamType) => {
-  const width = initParam(state.width, widthDef)
-  const height = initParam(state.height, heightDef)
-  const mines = initParam(state.mines, minesDef(width * height))
+const initCustomSize = (
+  param: CustomParamType,
+): SizeType => {
+  const width = initParam(param.width, widthDef)
+  const height = initParam(param.height, heightDef)
+  const mines = initParam(param.mines, minesDef(width * height))
   return { width, height, mines }
 }
 
-const sizeGen = (state: LevelParamType | CustomParamType): SizeType => (
-  state.level === 'custom' ? customSize(state) : levelToSize(state)
+const levelDef: Record<LevelType, SizeType> = {
+  easy: {
+    width: 9,
+    height: 9,
+    mines: 10,
+  },
+  medium: {
+    width: 16,
+    height: 16,
+    mines: 40,
+  },
+  hard: {
+    width: 30,
+    height: 16,
+    mines: 99,
+  },
+}
+
+const initSizeByLevel = (state: LevelParamType): SizeType => levelDef[state.level]
+
+const initSize = (param: SizeParamType): SizeType => (
+  param.level === 'custom' ? initCustomSize(param) : initSizeByLevel(param)
 )
 
-export default sizeGen
+export { initSize }

@@ -1,28 +1,28 @@
 import { noop } from '@/utils'
 
-type MouseStateType = {
+export type MouseStateType = {
   pressed: number,
 }
 
-type MouseHandlerType = (state: MouseStateType, i: number, j: number) => void
+type TgtHandlerType<S> = (
+  state: S,
+  i: number,
+  j: number
+) => void
 
-type MouseModelType = {
-  handleLeftMouseDown: MouseHandlerType,
-  handleLeftMouseUp: MouseHandlerType,
-  handleLeftMouseOver: MouseHandlerType,
-  handleLeftMouseOut: MouseHandlerType,
-  handleRightMouseDown: MouseHandlerType,
-  handleRightMouseUp: MouseHandlerType,
-  handleRightMouseOver: MouseHandlerType,
-  handleRightMouseOut: MouseHandlerType,
-  handleBothMouseDown: MouseHandlerType,
-  handleBothMouseUp: MouseHandlerType,
-  handleBothMouseOver: MouseHandlerType,
-  handleBothMouseOut: MouseHandlerType,
-}
-
-interface IPressedTbl {
-  [key: number]: number
+type TgtModelType<S> = {
+  handleLeftMouseDown: TgtHandlerType<S>,
+  handleLeftMouseUp: TgtHandlerType<S>,
+  handleLeftMouseOver: TgtHandlerType<S>,
+  handleLeftMouseOut: TgtHandlerType<S>,
+  handleRightMouseDown: TgtHandlerType<S>,
+  handleRightMouseUp: TgtHandlerType<S>,
+  handleRightMouseOver: TgtHandlerType<S>,
+  handleRightMouseOut: TgtHandlerType<S>,
+  handleBothMouseDown: TgtHandlerType<S>,
+  handleBothMouseUp: TgtHandlerType<S>,
+  handleBothMouseOver: TgtHandlerType<S>,
+  handleBothMouseOut: TgtHandlerType<S>,
 }
 
 // mouse events
@@ -46,12 +46,12 @@ const pressedEnum = {
 }
 
 // ev.button -> state.pressed value
-const pressedTbl: IPressedTbl = {
+const pressedTbl: Record<number, number> = {
   [evBtnEnum.LEFT]: pressedEnum.LEFT,
   [evBtnEnum.RIGHT]: pressedEnum.RIGHT,
 }
 
-const makeDispatch = (model: MouseModelType): MouseHandlerType[][] => [
+const makeDispatch = <S>(model: TgtModelType<S>): TgtHandlerType<S>[][] => [
   [
     noop,
     model.handleLeftMouseDown,
@@ -78,15 +78,15 @@ const makeDispatch = (model: MouseModelType): MouseHandlerType[][] => [
   ],
 ]
 
-const wrapModel = (model: MouseModelType) => ({
+const makeWrapper = <S>(model: TgtModelType<S>) => ({
   dispatch: makeDispatch(model),
-  init(): MouseStateType {
+  initMouseEvent(): MouseStateType {
     return {
       pressed: 0,
     }
   },
   handleMouseDown(
-    state: MouseStateType,
+    state: MouseStateType & S,
     button: number,
     i: number,
     j: number,
@@ -94,20 +94,32 @@ const wrapModel = (model: MouseModelType) => ({
     state.pressed |= pressedTbl[button]
     this.dispatch[eventEnum.MOUSE_DOWN][state.pressed](state, i, j)
   },
-  handleMouseUp(state: MouseStateType, i: number, j: number): void {
+  handleMouseUp(
+    state: MouseStateType & S,
+    i: number,
+    j: number,
+  ): void {
     if (state.pressed === 0) return
     const pressedOld = state.pressed
     state.pressed = 0
     this.dispatch[eventEnum.MOUSE_UP][pressedOld](state, i, j)
   },
-  handleMouseOver(state: MouseStateType, i: number, j: number): void {
+  handleMouseOver(
+    state: MouseStateType & S,
+    i: number,
+    j: number,
+  ): void {
     if (state.pressed === 0) return
     this.dispatch[eventEnum.MOUSE_OVER][state.pressed](state, i, j)
   },
-  handleMouseOut(state: MouseStateType, i: number, j: number): void {
+  handleMouseOut(
+    state: MouseStateType & S,
+    i: number,
+    j: number,
+  ): void {
     if (state.pressed === 0) return
     this.dispatch[eventEnum.MOUSE_OUT][state.pressed](state, i, j)
   },
 })
 
-export default wrapModel
+export { makeWrapper }

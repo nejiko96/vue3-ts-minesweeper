@@ -4,6 +4,7 @@ export const timerModes = {
   RUNNING: 'running',
   STOPPED: 'stopped',
 } as const
+
 export type TimerModeType = typeof timerModes[keyof typeof timerModes]
 </script>
 
@@ -39,7 +40,6 @@ watchEffect((onInvalidate) => {
   }
   onInvalidate(() => timerObj.stop())
 })
-
 </script>
 
 <template>

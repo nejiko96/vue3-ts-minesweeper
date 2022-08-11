@@ -26,7 +26,7 @@ rules:
   import/first: off
   import/prefer-default-export: off
   no-bitwise:
-    - warn
+    - off
     -
       int32Hint: true
   no-plusplus:
