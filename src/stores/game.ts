@@ -1,34 +1,29 @@
 import { defineStore } from 'pinia'
 
-import { SizeParamType } from '@/models/sizeModel'
+import {
+  SizeParamType,
+  GameStoreStateType,
+  GridPosType,
+  GridClickType,
+} from '@/types'
 import * as gameModel from '@/models/gameModel'
-import { makeWrapper, MouseStateType } from '@/models/mouseEventModel'
-
-type TouchStateType = { touch: boolean }
-type GameUIStateType = gameModel.GameStateType & MouseStateType & TouchStateType
-
-type ButtonType = { button: number }
-type GridPosType = {
-  row: number,
-  col: number,
-}
-type GridClickType = ButtonType & GridPosType
+import { makeWrapper } from '@/models/mouseEventModel'
 
 const mouseModel = makeWrapper(gameModel)
 
 const useGameStore = defineStore('test', {
-  state: ():GameUIStateType => ({
+  state: (): GameStoreStateType => ({
     ...gameModel.initState({ level: 'easy' }),
     ...mouseModel.initMouseEvent(),
     touch: false,
   }),
 
-  // getters: {
-
-  // },
+  getters: {
+    remain: (state) => (state.mines - Object.keys(state.markPos).length),
+  },
 
   actions: {
-    init(param: SizeParamType):void {
+    init(param: SizeParamType): void {
       gameModel.setSize(this, param)
     },
     restart(): void {

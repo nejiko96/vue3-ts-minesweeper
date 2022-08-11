@@ -1,8 +1,9 @@
+import { StylesType } from '@/types'
 import { fillArray } from '@/utils'
-import cellImgGreen16 from './images/green_16x16.png'
-import cellImgGreen32 from './images/green_32x32.png'
-import cellImgMS16 from './images/MS_16x16.png'
-import cellImgMS32 from './images/MS_32x32.png'
+import cellImgGreen16 from '@/images/green_16x16.png'
+import cellImgGreen32 from '@/images/green_32x32.png'
+import cellImgMS16 from '@/images/MS_16x16.png'
+import cellImgMS32 from '@/images/MS_32x32.png'
 
 const textBoxStyle = {
   backgroundColor: '#f5f5f5',
@@ -35,11 +36,9 @@ const cellStyle = (theme: string, cellSize: number) => (i: number) => {
   }
 }
 
-const stylesGen = (theme: string, cellSize: number) => {
+const initStyles = (theme: string, cellSize: number): StylesType => {
   const cellStyleCurry = cellStyle(theme, cellSize)
   return {
-    theme,
-    cellSize,
     container: {
       margin: '2rem',
       whiteSpace: 'nowrap',
@@ -75,4 +74,4 @@ const stylesGen = (theme: string, cellSize: number) => {
   }
 }
 
-export default stylesGen
+export { initStyles }

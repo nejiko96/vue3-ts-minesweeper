@@ -1,8 +1,12 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import TimeElapsed, { timerModes, TimerModeType } from './TimeElapsed.vue'
+
+import { initStyles } from '@/utils/styles'
+
+import MsTimer, { timerModes, TimerModeType } from './MsTimer.vue'
 
 const mode = ref<TimerModeType>(timerModes.READY)
+const styles = initStyles('ms', 32)
 </script>
 
 <template>
@@ -16,7 +20,10 @@ const mode = ref<TimerModeType>(timerModes.READY)
     <button @click="mode=timerModes.STOPPED">
       stopped
     </button>
-    <TimeElapsed :mode="mode" />
+    <MsTimer
+      :style="styles.timer"
+      :mode="mode"
+    />
   </div>
 </template>
 

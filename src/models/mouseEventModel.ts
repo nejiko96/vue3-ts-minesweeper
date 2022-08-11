@@ -1,29 +1,9 @@
+import {
+  MouseStateType,
+  TgtHandlerType,
+  TgtModelType,
+} from '@/types'
 import { noop } from '@/utils'
-
-export type MouseStateType = {
-  pressed: number,
-}
-
-type TgtHandlerType<S> = (
-  state: S,
-  i: number,
-  j: number
-) => void
-
-type TgtModelType<S> = {
-  handleLeftMouseDown: TgtHandlerType<S>,
-  handleLeftMouseUp: TgtHandlerType<S>,
-  handleLeftMouseOver: TgtHandlerType<S>,
-  handleLeftMouseOut: TgtHandlerType<S>,
-  handleRightMouseDown: TgtHandlerType<S>,
-  handleRightMouseUp: TgtHandlerType<S>,
-  handleRightMouseOver: TgtHandlerType<S>,
-  handleRightMouseOut: TgtHandlerType<S>,
-  handleBothMouseDown: TgtHandlerType<S>,
-  handleBothMouseUp: TgtHandlerType<S>,
-  handleBothMouseOver: TgtHandlerType<S>,
-  handleBothMouseOut: TgtHandlerType<S>,
-}
 
 // mouse events
 const eventEnum = {

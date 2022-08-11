@@ -1,11 +1,21 @@
 <script setup lang="ts">
-import PropChangeTest from './components/PropChangeTest.vue'
+import { SettingsType } from '@/types'
 import StoreTest from './components/StoreTest.vue'
+import MsGame from './components/MsGame.vue'
+
+const settings: SettingsType = {
+  lang: 'en',
+  theme: 'green',
+  cellSize: 32,
+  board: {
+    level: 'easy',
+  },
+}
 </script>
 
 <template>
-  <PropChangeTest />
   <StoreTest />
+  <MsGame :settings="settings" />
 </template>
 
 <style scoped>

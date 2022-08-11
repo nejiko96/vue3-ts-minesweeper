@@ -1,43 +1,25 @@
-type LevelType = 'easy' | 'medium' | 'hard'
+import {
+  LevelValueType,
+  LevelParamType,
+  CustomParamType,
+  SizeParamType,
+  SizeType,
+  ParamRangeType,
+} from '@/types'
 
-type LevelParamType = {
-  level: LevelType,
-}
-
-type CustomParamType = {
-  level: 'custom',
-  width: number | undefined,
-  height: number | undefined,
-  mines: number | undefined,
-}
-
-export type SizeParamType = LevelParamType | CustomParamType
-
-export type SizeType = {
-  width: number,
-  height: number,
-  mines: number,
-}
-
-type RangeType = {
-  min: number,
-  max: number,
-  default: number,
-}
-
-const widthDef: RangeType = {
+const widthDef: ParamRangeType = {
   min: 9,
   max: 30,
   default: 9,
 }
 
-const heightDef: RangeType = {
+const heightDef: ParamRangeType = {
   min: 9,
   max: 24,
   default: 9,
 }
 
-const minesDef = (n: number): RangeType => {
+const minesDef = (n: number): ParamRangeType => {
   const pct = 10 + (n / 45 | 0)
   return {
     min: 10,
@@ -46,7 +28,7 @@ const minesDef = (n: number): RangeType => {
   }
 }
 
-const initParam = (value: number | undefined, rng: RangeType): number => (
+const initParam = (value: number | undefined, rng: ParamRangeType): number => (
   value === undefined ? rng.default : Math.min(Math.max(value, rng.min), rng.max)
 )
 
@@ -59,7 +41,7 @@ const initCustomSize = (
   return { width, height, mines }
 }
 
-const levelDef: Record<LevelType, SizeType> = {
+const levelDef: Record<LevelValueType, SizeType> = {
   easy: {
     width: 9,
     height: 9,

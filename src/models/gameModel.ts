@@ -1,16 +1,12 @@
+import {
+  SizeParamType,
+  SizeType,
+  BoardStateType,
+  GameModelStateType,
+} from '@/types'
 import { fillArray, fillArray2D, noop } from '@/utils'
 import * as cell from './cellModel'
-import { initSize, SizeParamType, SizeType } from './sizeModel'
-
-type BoardStateType = {
-  status: number,
-  grid: number[][],
-  minePos: Record<string, number[]>,
-  markPos: Record<string, number[]>,
-  countDown: number,
-}
-
-export type GameStateType = SizeType & BoardStateType
+import { initSize } from './sizeModel'
 
 const gameStatusEnum = {
   READY: 1,
@@ -25,17 +21,17 @@ const gameStatusFlags = {
 }
 
 const isEnabled = (
-  state: GameStateType,
+  state: GameModelStateType,
 ) : boolean => (state.status & gameStatusFlags.ENABLED) > 0
 
 const isHidden = (
-  state: GameStateType,
+  state: GameModelStateType,
   i: number,
   j: number,
 ): boolean => cell.isHidden(state.grid[i][j])
 
 const relatives = (
-  state: GameStateType,
+  state: GameModelStateType,
   i: number,
   j: number,
   diffs: number[][],
@@ -48,7 +44,7 @@ const relatives = (
 )
 
 const surroundings = (
-  state: GameStateType,
+  state: GameModelStateType,
   i: number,
   j: number,
 ): number[][] => (
@@ -64,7 +60,7 @@ const surroundings = (
 )
 
 const neighbors = (
-  state: GameStateType,
+  state: GameModelStateType,
   i: number,
   j: number,
 ): number[][] => (
@@ -81,7 +77,7 @@ const neighbors = (
 )
 
 const generateMines = (
-  state: GameStateType,
+  state: GameModelStateType,
   i: number,
   j: number,
 ): void => {
@@ -108,7 +104,7 @@ const generateMines = (
 }
 
 const start = (
-  state: GameStateType,
+  state: GameModelStateType,
   i: number,
   j: number,
 ): void => {
@@ -117,7 +113,7 @@ const start = (
 }
 
 const toggleMark = (
-  state: GameStateType,
+  state: GameModelStateType,
   i: number,
   j: number,
 ): void => {
@@ -137,7 +133,7 @@ const toggleMark = (
 }
 
 const postOpen = (
-  state: GameStateType,
+  state: GameModelStateType,
   i: number,
   j: number,
 ): number[][] => {
@@ -150,7 +146,7 @@ const postOpen = (
 }
 
 const open = (
-  state: GameStateType,
+  state: GameModelStateType,
   i: number,
   j: number,
 ): number => {
@@ -164,7 +160,7 @@ const open = (
 }
 
 const areaOpen = (
-  state: GameStateType,
+  state: GameModelStateType,
   i: number,
   j: number,
 ): number => {
@@ -185,7 +181,7 @@ const areaOpen = (
     .reduce((a, b) => a | b, cell.resultEnum.NONE)
 }
 
-const gameClear = (state: GameStateType): void => {
+const gameClear = (state: GameModelStateType): void => {
   state.status = gameStatusEnum.CLEARED
   Object.entries(state.minePos)
     .forEach(([key, pos]) => {
@@ -195,7 +191,7 @@ const gameClear = (state: GameStateType): void => {
     })
 }
 
-const gameOver = (state: GameStateType): void => {
+const gameOver = (state: GameModelStateType): void => {
   state.status = gameStatusEnum.GAMEOVER
   const mineMarkPos = {
     ...state.minePos,
@@ -215,7 +211,7 @@ const initBoard = ({ width, height, mines }: SizeType): BoardStateType => ({
   countDown: width * height - mines,
 })
 
-const initState = (param: SizeParamType): GameStateType => {
+const initState = (param: SizeParamType): GameModelStateType => {
   const size = initSize(param)
   return {
     ...size,
@@ -223,16 +219,16 @@ const initState = (param: SizeParamType): GameStateType => {
   }
 }
 
-const setSize = (state: GameStateType, param: SizeParamType): void => {
+const setSize = (state: GameModelStateType, param: SizeParamType): void => {
   Object.assign(state, initState(param))
 }
 
-const restart = (state: GameStateType): void => {
+const restart = (state: GameModelStateType): void => {
   Object.assign(state, initBoard(state))
 }
 
 const handleLeftMouseDown = (
-  state: GameStateType,
+  state: GameModelStateType,
   i: number,
   j: number,
 ): void => {
@@ -243,7 +239,7 @@ const handleLeftMouseDown = (
 }
 
 const handleLeftMouseOver = (
-  state: GameStateType,
+  state: GameModelStateType,
   i: number,
   j: number,
 ): void => {
@@ -254,7 +250,7 @@ const handleLeftMouseOver = (
 }
 
 const handleLeftMouseOut = (
-  state: GameStateType,
+  state: GameModelStateType,
   i: number,
   j: number,
 ): void => {
@@ -265,7 +261,7 @@ const handleLeftMouseOut = (
 }
 
 const handleLeftMouseUp = (
-  state: GameStateType,
+  state: GameModelStateType,
   i: number,
   j: number,
 ): void => {
@@ -285,7 +281,7 @@ const handleLeftMouseUp = (
 }
 
 const handleRightMouseDown = (
-  state: GameStateType,
+  state: GameModelStateType,
   i: number,
   j: number,
 ): void => {
@@ -303,7 +299,7 @@ const handleRightMouseOut = noop
 const handleRightMouseUp = noop
 
 const handleBothMouseDown = (
-  state: GameStateType,
+  state: GameModelStateType,
   i: number,
   j: number,
 ): void => {
@@ -316,7 +312,7 @@ const handleBothMouseDown = (
 }
 
 const handleBothMouseOver = (
-  state: GameStateType,
+  state: GameModelStateType,
   i: number,
   j: number,
 ): void => {
@@ -329,7 +325,7 @@ const handleBothMouseOver = (
 }
 
 const handleBothMouseOut = (
-  state: GameStateType,
+  state: GameModelStateType,
   i: number,
   j: number,
 ): void => {
@@ -344,7 +340,7 @@ const handleBothMouseOut = (
 }
 
 const handleBothMouseUp = (
-  state: GameStateType,
+  state: GameModelStateType,
   i: number,
   j: number,
 ): void => {
@@ -365,7 +361,7 @@ const handleBothMouseUp = (
 }
 
 const handleTouchStart = (
-  state: GameStateType,
+  state: GameModelStateType,
   i: number,
   j: number,
 ): void => {
@@ -377,7 +373,7 @@ const handleTouchStart = (
 }
 
 const handleTouchEnd = (
-  state: GameStateType,
+  state: GameModelStateType,
   i: number,
   j: number,
 ): void => {
@@ -389,7 +385,7 @@ const handleTouchEnd = (
 }
 
 const handleLongPress = (
-  state: GameStateType,
+  state: GameModelStateType,
   i: number,
   j: number,
 ): void => {
