@@ -42,15 +42,12 @@ export type BoardStateType = {
 
 export type GameModelStateType = SizeType & BoardStateType
 
-export type GameComputedStateType = { remain?: number }
-
 export type MouseStateType = { pressed: number }
 
 export type TouchStateType = { touch: boolean }
 
 export type GameStoreStateType = (
   GameModelStateType
-  & GameComputedStateType
   & MouseStateType
   & TouchStateType
 )

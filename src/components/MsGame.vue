@@ -37,9 +37,17 @@ const handleContextMenu = (ev: Event) => ev.preventDefault()
 
 const handleRestart = () => game.restart()
 
-onMounted(() => node.value?.addEventListener('contextmenu', handleContextMenu))
+onMounted(
+  () => {
+    node.value?.addEventListener('contextmenu', handleContextMenu)
+  },
+)
 
-onBeforeUnmount(() => node.value?.removeEventListener('contextmenu', handleContextMenu))
+onBeforeUnmount(
+  () => {
+    node.value?.removeEventListener('contextmenu', handleContextMenu)
+  },
+)
 
 watch(
   () => props.settings.board,
@@ -74,7 +82,7 @@ watch(
     <p />
     <button
       type="button"
-      @onclick="handleRestart"
+      @click="handleRestart"
     >
       {{ locale.retry }}
     </button>

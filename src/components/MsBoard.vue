@@ -27,7 +27,7 @@ const overlay = computed(() => (
         <MsCell
           v-for="(value, j) in arr"
           :key="`${i}_${j}`"
-          :style="props.styles.cell"
+          :style-arr="props.styles.cell"
           :row="i"
           :col="j"
           :value="value"

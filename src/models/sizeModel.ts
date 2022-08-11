@@ -28,16 +28,16 @@ const minesDef = (n: number): ParamRangeType => {
   }
 }
 
-const initParam = (value: number | undefined, rng: ParamRangeType): number => (
+const adjustParam = (value: number | undefined, rng: ParamRangeType): number => (
   value === undefined ? rng.default : Math.min(Math.max(value, rng.min), rng.max)
 )
 
-const initCustomSize = (
+const calcCustomSize = (
   param: CustomParamType,
 ): SizeType => {
-  const width = initParam(param.width, widthDef)
-  const height = initParam(param.height, heightDef)
-  const mines = initParam(param.mines, minesDef(width * height))
+  const width = adjustParam(param.width, widthDef)
+  const height = adjustParam(param.height, heightDef)
+  const mines = adjustParam(param.mines, minesDef(width * height))
   return { width, height, mines }
 }
 
@@ -59,10 +59,10 @@ const levelDef: Record<LevelValueType, SizeType> = {
   },
 }
 
-const initSizeByLevel = (state: LevelParamType): SizeType => levelDef[state.level]
+const selectSizeByLevel = (state: LevelParamType): SizeType => levelDef[state.level]
 
-const initSize = (param: SizeParamType): SizeType => (
-  param.level === 'custom' ? initCustomSize(param) : initSizeByLevel(param)
+const calcSize = (param: SizeParamType): SizeType => (
+  param.level === 'custom' ? calcCustomSize(param) : selectSizeByLevel(param)
 )
 
-export { initSize }
+export { calcSize }

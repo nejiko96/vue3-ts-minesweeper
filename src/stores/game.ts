@@ -11,7 +11,7 @@ import { makeWrapper } from '@/models/mouseEventModel'
 
 const mouseModel = makeWrapper(gameModel)
 
-const useGameStore = defineStore('test', {
+const useGameStore = defineStore('game', {
   state: (): GameStoreStateType => ({
     ...gameModel.initState({ level: 'easy' }),
     ...mouseModel.initMouseEvent(),

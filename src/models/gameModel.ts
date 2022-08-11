@@ -6,7 +6,7 @@ import {
 } from '@/types'
 import { fillArray, fillArray2D, noop } from '@/utils'
 import * as cell from './cellModel'
-import { initSize } from './sizeModel'
+import { calcSize } from './sizeModel'
 
 const gameStatusEnum = {
   READY: 1,
@@ -212,7 +212,7 @@ const initBoard = ({ width, height, mines }: SizeType): BoardStateType => ({
 })
 
 const initState = (param: SizeParamType): GameModelStateType => {
-  const size = initSize(param)
+  const size = calcSize(param)
   return {
     ...size,
     ...initBoard(size),

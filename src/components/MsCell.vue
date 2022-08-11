@@ -5,7 +5,7 @@ import { styleIdx } from '@/models/cellModel'
 import { useGameStore } from '@/stores/game'
 
 const props = defineProps<{
-  style: Record<string, string>[]
+  styleArr: Record<string, string>[]
   row: number,
   col: number,
   value: number,
@@ -95,7 +95,7 @@ watchEffect((onInvalidate) => {
 
 <template>
   <span
-    :style="style[styleIdx(props.value)]"
+    :style="styleArr[styleIdx(props.value)]"
     @mousedown="handleMouseDown"
     @mouseup="handleMouseUp"
     @mouseover="handleMouseOver"

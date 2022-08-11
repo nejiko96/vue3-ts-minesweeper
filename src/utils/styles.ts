@@ -1,9 +1,9 @@
 import { StylesType } from '@/types'
 import { fillArray } from '@/utils'
-import cellImgGreen16 from '@/images/green_16x16.png'
-import cellImgGreen32 from '@/images/green_32x32.png'
-import cellImgMS16 from '@/images/MS_16x16.png'
-import cellImgMS32 from '@/images/MS_32x32.png'
+import cellImgGreen16 from '@/assets/green_16x16.png'
+import cellImgGreen32 from '@/assets/green_32x32.png'
+import cellImgMS16 from '@/assets/MS_16x16.png'
+import cellImgMS32 from '@/assets/MS_32x32.png'
 
 const textBoxStyle = {
   backgroundColor: '#f5f5f5',
