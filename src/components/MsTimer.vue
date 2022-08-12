@@ -1,14 +1,34 @@
 <script setup lang="ts">
-import { ref, watchEffect } from 'vue'
+import { ref, computed, watch } from 'vue'
 
 import { StyleType, TimerModeEnum, TimerModeType } from '@/types'
 
 const props = defineProps<{
   style: StyleType,
+  interval: string,
+  limit: number,
   mode: TimerModeType,
 }>()
 
 const count = ref<number>(0)
+
+const innerMode = computed(() => {
+  if (props.mode !== TimerModeEnum.RUNNING) return props.mode
+  if (props.limit <= 0) return props.mode
+  if (count.value < props.limit) return props.mode
+  return TimerModeEnum.STOPPED
+})
+
+const intervalMs = computed(() => {
+  const timeUnitTbl: { [key: string]: number } = {
+    ms: 1,
+    s: 1000,
+  }
+  const result = /^([0-9]+(?:\.[0-9]*)?)\s*(.*s)?$/.exec(props.interval.trim()) || []
+  const num = (result[1] && parseFloat(result[1])) || 1000
+  const mult = (result[2] && timeUnitTbl[result[2]]) || 1
+  return num * mult
+})
 
 const intervalObj = {
   intervalId: 0,
@@ -25,16 +45,18 @@ const intervalObj = {
   },
 }
 
-watchEffect((onInvalidate) => {
-  // console.log(props.mode)
-  intervalObj.stop()
-  if (props.mode === TimerModeEnum.READY) {
-    count.value = 0
-  } else if (props.mode === TimerModeEnum.RUNNING) {
-    intervalObj.start(() => { count.value += 1 }, 1000)
-  }
-  onInvalidate(() => intervalObj.stop())
-})
+watch(
+  () => innerMode.value,
+  () => {
+    // console.log(`watch handler: mode=${innerMode.value}`)
+    intervalObj.stop()
+    if (innerMode.value === TimerModeEnum.READY) {
+      count.value = 0
+    } else if (innerMode.value === TimerModeEnum.RUNNING) {
+      intervalObj.start(() => { count.value += 1 }, intervalMs.value)
+    }
+  },
+)
 </script>
 
 <template>

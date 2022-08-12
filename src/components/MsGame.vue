@@ -75,6 +75,8 @@ watch(
     {{ locale.timer1 }}
     <MsTimer
       :style="styles.timer"
+      interval="1s"
+      :limit="999"
       :mode="timerModeTbl[game.status]"
     />
     {{ locale.timer2 }}

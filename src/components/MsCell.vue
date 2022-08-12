@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watchEffect } from 'vue'
+import { ref, watch } from 'vue'
 
 import { StyleType } from '@/types'
 import { useGameStore } from '@/stores/game'
@@ -67,28 +67,30 @@ const handleTouchStart = (): void => {
 }
 
 const handleTouchEnd = (): void => {
-  if (touched.value) {
-    touched.value = false
-    game.touchEnd({
-      row: props.row,
-      col: props.col,
-    })
-  }
+  if (!touched.value) return
+  touched.value = false
+  game.touchEnd({
+    row: props.row,
+    col: props.col,
+  })
 }
 
-watchEffect((onInvalidate) => {
-  timeoutObj.stop()
-  if (touched.value) {
-    timeoutObj.start(() => {
-      touched.value = false
-      game.longPress({
-        row: props.row,
-        col: props.col,
-      })
-    }, 300)
-  }
-  onInvalidate(() => timeoutObj.stop())
-})
+watch(
+  () => touched.value,
+  () => {
+    timeoutObj.stop()
+    if (touched.value) {
+      timeoutObj.start(() => {
+        touched.value = false
+        game.longPress({
+          row: props.row,
+          col: props.col,
+        })
+      }, 300)
+    }
+  },
+)
+
 </script>
 
 <template>
