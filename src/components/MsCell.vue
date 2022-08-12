@@ -1,14 +1,13 @@
 <script setup lang="ts">
 import { ref, watchEffect } from 'vue'
 
-import { styleIdx } from '@/models/cellModel'
+import { StyleType } from '@/types'
 import { useGameStore } from '@/stores/game'
 
 const props = defineProps<{
-  styleArr: Record<string, string>[]
+  style: StyleType
   row: number,
   col: number,
-  value: number,
 }>()
 
 const game = useGameStore()
@@ -19,13 +18,13 @@ const timeoutObj = {
   timeoutId: 0,
   start(handler: () => void, timeout: number): void {
     this.timeoutId = window.setTimeout(handler, timeout)
-    // console.log(`timer ${this.intervalId} started`)
+    // console.log(`timer ${this.timeoutId} started`)
   },
   stop(): void {
     if (this.timeoutId > 0) {
       window.clearTimeout(this.timeoutId)
+      // console.log(`timer ${this.timeoutId} stopped`)
       this.timeoutId = 0
-      // console.log(`timer ${this.intervalId} stopped`)
     }
   },
 }
@@ -67,7 +66,7 @@ const handleTouchStart = (): void => {
   touched.value = true
 }
 
-const handleTouchEnd = (ev: TouchEvent): void => {
+const handleTouchEnd = (): void => {
   if (touched.value) {
     touched.value = false
     game.touchEnd({
@@ -75,7 +74,6 @@ const handleTouchEnd = (ev: TouchEvent): void => {
       col: props.col,
     })
   }
-  ev.preventDefault() // disable double tap zoom
 }
 
 watchEffect((onInvalidate) => {
@@ -95,12 +93,12 @@ watchEffect((onInvalidate) => {
 
 <template>
   <span
-    :style="styleArr[styleIdx(props.value)]"
+    :style="props.style"
     @mousedown="handleMouseDown"
     @mouseup="handleMouseUp"
     @mouseover="handleMouseOver"
     @mouseout="handleMouseOut"
-    @ontouchstart="handleTouchStart"
-    @ontouchsend="handleTouchEnd"
+    @touchstart.prevent="handleTouchStart"
+    @touchend="handleTouchEnd"
   />
 </template>

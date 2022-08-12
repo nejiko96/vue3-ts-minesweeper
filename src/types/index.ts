@@ -1,3 +1,5 @@
+import { CSSProperties } from 'vue'
+
 //------------------------------------------------------------------------------
 // Game Settings
 //------------------------------------------------------------------------------
@@ -32,8 +34,22 @@ export type SizeType = {
   mines: number,
 }
 
+export const GameStatusEnum = {
+  READY: 1,
+  RUNNING: 2,
+  CLEARED: 4,
+  GAMEOVER: 8,
+} as const
+
+export const GameStatusFlags = {
+  ...GameStatusEnum,
+  ENABLED: GameStatusEnum.READY | GameStatusEnum.RUNNING,
+} as const
+
+export type GameStatusType = typeof GameStatusEnum[keyof typeof GameStatusEnum]
+
 export type BoardStateType = {
-  status: number,
+  status: GameStatusType,
   grid: number[][],
   minePos: Record<string, number[]>,
   markPos: Record<string, number[]>,
@@ -93,13 +109,24 @@ export type GridPosType = {
 export type GridClickType = { button: number } & GridPosType
 
 //------------------------------------------------------------------------------
+export type StyleType = CSSProperties
+
 export type StylesType = {
-  container: Record<string, string>,
-  counter: Record<string, string>,
-  timer: Record<string, string>,
-  space: Record<string, string>,
-  board: Record<string, string>,
-  cells: Record<string, string | number>,
-  cell: Record<string, string>[],
-  cellsOverlay: Record<string, string | number>,
+  container: StyleType,
+  counter: StyleType,
+  timer: StyleType,
+  space: StyleType,
+  board: StyleType,
+  cells: StyleType,
+  cell: StyleType[],
+  cellsOverlay: StyleType,
 }
+
+//------------------------------------------------------------------------------
+export const TimerModeEnum = {
+  READY: 'ready',
+  RUNNING: 'running',
+  STOPPED: 'stopped',
+} as const
+
+export type TimerModeType = typeof TimerModeEnum[keyof typeof TimerModeEnum]

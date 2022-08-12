@@ -1,11 +1,11 @@
-import { StylesType } from '@/types'
+import { StyleType, StylesType } from '@/types'
 import { fillArray } from '@/utils'
 import cellImgGreen16 from '@/assets/green_16x16.png'
 import cellImgGreen32 from '@/assets/green_32x32.png'
 import cellImgMS16 from '@/assets/MS_16x16.png'
 import cellImgMS32 from '@/assets/MS_32x32.png'
 
-const textBoxStyle = {
+const textBoxStyle: StyleType = {
   backgroundColor: '#f5f5f5',
   color: '#000000',
   border: '1px solid #d3d3d3',
@@ -22,7 +22,7 @@ const cellImgTbl: Record<string, string> = {
   MS_32: cellImgMS32,
 }
 
-const cellStyle = (theme: string, cellSize: number) => (i: number) => {
+const cellStyle = (theme: string, cellSize: number) => (i: number): StyleType => {
   const x = -cellSize * (i % 3)
   const y = -cellSize * (i / 3 | 0)
   const cellImg = cellImgTbl[`${theme}_${cellSize}`]

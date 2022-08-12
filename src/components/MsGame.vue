@@ -3,20 +3,25 @@ import {
   ref, computed, watch, onMounted, onBeforeUnmount,
 } from 'vue'
 
-import { SettingsType } from '@/types'
+import {
+  SettingsType,
+  GameStatusEnum,
+  GameStatusType,
+  TimerModeEnum,
+  TimerModeType,
+} from '@/types'
 import { initStyles } from '@/utils/styles'
 import { initLocale } from '@/utils/locale'
-import { gameStatusFlags } from '@/models/gameModel'
 import { useGameStore } from '@/stores/game'
 
-import MsTimer, { timerModes } from './MsTimer.vue'
+import MsTimer, { } from './MsTimer.vue'
 import MsBoard from './MsBoard.vue'
 
-const timerModeTbl = {
-  [gameStatusFlags.READY]: timerModes.READY,
-  [gameStatusFlags.RUNNING]: timerModes.RUNNING,
-  [gameStatusFlags.CLEARED]: timerModes.STOPPED,
-  [gameStatusFlags.GAMEOVER]: timerModes.STOPPED,
+const timerModeTbl: Record<GameStatusType, TimerModeType> = {
+  [GameStatusEnum.READY]: TimerModeEnum.READY,
+  [GameStatusEnum.RUNNING]: TimerModeEnum.RUNNING,
+  [GameStatusEnum.CLEARED]: TimerModeEnum.STOPPED,
+  [GameStatusEnum.GAMEOVER]: TimerModeEnum.STOPPED,
 }
 
 const props = defineProps<{
@@ -31,7 +36,7 @@ const node = ref<HTMLInputElement | null>(null)
 
 const game = useGameStore()
 
-const clearMsg = computed(() => (game.status === gameStatusFlags.CLEARED ? locale.value.cleared : ''))
+const clearMsg = computed(() => (game.status === GameStatusEnum.CLEARED ? locale.value.cleared : ''))
 
 const handleContextMenu = (ev: Event) => ev.preventDefault()
 

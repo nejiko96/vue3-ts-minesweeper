@@ -3,26 +3,16 @@ import {
   SizeType,
   BoardStateType,
   GameModelStateType,
+  GameStatusEnum,
+  GameStatusFlags,
 } from '@/types'
 import { fillArray, fillArray2D, noop } from '@/utils'
 import * as cell from './cellModel'
 import { calcSize } from './sizeModel'
 
-const gameStatusEnum = {
-  READY: 1,
-  RUNNING: 2,
-  CLEARED: 4,
-  GAMEOVER: 8,
-}
-
-const gameStatusFlags = {
-  ...gameStatusEnum,
-  ENABLED: gameStatusEnum.READY | gameStatusEnum.RUNNING,
-}
-
 const isEnabled = (
   state: GameModelStateType,
-) : boolean => (state.status & gameStatusFlags.ENABLED) > 0
+) : boolean => (state.status & GameStatusFlags.ENABLED) > 0
 
 const isHidden = (
   state: GameModelStateType,
@@ -109,7 +99,7 @@ const start = (
   j: number,
 ): void => {
   generateMines(state, i, j)
-  state.status = gameStatusEnum.RUNNING
+  state.status = GameStatusEnum.RUNNING
 }
 
 const toggleMark = (
@@ -182,7 +172,7 @@ const areaOpen = (
 }
 
 const gameClear = (state: GameModelStateType): void => {
-  state.status = gameStatusEnum.CLEARED
+  state.status = GameStatusEnum.CLEARED
   Object.entries(state.minePos)
     .forEach(([key, pos]) => {
       const [i, j] = pos
@@ -192,7 +182,7 @@ const gameClear = (state: GameModelStateType): void => {
 }
 
 const gameOver = (state: GameModelStateType): void => {
-  state.status = gameStatusEnum.GAMEOVER
+  state.status = GameStatusEnum.GAMEOVER
   const mineMarkPos = {
     ...state.minePos,
     ...state.markPos,
@@ -204,7 +194,7 @@ const gameOver = (state: GameModelStateType): void => {
 }
 
 const initBoard = ({ width, height, mines }: SizeType): BoardStateType => ({
-  status: gameStatusEnum.READY,
+  status: GameStatusEnum.READY,
   grid: fillArray2D(width, height, cell.initialValue),
   minePos: {},
   markPos: {},
@@ -269,7 +259,7 @@ const handleLeftMouseUp = (
     return
   }
   state.grid[i][j] = cell.release(state.grid[i][j])
-  if (state.status === gameStatusEnum.READY) {
+  if (state.status === GameStatusEnum.READY) {
     start(state, i, j)
   }
   const result = open(state, i, j)
@@ -397,7 +387,6 @@ const handleLongPress = (
 }
 
 export {
-  gameStatusFlags,
   initState,
   setSize,
   restart,
