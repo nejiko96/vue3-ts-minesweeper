@@ -75,7 +75,9 @@ const generateMines = (
   const w = state.width
   let n = w * state.height
   const samples = fillArray(n, (k) => k)
-  const excludes = neighbors(state, i, j).map(([i2, j2]) => i2 * w + j2)
+  const excludes = neighbors(state, i, j)
+    .map(([i2, j2]) => i2 * w + j2)
+    .reverse()
   for (let e = 0; e < excludes.length && n > 0; e++) {
     const k = excludes[e]
     n -= 1;
