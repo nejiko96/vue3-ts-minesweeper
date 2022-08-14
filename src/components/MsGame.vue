@@ -66,21 +66,23 @@ watch(
 <template>
   <div
     ref="node"
-    :style="styles.container"
+    class="container"
   >
     {{ locale.remain1 }}
-    <span :style="styles.counter">{{ game.remain }}</span>
+    <span
+      class="text-box"
+    >{{ game.remain }}</span>
     {{ locale.remain2 }}
-    <span :style="styles.space" />
+    <span class="space" />
     {{ locale.timer1 }}
     <MsTimer
-      :style="styles.timer"
+      class="text-box"
       interval="1s"
       :limit="999"
       :mode="timerModeTbl[game.status]"
     />
     {{ locale.timer2 }}
-    <span :style="styles.space" />
+    <span class="space" />
     {{ clearMsg }}
     <br>
     <MsBoard
@@ -96,3 +98,27 @@ watch(
     </button>
   </div>
 </template>
+
+<style scoped>
+.container {
+  margin: 2rem;
+  white-space: nowrap;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.text-box {
+  background-color: #f5f5f5;
+  color: #000000;
+  border: 1px solid #d3d3d3;
+  display: inline-block;
+  padding-right: 2px;
+  text-align: right;
+  width: 40px;
+}
+.space {
+  display: inline-block;
+  width: 20px;
+}
+</style>

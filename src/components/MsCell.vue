@@ -95,6 +95,7 @@ watch(
 
 <template>
   <span
+    class="cell"
     :style="props.style"
     @mousedown="handleMouseDown"
     @mouseup="handleMouseUp"
@@ -104,3 +105,10 @@ watch(
     @touchend="handleTouchEnd"
   />
 </template>
+
+<style scoped>
+.cell {
+  display: inline-block;
+  overflow: hidden;
+}
+</style>

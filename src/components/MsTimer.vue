@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue'
 
-import { StyleType, TimerModeEnum, TimerModeType } from '@/types'
+import { TimerModeEnum, TimerModeType } from '@/types'
 
 const props = defineProps<{
-  style: StyleType,
   interval: string,
   limit: number,
   mode: TimerModeType,
@@ -60,5 +59,5 @@ watch(
 </script>
 
 <template>
-  <span :style="props.style">{{ count }}</span>
+  <span>{{ count }}</span>
 </template>

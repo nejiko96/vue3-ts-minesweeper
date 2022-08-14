@@ -18,8 +18,8 @@ const overlay = computed(() => (
 </script>
 
 <template>
-  <div :style="props.styles.board">
-    <div :style="props.styles.cells">
+  <div class="board">
+    <div class="cells">
       <template
         v-for="(arr, i) in game.grid"
         :key="i"
@@ -36,7 +36,27 @@ const overlay = computed(() => (
     </div>
     <div
       v-if="overlay"
-      :style="styles.cellsOverlay"
+      class="cells-overlay"
     />
   </div>
 </template>
+
+<style scoped>
+.board {
+  position: relative;
+  display: inline-block;
+}
+.cells {
+  line-height: 0;
+}
+.cells-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 0;
+  background-color: rgba(0, 0, 0, 0.1);
+  pointer-events: none;
+}
+</style>
