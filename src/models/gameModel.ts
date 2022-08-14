@@ -1,6 +1,6 @@
 import {
-  SizeParamType,
-  SizeType,
+  SizeSettingType,
+  SizeStateType,
   BoardStateType,
   GameModelStateType,
   GameStatusEnum,
@@ -195,7 +195,7 @@ const gameOver = (state: GameModelStateType): void => {
     })
 }
 
-const initBoard = ({ width, height, mines }: SizeType): BoardStateType => ({
+const initBoard = ({ width, height, mines }: SizeStateType): BoardStateType => ({
   status: GameStatusEnum.READY,
   grid: fillArray2D(width, height, cell.initialValue),
   minePos: {},
@@ -203,7 +203,7 @@ const initBoard = ({ width, height, mines }: SizeType): BoardStateType => ({
   countDown: width * height - mines,
 })
 
-const initState = (param: SizeParamType): GameModelStateType => {
+const initAll = (param: SizeSettingType): GameModelStateType => {
   const size = calcSize(param)
   return {
     ...size,
@@ -211,11 +211,11 @@ const initState = (param: SizeParamType): GameModelStateType => {
   }
 }
 
-const setSize = (state: GameModelStateType, param: SizeParamType): void => {
-  Object.assign(state, initState(param))
+const resetAll = (state: GameModelStateType, size: SizeSettingType): void => {
+  Object.assign(state, initAll(size))
 }
 
-const restart = (state: GameModelStateType): void => {
+const resetBoard = (state: GameModelStateType): void => {
   Object.assign(state, initBoard(state))
 }
 
@@ -389,9 +389,9 @@ const handleLongPress = (
 }
 
 export {
-  initState,
-  setSize,
-  restart,
+  initAll,
+  resetAll,
+  resetBoard,
   handleLeftMouseDown,
   handleLeftMouseOver,
   handleLeftMouseOut,

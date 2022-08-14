@@ -1,7 +1,8 @@
 import { defineStore } from 'pinia'
 
 import {
-  SizeParamType,
+  ThemeSettingType,
+  SizeSettingType,
   GameStoreStateType,
   GridPosType,
   GridClickType,
@@ -13,8 +14,9 @@ const mouseModel = makeWrapper(gameModel)
 
 const useGameStore = defineStore('game', {
   state: (): GameStoreStateType => ({
-    ...gameModel.initState({ level: 'easy' }),
-    ...mouseModel.initMouseEvent(),
+    theme: { name: 'green', size: 32 },
+    ...gameModel.initAll({ level: 'easy' }),
+    ...mouseModel.initState(),
     touch: false,
   }),
 
@@ -23,11 +25,14 @@ const useGameStore = defineStore('game', {
   },
 
   actions: {
-    init(param: SizeParamType): void {
-      gameModel.setSize(this, param)
+    changeTheme(theme: ThemeSettingType): void {
+      this.theme = theme
+    },
+    changeSize(size: SizeSettingType): void {
+      gameModel.resetAll(this, size)
     },
     restart(): void {
-      gameModel.restart(this)
+      gameModel.resetBoard(this)
     },
     mouseDown({ button, row, col }: GridClickType): void {
       mouseModel.handleMouseDown(this, button, row, col)

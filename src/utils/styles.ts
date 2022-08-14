@@ -1,9 +1,24 @@
-import { StyleType, StylesType } from '@/types'
+import { CSSProperties } from 'vue'
+
+import { ThemeSettingType } from '@/types'
 import { fillArray } from '@/utils'
 import cellImgGreen16 from '@/assets/green_16x16.png'
 import cellImgGreen32 from '@/assets/green_32x32.png'
 import cellImgMS16 from '@/assets/MS_16x16.png'
 import cellImgMS32 from '@/assets/MS_32x32.png'
+
+type StyleType = CSSProperties
+
+type StylesType = {
+  container: StyleType,
+  counter: StyleType,
+  timer: StyleType,
+  space: StyleType,
+  board: StyleType,
+  cells: StyleType,
+  cell: StyleType[],
+  cellsOverlay: StyleType,
+}
 
 const textBoxStyle: StyleType = {
   backgroundColor: '#f5f5f5',
@@ -22,22 +37,22 @@ const cellImgTbl: Record<string, string> = {
   MS_32: cellImgMS32,
 }
 
-const cellStyle = (theme: string, cellSize: number) => (i: number): StyleType => {
-  const x = -cellSize * (i % 3)
-  const y = -cellSize * (i / 3 | 0)
-  const cellImg = cellImgTbl[`${theme}_${cellSize}`]
+const cellStyle = (name: string, size: number) => (i: number): StyleType => {
+  const x = -size * (i % 3)
+  const y = -size * (i / 3 | 0)
+  const cellImg = cellImgTbl[`${name}_${size}`]
   return {
+    backgroundPosition: `${x}px ${y}px`,
     backgroundImage: `url(${cellImg})`,
     display: 'inline-block',
-    height: `${cellSize}px`,
+    height: `${size}px`,
     overflow: 'hidden',
-    width: `${cellSize}px`,
-    backgroundPosition: `${x}px ${y}px`,
+    width: `${size}px`,
   }
 }
 
-const initStyles = (theme: string, cellSize: number): StylesType => {
-  const cellStyleCurry = cellStyle(theme, cellSize)
+const initStyles = ({ name, size }: ThemeSettingType): StylesType => {
+  const cellStyleCurry = cellStyle(name, size)
   return {
     container: {
       margin: '2rem',

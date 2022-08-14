@@ -1,9 +1,9 @@
 import {
   LevelValueType,
-  LevelParamType,
-  CustomParamType,
-  SizeParamType,
-  SizeType,
+  LevelSettingType,
+  CustomSettingType,
+  SizeSettingType,
+  SizeStateType,
   ParamRangeType,
 } from '@/types'
 
@@ -33,15 +33,15 @@ const adjustParam = (value: number | undefined, rng: ParamRangeType): number => 
 )
 
 const calcCustomSize = (
-  param: CustomParamType,
-): SizeType => {
+  param: CustomSettingType,
+): SizeStateType => {
   const width = adjustParam(param.width, widthDef)
   const height = adjustParam(param.height, heightDef)
   const mines = adjustParam(param.mines, minesDef(width * height))
   return { width, height, mines }
 }
 
-const levelDef: Record<LevelValueType, SizeType> = {
+const levelDef: Record<LevelValueType, SizeStateType> = {
   easy: {
     width: 9,
     height: 9,
@@ -59,9 +59,9 @@ const levelDef: Record<LevelValueType, SizeType> = {
   },
 }
 
-const selectSizeByLevel = (state: LevelParamType): SizeType => levelDef[state.level]
+const selectSizeByLevel = (state: LevelSettingType): SizeStateType => levelDef[state.level]
 
-const calcSize = (param: SizeParamType): SizeType => (
+const calcSize = (param: SizeSettingType): SizeStateType => (
   param.level === 'custom' ? calcCustomSize(param) : selectSizeByLevel(param)
 )
 

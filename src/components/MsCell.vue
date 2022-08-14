@@ -1,18 +1,31 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { ref, computed, watch } from 'vue'
 
-import { StyleType } from '@/types'
 import { useGameStore } from '@/stores/game'
+import { styleIdx } from '@/models/cellModel'
 
 const props = defineProps<{
-  style: StyleType
   row: number,
   col: number,
+  value: number
 }>()
 
 const game = useGameStore()
 
 const touched = ref(false)
+
+const themeClass = computed((): string => {
+  const { name, size } = game.theme
+  return `${name}_${size}`
+})
+
+const bgPosition = computed((): string => {
+  const { size } = game.theme
+  const i = styleIdx(props.value)
+  const x = -size * (i % 3)
+  const y = -size * (i / 3 | 0)
+  return `${x}px ${y}px`
+})
 
 const timeoutObj = {
   timeoutId: 0,
@@ -95,8 +108,8 @@ watch(
 
 <template>
   <span
-    class="cell"
-    :style="props.style"
+    class="cell value"
+    :class="themeClass"
     @mousedown="handleMouseDown"
     @mouseup="handleMouseUp"
     @mouseover="handleMouseOver"
@@ -110,5 +123,28 @@ watch(
 .cell {
   display: inline-block;
   overflow: hidden;
+}
+.value {
+  background-position: v-bind(bgPosition);
+}
+.green_16 {
+  background-image: url('../assets/green_16x16.png');
+  height: 16px;
+  width: 16px;
+}
+.green_32 {
+  background-image: url('../assets/green_32x32.png');
+  height: 32px;
+  width: 32px;
+}
+.MS_16 {
+  background-image: url('../assets/MS_16x16.png');
+  height: 16px;
+  width: 16px;
+}
+.MS_32 {
+  background-image: url('../assets/MS_32x32.png');
+  height: 32px;
+  width: 32px;
 }
 </style>

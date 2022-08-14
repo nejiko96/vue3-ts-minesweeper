@@ -19,7 +19,7 @@ const innerMode = computed(() => {
 })
 
 const intervalMs = computed(() => {
-  const timeUnitTbl: { [key: string]: number } = {
+  const timeUnitTbl: Record<string, number> = {
     ms: 1,
     s: 1000,
   }

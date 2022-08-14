@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import {
-  ref, computed, watch, onMounted, onBeforeUnmount,
+  ref,
+  computed,
+  watch,
+  onMounted,
+  onBeforeUnmount,
 } from 'vue'
 
 import {
@@ -10,11 +14,10 @@ import {
   TimerModeEnum,
   TimerModeType,
 } from '@/types'
-import { initStyles } from '@/utils/styles'
 import { initLocale } from '@/utils/locale'
 import { useGameStore } from '@/stores/game'
 
-import MsTimer, { } from './MsTimer.vue'
+import MsTimer from './MsTimer.vue'
 import MsBoard from './MsBoard.vue'
 
 const timerModeTbl: Record<GameStatusType, TimerModeType> = {
@@ -28,13 +31,11 @@ const props = defineProps<{
   settings: SettingsType
 }>()
 
-const locale = computed(() => initLocale(props.settings.lang))
-
-const styles = computed(() => initStyles(props.settings.theme, props.settings.cellSize))
+const game = useGameStore()
 
 const node = ref<HTMLInputElement | null>(null)
 
-const game = useGameStore()
+const locale = computed(() => initLocale(props.settings.lang))
 
 const clearMsg = computed(() => (game.status === GameStatusEnum.CLEARED ? locale.value.cleared : ''))
 
@@ -45,6 +46,8 @@ const handleRestart = () => game.restart()
 onMounted(
   () => {
     node.value?.addEventListener('contextmenu', handleContextMenu)
+    game.changeTheme(props.settings.theme)
+    game.changeSize(props.settings.board)
   },
 )
 
@@ -55,9 +58,17 @@ onBeforeUnmount(
 )
 
 watch(
+  () => props.settings.theme,
+  () => {
+    game.changeTheme(props.settings.theme)
+  },
+  { deep: true },
+)
+
+watch(
   () => props.settings.board,
   () => {
-    game.init(props.settings.board)
+    game.changeSize(props.settings.board)
   },
   { deep: true },
 )
@@ -85,9 +96,7 @@ watch(
     <span class="space" />
     {{ clearMsg }}
     <br>
-    <MsBoard
-      :styles="styles"
-    />
+    <MsBoard />
     <p />
     <button
       class="bg-gray-400 hover:bg-gray-300 text-white rounded px-4 py-2"

@@ -4,8 +4,10 @@ import MsGame from './components/MsGame.vue'
 
 const settings: SettingsType = {
   lang: 'en',
-  theme: 'green',
-  cellSize: 32,
+  theme: {
+    name: 'green',
+    size: 32,
+  },
   board: {
     level: 'easy',
   },

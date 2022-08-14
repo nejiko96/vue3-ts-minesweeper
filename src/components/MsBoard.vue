@@ -1,13 +1,10 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
-import { StylesType, GameStatusFlags } from '@/types'
+import { GameStatusFlags } from '@/types'
 import { useGameStore } from '@/stores/game'
-import { styleIdx } from '@/models/cellModel'
 
 import MsCell from './MsCell.vue'
-
-const props = defineProps<{ styles: StylesType }>()
 
 const game = useGameStore()
 
@@ -27,9 +24,9 @@ const overlay = computed(() => (
         <MsCell
           v-for="(value, j) in arr"
           :key="`${i}_${j}`"
-          :style="props.styles.cell[styleIdx(value)]"
           :row="i"
           :col="j"
+          :value="value"
         />
         <br>
       </template>

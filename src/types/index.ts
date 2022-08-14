@@ -3,37 +3,35 @@ import { CSSProperties } from 'vue'
 //------------------------------------------------------------------------------
 // Game Settings
 //------------------------------------------------------------------------------
+export type ThemeSettingType = {
+  name: string,
+  size: number,
+}
+
 export type LevelValueType = 'easy' | 'medium' | 'hard'
 
-export type LevelParamType = {
+export type LevelSettingType = {
   level: LevelValueType,
 }
 
-export type CustomParamType = {
+export type CustomSettingType = {
   level: 'custom',
   width: number | undefined,
   height: number | undefined,
   mines: number | undefined,
 }
 
-export type SizeParamType = LevelParamType | CustomParamType
+export type SizeSettingType = LevelSettingType | CustomSettingType
 
 export type SettingsType = {
   lang: string,
-  theme: string,
-  cellSize: number,
-  board: SizeParamType,
+  theme: ThemeSettingType,
+  board: SizeSettingType,
 }
 
 //------------------------------------------------------------------------------
 // Game Model & Game Store
 //------------------------------------------------------------------------------
-export type SizeType = {
-  width: number,
-  height: number,
-  mines: number,
-}
-
 export const GameStatusEnum = {
   READY: 1,
   RUNNING: 2,
@@ -46,6 +44,12 @@ export const GameStatusFlags = {
   ENABLED: GameStatusEnum.READY | GameStatusEnum.RUNNING,
 } as const
 
+export type SizeStateType = {
+  width: number,
+  height: number,
+  mines: number,
+}
+
 export type GameStatusType = typeof GameStatusEnum[keyof typeof GameStatusEnum]
 
 export type BoardStateType = {
@@ -56,14 +60,17 @@ export type BoardStateType = {
   countDown: number,
 }
 
-export type GameModelStateType = SizeType & BoardStateType
+export type GameModelStateType = SizeStateType & BoardStateType
+
+export type ThemeStatusType = { theme: ThemeSettingType }
 
 export type MouseStateType = { pressed: number }
 
 export type TouchStateType = { touch: boolean }
 
 export type GameStoreStateType = (
-  GameModelStateType
+  ThemeStatusType
+  & GameModelStateType
   & MouseStateType
   & TouchStateType
 )
@@ -102,26 +109,7 @@ export type TgtModelType<S> = {
 }
 
 //------------------------------------------------------------------------------
-export type GridPosType = {
-  row: number,
-  col: number,
-}
-export type GridClickType = { button: number } & GridPosType
-
-//------------------------------------------------------------------------------
-export type StyleType = CSSProperties
-
-export type StylesType = {
-  container: StyleType,
-  counter: StyleType,
-  timer: StyleType,
-  space: StyleType,
-  board: StyleType,
-  cells: StyleType,
-  cell: StyleType[],
-  cellsOverlay: StyleType,
-}
-
+// Timer Constants
 //------------------------------------------------------------------------------
 export const TimerModeEnum = {
   READY: 'ready',
@@ -130,3 +118,10 @@ export const TimerModeEnum = {
 } as const
 
 export type TimerModeType = typeof TimerModeEnum[keyof typeof TimerModeEnum]
+
+//------------------------------------------------------------------------------
+export type GridPosType = {
+  row: number,
+  col: number,
+}
+export type GridClickType = { button: number } & GridPosType

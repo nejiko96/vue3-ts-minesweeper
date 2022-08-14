@@ -5,13 +5,13 @@ const valueEnum = {
   OPEN_EXPLODED: 0x008,
   HID_PRESSED: 0x100,
   HID_PENDING: 0x200,
-}
+} as const
 
 const valueFlags = {
   ...valueEnum,
   MAIN: 0x007,
   OPEN_HINT: 0x0F0,
-}
+} as const
 
 const styleEnum = {
   HIDDEN: 0,
@@ -22,7 +22,7 @@ const styleEnum = {
   MINE: 12,
   EXPLOSION: 13,
   MISTAKE: 14,
-}
+} as const
 
 const resultEnum = {
   NONE: 0,
@@ -30,7 +30,7 @@ const resultEnum = {
   EXPLODED: 2,
   MARKED: 4,
   UNMARKED: 8,
-}
+} as const
 
 const initialValue = (): number => (valueFlags.HIDDEN)
 

@@ -60,7 +60,7 @@ const makeDispatch = <S>(model: TgtModelType<S>): TgtHandlerType<S>[][] => [
 
 const makeWrapper = <S>(model: TgtModelType<S>) => ({
   dispatch: makeDispatch(model),
-  initMouseEvent(): MouseStateType {
+  initState(): MouseStateType {
     return {
       pressed: 0,
     }
