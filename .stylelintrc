@@ -8,6 +8,14 @@
           "tailwind"
         ]
       }
+    ],
+    "function-no-unknown": [
+      true,
+      {
+        "ignoreFunctions": [
+          "v-bind"
+        ]
+      }
     ]
   }
 }
