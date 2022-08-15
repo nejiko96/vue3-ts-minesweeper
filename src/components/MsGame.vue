@@ -20,13 +20,6 @@ import { useGameStore } from '@/stores/game'
 import MsTimer from './MsTimer.vue'
 import MsBoard from './MsBoard.vue'
 
-const timerModeTbl: Record<GameStatusType, TimerModeType> = {
-  [GameStatusEnum.READY]: TimerModeEnum.READY,
-  [GameStatusEnum.RUNNING]: TimerModeEnum.RUNNING,
-  [GameStatusEnum.CLEARED]: TimerModeEnum.STOPPED,
-  [GameStatusEnum.GAMEOVER]: TimerModeEnum.STOPPED,
-}
-
 const props = defineProps<{
   settings: SettingsType
 }>()
@@ -35,7 +28,17 @@ const game = useGameStore()
 
 const node = ref<HTMLInputElement | null>(null)
 
-const locale = computed(() => initLocale(props.settings.lang))
+const locale = computed((): Record<string, string> => initLocale(props.settings.lang))
+
+const timerMode = computed((): TimerModeType => {
+  const timerModeTbl: Record<GameStatusType, TimerModeType> = {
+    [GameStatusEnum.READY]: TimerModeEnum.READY,
+    [GameStatusEnum.RUNNING]: TimerModeEnum.RUNNING,
+    [GameStatusEnum.CLEARED]: TimerModeEnum.STOPPED,
+    [GameStatusEnum.GAMEOVER]: TimerModeEnum.STOPPED,
+  }
+  return timerModeTbl[game.status]
+})
 
 const clearMsg = computed(() => (game.status === GameStatusEnum.CLEARED ? locale.value.cleared : ''))
 
@@ -80,9 +83,9 @@ watch(
     class="container"
   >
     {{ locale.remain1 }}
-    <span
-      class="text-box"
-    >{{ game.remain }}</span>
+    <span class="text-box">
+      {{ game.remain }}
+    </span>
     {{ locale.remain2 }}
     <span class="space" />
     {{ locale.timer1 }}
@@ -90,7 +93,7 @@ watch(
       class="text-box"
       interval="1s"
       :limit="999"
-      :mode="timerModeTbl[game.status]"
+      :mode="timerMode"
     />
     {{ locale.timer2 }}
     <span class="space" />
@@ -99,7 +102,7 @@ watch(
     <MsBoard />
     <p />
     <button
-      class="bg-gray-400 hover:bg-gray-300 text-white rounded px-4 py-2"
+      class="bg-gray-400 hover:bg-gray-300 text-black rounded px-4 py-2"
       type="button"
       @click="handleRestart"
     >
