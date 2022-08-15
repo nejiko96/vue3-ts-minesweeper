@@ -1,8 +1,15 @@
-<script setup lang="ts">
+<script lang="ts">
 import { ref, computed, watch } from 'vue'
 
 import { TimerModeEnum, TimerModeType } from '@/types'
 
+const timeUnitTbl: Record<string, number> = {
+  ms: 1,
+  s: 1000,
+}
+</script>
+
+<script setup lang="ts">
 const props = defineProps<{
   interval: string,
   limit: number,
@@ -19,13 +26,9 @@ const innerMode = computed(() => {
 })
 
 const intervalMs = computed(() => {
-  const timeUnitTbl: Record<string, number> = {
-    ms: 1,
-    s: 1000,
-  }
-  const result = /^([0-9]+(?:\.[0-9]*)?)\s*(.*s)?$/.exec(props.interval.trim()) || []
-  const num = (result[1] && parseFloat(result[1])) || 1000
-  const mult = (result[2] && timeUnitTbl[result[2]]) || 1
+  const match = /^([0-9]+(?:\.[0-9]*)?)\s*(.*s)?$/.exec(props.interval.trim()) || []
+  const num = (match[1] && parseFloat(match[1])) || 1000
+  const mult = (match[2] && timeUnitTbl[match[2]]) || 1
   return num * mult
 })
 

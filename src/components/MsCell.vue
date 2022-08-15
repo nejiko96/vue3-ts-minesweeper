@@ -1,9 +1,13 @@
-<script setup lang="ts">
+<script lang="ts">
 import { ref, computed, watch } from 'vue'
 
 import { useGameStore } from '@/stores/game'
 import { styleIdx } from '@/models/cellModel'
 
+const bgPosCache: Record<number, Record<number, string>> = {}
+</script>
+
+<script setup lang="ts">
 const props = defineProps<{
   row: number,
   col: number,
@@ -19,12 +23,17 @@ const themeClass = computed((): string => {
   return `${name}_${size}`
 })
 
-const bgPosition = computed((): string => {
+const bgPos = computed((): string => {
   const { size } = game.theme
-  const i = styleIdx(props.value)
-  const x = -size * (i % 3)
-  const y = -size * (i / 3 | 0)
-  return `${x}px ${y}px`
+  bgPosCache[size] ||= {}
+  const v = props.value
+  if (bgPosCache[size][v] === undefined) {
+    const i = styleIdx(v)
+    const x = -size * (i % 3)
+    const y = -size * (i / 3 | 0)
+    bgPosCache[size][v] = `${x}px ${y}px`
+  }
+  return bgPosCache[size][v]
 })
 
 const timeoutObj = {
@@ -45,47 +54,25 @@ const timeoutObj = {
 const handleMouseDown = (ev: MouseEvent): void => {
   game.mouseDown({
     button: ev.button,
-    row: props.row,
-    col: props.col,
+    ...props,
   })
 }
 
-const handleMouseUp = (): void => {
-  game.mouseUp({
-    row: props.row,
-    col: props.col,
-  })
-}
+const handleMouseUp = (): void => game.mouseUp(props)
 
-const handleMouseOver = (): void => {
-  game.mouseOver({
-    row: props.row,
-    col: props.col,
-  })
-}
+const handleMouseOver = (): void => game.mouseOver(props)
 
-const handleMouseOut = (): void => {
-  game.mouseOut({
-    row: props.row,
-    col: props.col,
-  })
-}
+const handleMouseOut = (): void => game.mouseOut(props)
 
 const handleTouchStart = (): void => {
-  game.touchStart({
-    row: props.row,
-    col: props.col,
-  })
+  game.touchStart(props)
   touched.value = true
 }
 
 const handleTouchEnd = (): void => {
   if (!touched.value) return
   touched.value = false
-  game.touchEnd({
-    row: props.row,
-    col: props.col,
-  })
+  game.touchEnd(props)
 }
 
 watch(
@@ -95,15 +82,11 @@ watch(
     if (touched.value) {
       timeoutObj.start(() => {
         touched.value = false
-        game.longPress({
-          row: props.row,
-          col: props.col,
-        })
+        game.longPress(props)
       }, 300)
     }
   },
 )
-
 </script>
 
 <template>
@@ -125,7 +108,7 @@ watch(
   overflow: hidden;
 }
 .value {
-  background-position: v-bind(bgPosition);
+  background-position: v-bind(bgPos);
 }
 .green_16 {
   background-image: url('../assets/green_16x16.png');

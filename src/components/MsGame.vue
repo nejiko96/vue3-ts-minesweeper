@@ -1,10 +1,8 @@
-<script setup lang="ts">
+<script lang="ts">
 import {
-  ref,
   computed,
   watch,
   onMounted,
-  onBeforeUnmount,
 } from 'vue'
 
 import {
@@ -20,43 +18,33 @@ import { useGameStore } from '@/stores/game'
 import MsTimer from './MsTimer.vue'
 import MsBoard from './MsBoard.vue'
 
+const timerModeTbl: Record<GameStatusType, TimerModeType> = {
+  [GameStatusEnum.READY]: TimerModeEnum.READY,
+  [GameStatusEnum.RUNNING]: TimerModeEnum.RUNNING,
+  [GameStatusEnum.CLEARED]: TimerModeEnum.STOPPED,
+  [GameStatusEnum.GAMEOVER]: TimerModeEnum.STOPPED,
+}
+</script>
+
+<script setup lang="ts">
 const props = defineProps<{
   settings: SettingsType
 }>()
 
 const game = useGameStore()
 
-const node = ref<HTMLInputElement | null>(null)
-
 const locale = computed((): Record<string, string> => initLocale(props.settings.lang))
 
-const timerMode = computed((): TimerModeType => {
-  const timerModeTbl: Record<GameStatusType, TimerModeType> = {
-    [GameStatusEnum.READY]: TimerModeEnum.READY,
-    [GameStatusEnum.RUNNING]: TimerModeEnum.RUNNING,
-    [GameStatusEnum.CLEARED]: TimerModeEnum.STOPPED,
-    [GameStatusEnum.GAMEOVER]: TimerModeEnum.STOPPED,
-  }
-  return timerModeTbl[game.status]
-})
+const timerMode = computed((): TimerModeType => timerModeTbl[game.status])
 
 const clearMsg = computed(() => (game.status === GameStatusEnum.CLEARED ? locale.value.cleared : ''))
-
-const handleContextMenu = (ev: Event) => ev.preventDefault()
 
 const handleRestart = () => game.restart()
 
 onMounted(
   () => {
-    node.value?.addEventListener('contextmenu', handleContextMenu)
     game.changeTheme(props.settings.theme)
     game.changeSize(props.settings.board)
-  },
-)
-
-onBeforeUnmount(
-  () => {
-    node.value?.removeEventListener('contextmenu', handleContextMenu)
   },
 )
 
@@ -79,8 +67,8 @@ watch(
 
 <template>
   <div
-    ref="node"
     class="container"
+    @contextmenu.prevent=""
   >
     {{ locale.remain1 }}
     <span class="text-box">
