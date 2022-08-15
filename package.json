@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
-    "lint": "yarn run eslint --ext .ts,.tsx,.vue ."
+    "lint": "yarn run eslint --ext .ts,.tsx,.vue .",
+    "lint:style": "yarn run stylelint src/**/*.{css,vue}"
   },
   "dependencies": {
     "pinia": "^2.0.17",
@@ -28,6 +29,10 @@
     "eslint-plugin-import": "^2.25.2",
     "eslint-plugin-vue": "^9.3.0",
     "postcss": "^8.4.16",
+    "postcss-html": "^1.5.0",
+    "stylelint": "^14.10.0",
+    "stylelint-config-recommended-vue": "^1.4.0",
+    "stylelint-config-standard": "^27.0.0",
     "tailwindcss": "^3.1.8",
     "typescript": "^4.6.4",
     "vite": "^3.0.0",
