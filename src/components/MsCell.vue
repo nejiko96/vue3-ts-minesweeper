@@ -20,10 +20,10 @@ const touched = ref(false)
 
 const themeClass = computed((): string => {
   const { name, size } = game.theme
-  return `${name}_${size}`
+  return `${name}-${size}`.toLowerCase()
 })
 
-const bgPos = computed((): string => {
+const bgpos = computed((): string => {
   const { size } = game.theme
   bgPosCache[size] ||= {}
   const v = props.value
@@ -107,26 +107,31 @@ watch(
   display: inline-block;
   overflow: hidden;
 }
+
 .value {
-  background-position: v-bind(bgPos);
+  background-position: v-bind(bgpos);
 }
-.green_16 {
-  background-image: url('../assets/green_16x16.png');
+
+.green-16 {
+  background-image: url("../assets/green_16x16.png");
   height: 16px;
   width: 16px;
 }
-.green_32 {
-  background-image: url('../assets/green_32x32.png');
+
+.green-32 {
+  background-image: url("../assets/green_32x32.png");
   height: 32px;
   width: 32px;
 }
-.MS_16 {
-  background-image: url('../assets/MS_16x16.png');
+
+.ms-16 {
+  background-image: url("../assets/MS_16x16.png");
   height: 16px;
   width: 16px;
 }
-.MS_32 {
-  background-image: url('../assets/MS_32x32.png');
+
+.ms-32 {
+  background-image: url("../assets/MS_32x32.png");
   height: 32px;
   width: 32px;
 }

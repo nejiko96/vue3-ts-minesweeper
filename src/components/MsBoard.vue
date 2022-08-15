@@ -43,9 +43,11 @@ const overlay = computed(() => (
   position: relative;
   display: inline-block;
 }
+
 .cells {
   line-height: 0;
 }
+
 .cells-overlay {
   position: absolute;
   top: 0;
@@ -53,7 +55,7 @@ const overlay = computed(() => (
   bottom: 0;
   right: 0;
   z-index: 0;
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgb(0 0 0 / 10%);
   pointer-events: none;
 }
 </style>

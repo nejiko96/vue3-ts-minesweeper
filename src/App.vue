@@ -17,6 +17,3 @@ const settings: SettingsType = {
 <template>
   <MsGame :settings="settings" />
 </template>
-
-<style scoped>
-</style>
