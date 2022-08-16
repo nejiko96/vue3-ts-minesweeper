@@ -2,32 +2,77 @@
   <!-- drawer component -->
   <div
     id="drawer-right"
-    class="fixed z-40 h-screen p-4 overflow-y-auto bg-white w-80 dark:bg-gray-800 transition-transform right-0 top-16 transform-none"
+    class="
+      --fixed absolute right-0 top-16 w-80
+      h-screen z-40 p-4 overflow-y-auto
+      --bg-white dark:bg-gray-800
+      transition-transform transform-none
+    "
     tabindex="-1"
     aria-labelledby="drawer-right-label"
     aria-modal="true"
     role="dialog"
   >
-    <h5
+    <span
       id="drawer-right-label"
-      class="inline-flex items-center mb-4 text-base font-semibold text-gray-500 dark:text-gray-400"
+      class="inline-flex items-center mb-4 text-base font-semibold"
     >
       <svg
-        class="w-5 h-5 mr-2 fill-current"
-        aria-hidden="true"
-        viewBox="0 0 20 20"
+        class="w-4 h-4 fill-current"
+        viewBox="0 0 24 24"
         xmlns="http://www.w3.org/2000/svg"
-      ><path
-        fill-rule="evenodd"
-        d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
-        clip-rule="evenodd"
-      /></svg>Settings
-    </h5>
+      >
+        <path
+          d="
+            M24 13.616
+            v-3.232
+            c-1.651-.587-2.694-.752-3.219-2.019
+            v-.001
+            c-.527-1.271.1-2.134.847-3.707
+            l-2.285-2.285
+            c-1.561.742-2.433 1.375-3.707.847
+            h-.001
+            c-1.269-.526-1.435-1.576-2.019-3.219
+            h-3.232
+            c-.582 1.635-.749 2.692-2.019 3.219
+            h-.001
+            c-1.271.528-2.132-.098-3.707-.847
+            l-2.285 2.285
+            c.745 1.568 1.375 2.434.847 3.707-.527 1.271-1.584 1.438-3.219 2.02
+            v3.232
+            c1.632.58 2.692.749 3.219 2.019.53 1.282-.114 2.166-.847 3.707
+            l2.285 2.286c1.562-.743 2.434-1.375 3.707-.847
+            h.001
+            c1.27.526 1.436 1.579 2.019 3.219
+            h3.232
+            c.582-1.636.75-2.69 2.027-3.222
+            h.001
+            c1.262-.524 2.12.101 3.698.851
+            l2.285-2.286
+            c-.744-1.563-1.375-2.433-.848-3.706.527-1.271 1.588-1.44 3.221-2.021
+            z
+            m-12 2.384
+            c-2.209 0-4-1.791-4-4
+            s1.791-4 4-4 4 1.791 4 4-1.791 4-4 4
+            z
+          "
+        />
+      </svg>
+      Settings
+    </span>
+
     <button
       type="button"
-      data-drawer-dismiss="drawer-right-example"
-      aria-controls="drawer-right-example"
-      class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 absolute top-2.5 right-2.5 inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+      data-drawer-dismiss="drawer-right"
+      aria-controls="drawer-right"
+      class="
+        text-gray-400 bg-transparent
+        hover:bg-gray-200 hover:text-gray-900
+        dark:hover:bg-gray-600 dark:hover:text-white
+        rounded-lg text-sm p-1.5
+        absolute top-2.5 right-2.5
+        inline-flex items-center
+      "
     >
       <svg
         aria-hidden="true"
@@ -37,36 +82,247 @@
         xmlns="http://www.w3.org/2000/svg"
       ><path
         fill-rule="evenodd"
-        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+        d="
+          M4.293 4.293
+          a1 1 0 011.414 0
+          L10 8.586
+          l4.293-4.293
+          a1 1 0 111.414 1.414
+          L11.414 10
+          l4.293 4.293
+          a1 1 0 01-1.414 1.414
+          L10 11.414
+          l-4.293 4.293
+          a1 1 0 01-1.414-1.414
+          L8.586 10 4.293 5.707
+          a1 1 0 010-1.414
+          z
+        "
         clip-rule="evenodd"
       /></svg>
       <span class="sr-only">Close menu</span>
     </button>
-    <p class="mb-6 text-sm text-gray-500 dark:text-gray-400">
-      Supercharge your hiring by taking advantage of our <a
-        href="#"
-        class="text-blue-600 underline dark:text-blue-500 hover:no-underline"
-      >limited-time sale</a> for Flowbite Docs + Job Board. Unlimited access to over 190K top-ranked candidates and the #1 design job board.
-    </p>
-    <div class="grid grid-cols-2 gap-4">
-      <a
-        href="#"
-        class="px-4 py-2 text-sm font-medium text-center text-gray-900 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-      >Learn more</a>
-      <a
-        href="#"
-        class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-      >Get access <svg
-        class="w-4 h-4 ml-2"
-        aria-hidden="true"
-        fill="currentColor"
-        viewBox="0 0 20 20"
-        xmlns="http://www.w3.org/2000/svg"
-      ><path
-        fill-rule="evenodd"
-        d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
-        clip-rule="evenodd"
-      /></svg></a>
-    </div>
+
+    <form class="w-full">
+      <div class="w-full px-3 mb-6">
+        <label
+          class="block tracking-wide text-sm font-semibold mb-2"
+          for="lang"
+        >
+          Language
+        </label>
+        <div class="relative">
+          <select
+            id="lang"
+            class="
+              block appearance-none w-full
+              bg-gray-200 border border-gray-200 text-gray-700
+              py-1 px-4 pr-8 rounded leading-tight
+              focus:outline-none focus:bg-white focus:border-gray-500
+            "
+          >
+            <option value="en">
+              English
+            </option>
+            <option value="ja">
+              日本語
+            </option>
+          </select>
+          <div
+            class="
+              pointer-events-none
+              absolute inset-y-0 right-0
+              flex items-center
+              px-2
+              text-gray-700
+            "
+          >
+            <svg
+              class="fill-current h-4 w-4"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+            ><path
+              d="
+                M9.293 12.95
+                l.707.707
+                L15.657 8
+                l-1.414-1.414
+                L10 10.828 5.757 6.586 4.343 8
+                z
+              "
+            /></svg>
+          </div>
+        </div>
+      </div>
+      <div class="w-full px-3 mb-6">
+        <label
+          class="block tracking-wide text-sm font-semibold mb-2"
+          for="theme"
+        >
+          Theme
+        </label>
+        <div class="relative">
+          <select
+            id="theme"
+            class="
+              block appearance-none w-full
+              bg-gray-200 border border-gray-200 text-gray-700
+              py-1 px-4 pr-8 rounded leading-tight
+              focus:outline-none focus:bg-white focus:border-gray-500
+            "
+          >
+            <option value="green_32">
+              green(32px)
+            </option>
+            <option value="MS_32">
+              MS(32px)
+            </option>
+            <option value="green(16px)">
+              green(16px)
+            </option>
+            <option value="MS_16">
+              MS(16px)
+            </option>
+          </select>
+          <div
+            class="
+              pointer-events-none
+              absolute inset-y-0 right-0
+              flex items-center
+              px-2
+              text-gray-700
+            "
+          >
+            <svg
+              class="fill-current h-4 w-4"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+            ><path
+              d="
+                M9.293 12.95
+                l.707.707
+                L15.657 8
+                l-1.414-1.414
+                L10 10.828 5.757 6.586 4.343 8
+                z
+              "
+            /></svg>
+          </div>
+        </div>
+      </div>
+      <div class="w-full px-3 mb-6">
+        <label
+          class="block tracking-wide text-sm font-semibold mb-2"
+          for="level"
+        >
+          Level
+        </label>
+        <div class="relative">
+          <select
+            id="level"
+            class="
+              block appearance-none w-full
+              bg-gray-200 border border-gray-200 text-gray-700
+              py-1 px-4 pr-8 rounded leading-tight
+              focus:outline-none focus:bg-white focus:border-gray-500
+            "
+          >
+            <option value="easy">
+              Easy
+            </option>
+            <option value="medium">
+              Medium
+            </option>
+            <option value="Hard">
+              Hard
+            </option>
+            <option value="custom">
+              Custom
+            </option>
+          </select>
+          <div
+            class="
+              pointer-events-none
+              absolute inset-y-0 right-0
+              flex items-center
+              px-2
+              text-gray-700
+            "
+          >
+            <svg
+              class="fill-current h-4 w-4"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+            ><path
+              d="
+                M9.293 12.95
+                l.707.707
+                L15.657 8
+                l-1.414-1.414
+                L10 10.828 5.757 6.586 4.343 8
+                z
+              "
+            /></svg>
+          </div>
+        </div>
+      </div>
+      <div class="w-full px-3 mb-6">
+        <label
+          class="block tracking-wide text-sm font-semibold mb-2"
+          for="width"
+        >
+          Width
+        </label>
+        <input
+          id="width"
+          class="
+            block appearance-none w-full
+            bg-gray-200 border border-gray-200 text-gray-700
+            py-1 px-4 rounded leading-tight
+            focus:outline-none focus:bg-white focus:border-gray-500
+          "
+          type="number"
+          placeholder="9 - 30"
+        >
+      </div>
+      <div class="w-full px-3 mb-6">
+        <label
+          class="block tracking-wide text-sm font-semibold mb-2"
+          for="height"
+        >
+          Height
+        </label>
+        <input
+          id="height"
+          class="
+            block appearance-none w-full
+            bg-gray-200 border border-gray-200 text-gray-700
+            py-1 px-4 rounded leading-tight
+            focus:outline-none focus:bg-white focus:border-gray-500
+          "
+          type="number"
+          placeholder="9 - 24"
+        >
+      </div>
+      <div class="w-full px-3 mb-6">
+        <label
+          class="block tracking-wide text-sm font-semibold mb-2"
+          for="mines"
+        >
+          Mines
+        </label>
+        <input
+          id="mines"
+          class="
+            block appearance-none w-full
+            bg-gray-200 border border-gray-200 text-gray-700
+            py-1 px-4 rounded leading-tight
+            focus:outline-none focus:bg-white focus:border-gray-500
+          "
+          type="number"
+          placeholder="10 - 999"
+        >
+      </div>
+    </form>
   </div>
 </template>

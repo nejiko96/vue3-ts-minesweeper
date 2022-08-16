@@ -22,7 +22,7 @@ const settings: SettingsType = {
     >
       <div class="flex justify-between items-center">
         <span class="text-xl font-semibold">
-          Vue3+TS minesweeper demo page
+          Vue3 + TypeScript minesweeper demo page
         </span>
 
         <button>
@@ -71,7 +71,7 @@ const settings: SettingsType = {
       </div>
     </nav>
   </header>
-  <main>
+  <main class="">
     <div>
       <MsGame :settings="settings" />
     </div>
@@ -85,8 +85,8 @@ const settings: SettingsType = {
           focus:outline-none dark:focus:ring-blue-800
         "
         type="button"
-        data-drawer-target="drawer-right-example"
-        data-drawer-show="drawer-right-example"
+        data-drawer-target="drawer-right"
+        data-drawer-show="drawer-right"
         data-drawer-placement="right"
         aria-controls="drawer-right-example"
       >
