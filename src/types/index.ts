@@ -6,20 +6,15 @@ export type ThemeSettingType = {
   size: number,
 }
 
-export type LevelValueType = 'easy' | 'medium' | 'hard'
+export type RegularLevelType = 'easy' | 'medium' | 'hard'
+export type LevelType = RegularLevelType | 'custom'
 
-export type LevelSettingType = {
-  level: LevelValueType,
+export type SizeSettingType = {
+  level: LevelType,
+  width?: number,
+  height?: number,
+  mines?: number,
 }
-
-export type CustomSettingType = {
-  level: 'custom',
-  width: number | undefined,
-  height: number | undefined,
-  mines: number | undefined,
-}
-
-export type SizeSettingType = LevelSettingType | CustomSettingType
 
 export type SettingsType = {
   lang: string,

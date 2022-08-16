@@ -1,5 +1,48 @@
+<script setup lang="ts">
+import { computed } from 'vue'
+import { useSettingsStore } from '@/stores/settings'
+import { LevelType } from '@/types'
+
+const settings = useSettingsStore()
+
+const lang = computed({
+  get: () => settings.lang,
+  set: (value: string) => settings.changeLang(value),
+})
+
+const theme = computed({
+  get: () => `${settings.theme.name}_${settings.theme.size}`,
+  set: (value: string) => {
+    const [name, size] = value.split('_')
+    settings.changeTheme(name, Number(size))
+  },
+})
+
+const level = computed({
+  get: () => settings.board.level,
+  set: (value: LevelType) => settings.changeLevel(value),
+})
+
+const width = computed({
+  get: () => settings.board.width?.toString() ?? '',
+  set: (value: string) => {
+    settings.changeWidth(Number(value))
+  },
+})
+
+const height = computed({
+  get: () => settings.board.height?.toString() ?? '',
+  set: (value: string) => settings.changeHeight(Number(value)),
+})
+
+const mines = computed({
+  get: () => settings.board.mines?.toString() ?? '',
+  set: (value: string) => settings.changeMines(Number(value)),
+})
+
+</script>
+
 <template>
-  <!-- drawer component -->
   <div
     id="drawer-right"
     class="
@@ -114,6 +157,7 @@
         <div class="relative">
           <select
             id="lang"
+            v-model="lang"
             class="
               block appearance-none w-full
               bg-gray-200 border border-gray-200 text-gray-700
@@ -164,6 +208,7 @@
         <div class="relative">
           <select
             id="theme"
+            v-model="theme"
             class="
               block appearance-none w-full
               bg-gray-200 border border-gray-200 text-gray-700
@@ -177,7 +222,7 @@
             <option value="MS_32">
               MS(32px)
             </option>
-            <option value="green(16px)">
+            <option value="green_16">
               green(16px)
             </option>
             <option value="MS_16">
@@ -220,6 +265,7 @@
         <div class="relative">
           <select
             id="level"
+            v-model="level"
             class="
               block appearance-none w-full
               bg-gray-200 border border-gray-200 text-gray-700
@@ -233,7 +279,7 @@
             <option value="medium">
               Medium
             </option>
-            <option value="Hard">
+            <option value="hard">
               Hard
             </option>
             <option value="custom">
@@ -275,6 +321,7 @@
         </label>
         <input
           id="width"
+          v-model="width"
           class="
             block appearance-none w-full
             bg-gray-200 border border-gray-200 text-gray-700
@@ -294,6 +341,7 @@
         </label>
         <input
           id="height"
+          v-model="height"
           class="
             block appearance-none w-full
             bg-gray-200 border border-gray-200 text-gray-700
@@ -313,6 +361,7 @@
         </label>
         <input
           id="mines"
+          v-model="mines"
           class="
             block appearance-none w-full
             bg-gray-200 border border-gray-200 text-gray-700

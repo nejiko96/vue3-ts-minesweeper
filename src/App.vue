@@ -1,18 +1,12 @@
 <script setup lang="ts">
 import { SettingsType } from '@/types'
+import { useSettingsStore } from '@/stores/settings'
+
 import MsGame from './components/MsGame.vue'
 import MsSettings from './components/MsSettings.vue'
 
-const settings: SettingsType = {
-  lang: 'en',
-  theme: {
-    name: 'green',
-    size: 32,
-  },
-  board: {
-    level: 'easy',
-  },
-}
+const settings: SettingsType = useSettingsStore()
+
 </script>
 
 <template>

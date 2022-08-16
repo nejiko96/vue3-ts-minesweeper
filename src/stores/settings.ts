@@ -1,0 +1,41 @@
+import { defineStore } from 'pinia'
+
+import { SettingsType, LevelType } from '@/types'
+
+const useSettingsStore = defineStore('settings', {
+  state: (): SettingsType => ({
+    lang: 'en',
+    theme: {
+      name: 'green',
+      size: 32,
+    },
+    board: {
+      level: 'easy',
+    },
+  }),
+
+  getters: {},
+
+  actions: {
+    changeLang(lang: string): void {
+      this.lang = lang
+    },
+    changeTheme(name: string, size: number): void {
+      this.theme = { name, size }
+    },
+    changeLevel(level: LevelType): void {
+      this.board.level = level
+    },
+    changeWidth(width: number): void {
+      this.board.width = width
+    },
+    changeHeight(height: number): void {
+      this.board.height = height
+    },
+    changeMines(mines: number): void {
+      this.board.mines = mines
+    },
+  },
+})
+
+export { useSettingsStore }
