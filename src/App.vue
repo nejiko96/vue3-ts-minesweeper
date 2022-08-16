@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { SettingsType } from '@/types'
 import MsGame from './components/MsGame.vue'
+import MsSettings from './components/MsSettings.vue'
 
 const settings: SettingsType = {
   lang: 'en',
@@ -15,23 +16,23 @@ const settings: SettingsType = {
 </script>
 
 <template>
-  <header class="bg-indigo-500 text-white">
+  <header class="bg-teal-500 text-white">
     <nav
-      class="
-        container mx-auto px-2 py-6
-        flex justify-between items-center
-      "
+      class="container mx-auto px-2 py-4 h-16"
     >
-      <span class="text-2xl font-semibold">
-        Vue3+TS minesweeper demo page
-      </span>
+      <div class="flex justify-between items-center">
+        <span class="text-xl font-semibold">
+          Vue3+TS minesweeper demo page
+        </span>
 
-      <button>
-        <svg
-          class="w-6 h-6 fill-current"
-        >
-          <path
-            d="
+        <button>
+          <svg
+            class="w-6 h-6 fill-current"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="
                   M24 13.616
                   v-3.232
                   c-1.651-.587-2.694-.752-3.219-2.019
@@ -64,12 +65,34 @@ const settings: SettingsType = {
                   s1.791-4 4-4 4 1.791 4 4-1.791 4-4 4
                   z
                 "
-          />
-        </svg>
-      </button>
+            />
+          </svg>
+        </button>
+      </div>
     </nav>
   </header>
   <main>
-    <MsGame :settings="settings" />
+    <div>
+      <MsGame :settings="settings" />
+    </div>
+    <div class="text-center">
+      <button
+        class="
+          text-white bg-blue-700
+          hover:bg-blue-800 focus:ring-4 focus:ring-blue-300
+          font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2
+          dark:bg-blue-600 dark:hover:bg-blue-700
+          focus:outline-none dark:focus:ring-blue-800
+        "
+        type="button"
+        data-drawer-target="drawer-right-example"
+        data-drawer-show="drawer-right-example"
+        data-drawer-placement="right"
+        aria-controls="drawer-right-example"
+      >
+        Show right drawer
+      </button>
+    </div>
+    <MsSettings />
   </main>
 </template>
