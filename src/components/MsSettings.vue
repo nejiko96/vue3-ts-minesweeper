@@ -2,6 +2,7 @@
 import { computed } from 'vue'
 import { useSettingsStore } from '@/stores/settings'
 import { LevelType } from '@/types'
+import { toNumber } from '@/utils'
 
 const settings = useSettingsStore()
 
@@ -26,18 +27,18 @@ const level = computed({
 const width = computed({
   get: () => settings.board.width?.toString() ?? '',
   set: (value: string) => {
-    settings.changeWidth(Number(value))
+    settings.changeWidth(toNumber(value))
   },
 })
 
 const height = computed({
   get: () => settings.board.height?.toString() ?? '',
-  set: (value: string) => settings.changeHeight(Number(value)),
+  set: (value: string) => settings.changeHeight(toNumber(value)),
 })
 
 const mines = computed({
   get: () => settings.board.mines?.toString() ?? '',
-  set: (value: string) => settings.changeMines(Number(value)),
+  set: (value: string) => settings.changeMines(toNumber(value)),
 })
 
 </script>

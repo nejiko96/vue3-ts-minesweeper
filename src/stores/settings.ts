@@ -26,13 +26,13 @@ const useSettingsStore = defineStore('settings', {
     changeLevel(level: LevelType): void {
       this.board.level = level
     },
-    changeWidth(width: number): void {
+    changeWidth(width: number | undefined): void {
       this.board.width = width
     },
-    changeHeight(height: number): void {
+    changeHeight(height: number | undefined): void {
       this.board.height = height
     },
-    changeMines(mines: number): void {
+    changeMines(mines: number | undefined): void {
       this.board.mines = mines
     },
   },
