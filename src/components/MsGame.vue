@@ -101,7 +101,7 @@ watch(
 
 <style scoped>
 .container {
-  margin: 2rem;
+  padding: 2rem;
   white-space: nowrap;
   -webkit-touch-callout: none;
   user-select: none;

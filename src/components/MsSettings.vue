@@ -51,7 +51,7 @@ const mines = computed({
     class="
       --fixed absolute right-0 top-16 w-80
       h-screen z-40 p-4 overflow-y-auto
-      --bg-white dark:bg-gray-800
+      bg-white dark:bg-gray-800
       transition-transform transform-none
     "
     tabindex="-1"
