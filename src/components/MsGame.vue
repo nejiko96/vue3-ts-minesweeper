@@ -77,7 +77,7 @@ watch(
     {{ locale.remain2 }}
     <span class="space" />
     {{ locale.timer1 }}
-    <MsTimer
+    <ms-timer
       class="text-box"
       interval="1s"
       :limit="999"
@@ -87,7 +87,7 @@ watch(
     <span class="space" />
     {{ clearMsg }}
     <br>
-    <MsBoard />
+    <ms-board />
     <p />
     <button
       class="bg-gray-400 hover:bg-gray-300 text-black rounded px-4 py-2"

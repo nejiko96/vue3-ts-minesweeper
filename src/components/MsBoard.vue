@@ -21,7 +21,7 @@ const overlay = computed(() => (
         v-for="(arr, i) in game.grid"
         :key="i"
       >
-        <MsCell
+        <ms-cell
           v-for="(value, j) in arr"
           :key="`${i}_${j}`"
           :row="i"
