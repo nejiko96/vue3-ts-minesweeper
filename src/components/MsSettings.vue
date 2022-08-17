@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { defineEmits, computed } from 'vue'
 import { useSettingsStore } from '@/stores/settings'
 import { LevelType } from '@/types'
 import { toNumber } from '@/utils'
+
+const emit = defineEmits(['close'])
 
 const settings = useSettingsStore()
 
@@ -107,7 +109,6 @@ const mines = computed({
 
     <button
       type="button"
-      data-drawer-dismiss="drawer-right"
       aria-controls="drawer-right"
       class="
         text-gray-400 bg-transparent
@@ -117,6 +118,7 @@ const mines = computed({
         absolute top-2.5 right-2.5
         inline-flex items-center
       "
+      @click="$emit('close')"
     >
       <svg
         aria-hidden="true"

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import { SettingsType } from '@/types'
 import { useSettingsStore } from '@/stores/settings'
 
@@ -6,6 +7,8 @@ import MsGame from './components/MsGame.vue'
 import MsSettings from './components/MsSettings.vue'
 
 const settings: SettingsType = useSettingsStore()
+
+const settingsOpen = ref(false)
 
 </script>
 
@@ -79,14 +82,15 @@ const settings: SettingsType = useSettingsStore()
           focus:outline-none dark:focus:ring-blue-800
         "
         type="button"
-        data-drawer-target="drawer-right"
-        data-drawer-show="drawer-right"
-        data-drawer-placement="right"
-        aria-controls="drawer-right-example"
+        aria-controls="drawer-right"
+        @click="settingsOpen = true"
       >
         Show right drawer
       </button>
     </div>
-    <MsSettings />
+    <MsSettings
+      v-if="settingsOpen"
+      @close="settingsOpen = false"
+    />
   </main>
 </template>
