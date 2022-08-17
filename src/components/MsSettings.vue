@@ -313,66 +313,68 @@ const mines = computed({
           </div>
         </div>
       </div>
-      <div class="w-full px-3 mb-6">
-        <label
-          class="block tracking-wide text-sm font-semibold mb-2"
-          for="width"
-        >
-          Width
-        </label>
-        <input
-          id="width"
-          v-model="width"
-          class="
-            block appearance-none w-full
-            bg-gray-200 border border-gray-200 text-gray-700
-            py-1 px-4 rounded leading-tight
-            focus:outline-none focus:bg-white focus:border-gray-500
-          "
-          type="number"
-          placeholder="9 - 30"
-        >
-      </div>
-      <div class="w-full px-3 mb-6">
-        <label
-          class="block tracking-wide text-sm font-semibold mb-2"
-          for="height"
-        >
-          Height
-        </label>
-        <input
-          id="height"
-          v-model="height"
-          class="
-            block appearance-none w-full
-            bg-gray-200 border border-gray-200 text-gray-700
-            py-1 px-4 rounded leading-tight
-            focus:outline-none focus:bg-white focus:border-gray-500
-          "
-          type="number"
-          placeholder="9 - 24"
-        >
-      </div>
-      <div class="w-full px-3 mb-6">
-        <label
-          class="block tracking-wide text-sm font-semibold mb-2"
-          for="mines"
-        >
-          Mines
-        </label>
-        <input
-          id="mines"
-          v-model="mines"
-          class="
-            block appearance-none w-full
-            bg-gray-200 border border-gray-200 text-gray-700
-            py-1 px-4 rounded leading-tight
-            focus:outline-none focus:bg-white focus:border-gray-500
-          "
-          type="number"
-          placeholder="10 - 999"
-        >
-      </div>
+      <template v-if="level === 'custom'">
+        <div class="w-full px-3 mb-6">
+          <label
+            class="block tracking-wide text-sm font-semibold mb-2"
+            for="width"
+          >
+            Width
+          </label>
+          <input
+            id="width"
+            v-model="width"
+            class="
+              block appearance-none w-full
+              bg-gray-200 border border-gray-200 text-gray-700
+              py-1 px-4 rounded leading-tight
+              focus:outline-none focus:bg-white focus:border-gray-500
+            "
+            type="number"
+            placeholder="9 - 30"
+          >
+        </div>
+        <div class="w-full px-3 mb-6">
+          <label
+            class="block tracking-wide text-sm font-semibold mb-2"
+            for="height"
+          >
+            Height
+          </label>
+          <input
+            id="height"
+            v-model="height"
+            class="
+              block appearance-none w-full
+              bg-gray-200 border border-gray-200 text-gray-700
+              py-1 px-4 rounded leading-tight
+              focus:outline-none focus:bg-white focus:border-gray-500
+            "
+            type="number"
+            placeholder="9 - 24"
+          >
+        </div>
+        <div class="w-full px-3 mb-6">
+          <label
+            class="block tracking-wide text-sm font-semibold mb-2"
+            for="mines"
+          >
+            Mines
+          </label>
+          <input
+            id="mines"
+            v-model="mines"
+            class="
+              block appearance-none w-full
+              bg-gray-200 border border-gray-200 text-gray-700
+              py-1 px-4 rounded leading-tight
+              focus:outline-none focus:bg-white focus:border-gray-500
+            "
+            type="number"
+            placeholder="10 - 999"
+          >
+        </div>
+      </template>
     </form>
   </div>
 </template>
