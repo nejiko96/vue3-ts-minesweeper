@@ -23,12 +23,17 @@ const settingsOpen = ref(false)
           Vue3 + TypeScript minesweeper demo page
         </span>
 
-        <button>
+        <a
+          href="https://github.com/nejiko96/vue3-ts-minesweeper"
+          target="_blank"
+          title="View source on GitHub"
+          aria-label="View source on GitHub"
+        >
           <fa
             icon="fa-brands fa-github"
             size="2xl"
           />
-        </button>
+        </a>
       </div>
     </nav>
   </header>
