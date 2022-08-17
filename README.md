@@ -7,7 +7,7 @@ vue3-ts-minesweeper
 https://nejiko96.github.io/vue3-ts-minesweeper/
 
 ## Documents
-- [Development](development.md)
+- [Development](Development.md)
 
 ---
 # Vue 3 + TypeScript + Vite
