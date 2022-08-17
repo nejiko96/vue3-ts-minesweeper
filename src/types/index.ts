@@ -6,8 +6,8 @@ export type ThemeSettingType = {
   size: number,
 }
 
-export type RegularLevelType = 'easy' | 'medium' | 'hard'
-export type LevelType = RegularLevelType | 'custom'
+export type StdLevelType = 'easy' | 'medium' | 'hard'
+export type LevelType = StdLevelType | 'custom'
 
 export type SizeSettingType = {
   level: LevelType,

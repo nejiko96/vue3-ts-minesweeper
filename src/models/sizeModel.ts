@@ -1,5 +1,5 @@
 import {
-  RegularLevelType,
+  StdLevelType,
   SizeSettingType,
   SizeStateType,
   ParamRangeType,
@@ -39,7 +39,7 @@ const calcCustomSize = (
   return { width, height, mines }
 }
 
-const levelDef: Record<RegularLevelType, SizeStateType> = {
+const levelDef: Record<StdLevelType, SizeStateType> = {
   easy: {
     width: 9,
     height: 9,
