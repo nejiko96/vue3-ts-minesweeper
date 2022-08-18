@@ -4,11 +4,16 @@ import {
   ThemeSettingType,
   SizeSettingType,
   GameStoreStateType,
-  GridPosType,
-  GridClickType,
 } from '@/types'
 import * as gameModel from '@/models/gameModel'
 import { makeWrapper } from '@/models/mouseEventModel'
+
+type GridPosType = {
+  row: number,
+  col: number,
+}
+
+type GridClickType = { button: number } & GridPosType
 
 const mouseModel = makeWrapper(gameModel)
 

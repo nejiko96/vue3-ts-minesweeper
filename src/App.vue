@@ -55,10 +55,10 @@ const settingsOpen = ref(false)
         <fa icon="fa-gear" />
         Settings
       </button>
+      <ms-settings
+        v-if="settingsOpen"
+        @close="settingsOpen = false"
+      />
     </div>
-    <ms-settings
-      v-if="settingsOpen"
-      @close="settingsOpen = false"
-    />
   </main>
 </template>
