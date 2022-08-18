@@ -241,6 +241,9 @@ const mines = computed({
               focus:outline-none focus:bg-white focus:border-gray-500
             "
             type="number"
+            min="9"
+            max="30"
+            step="1"
             placeholder="9 - 30"
           >
         </div>
@@ -261,6 +264,9 @@ const mines = computed({
               focus:outline-none focus:bg-white focus:border-gray-500
             "
             type="number"
+            min="9"
+            max="24"
+            step="1"
             placeholder="9 - 24"
           >
         </div>
@@ -281,6 +287,9 @@ const mines = computed({
               focus:outline-none focus:bg-white focus:border-gray-500
             "
             type="number"
+            min="10"
+            max="999"
+            step="1"
             placeholder="10 - 999"
           >
         </div>

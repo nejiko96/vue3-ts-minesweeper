@@ -50,7 +50,7 @@ const minesDef = (n: number): SizeRangeType => {
 }
 
 const adjustParam = (value: number | undefined, rng: SizeRangeType): number => (
-  value === undefined ? rng.default : Math.min(Math.max(value, rng.min), rng.max)
+  value === undefined ? rng.default : Math.min(Math.max(value | 0, rng.min), rng.max)
 )
 
 const calcCustomSize = (
