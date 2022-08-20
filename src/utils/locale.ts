@@ -15,8 +15,10 @@ const localeBundle: Record<string, Record<string, string>> = {
     retry: 'もう一回？',
     cleared: 'クリア！',
   },
-}
+} as const
 
-const selectLocale = (lang: string): Record<string, string> => localeBundle[lang]
+const initLocale = (lang: string): Record<string, string> => (
+  localeBundle[lang] || localeBundle.en
+)
 
-export { selectLocale as initLocale }
+export { initLocale }
