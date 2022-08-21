@@ -1,4 +1,4 @@
-const localeBundle: Record<string, Record<string, string>> = {
+const localeBundle: Readonly<Record<string, Record<string, string>>> = {
   en: {
     remain1: '',
     remain2: 'mines',
@@ -15,7 +15,7 @@ const localeBundle: Record<string, Record<string, string>> = {
     retry: 'もう一回？',
     cleared: 'クリア！',
   },
-} as const
+}
 
 const initLocale = (lang: string): Record<string, string> => (
   localeBundle[lang] || localeBundle.en

@@ -18,7 +18,7 @@ import { useGameStore } from '@/stores/game'
 import MsTimer from './MsTimer.vue'
 import MsBoard from './MsBoard.vue'
 
-const timerModeTbl: Record<GameStatusType, TimerModeType> = {
+const timerModeTbl: Readonly<Record<GameStatusType, TimerModeType>> = {
   [GameStatusEnum.READY]: TimerModeEnum.READY,
   [GameStatusEnum.RUNNING]: TimerModeEnum.RUNNING,
   [GameStatusEnum.CLEARED]: TimerModeEnum.STOPPED,
@@ -37,7 +37,7 @@ const locale = computed((): Record<string, string> => initLocale(props.settings.
 
 const timerMode = computed((): TimerModeType => timerModeTbl[game.status])
 
-const clearMsg = computed(() => (game.status === GameStatusEnum.CLEARED ? locale.value.cleared : ''))
+const clearMsg = computed((): string => (game.status === GameStatusEnum.CLEARED ? locale.value.cleared : ''))
 
 const handleRestart = () => game.restart()
 

@@ -44,7 +44,7 @@ const pressedEnum = {
 } as const
 
 // ev.button -> state.pressed value
-const pressedTbl: Record<number, number> = {
+const pressedTbl: Readonly<Record<number, number>> = {
   [evBtnEnum.LEFT]: pressedEnum.LEFT,
   [evBtnEnum.RIGHT]: pressedEnum.RIGHT,
 }

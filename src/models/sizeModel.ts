@@ -10,7 +10,7 @@ type SizeRangeType = {
   default: number,
 }
 
-const stdSizeDef: Record<StdLevelType, SizeStateType> = {
+const stdSizeDef : Readonly<Record<StdLevelType, SizeStateType>> = {
   easy: {
     width: 9,
     height: 9,
@@ -26,19 +26,19 @@ const stdSizeDef: Record<StdLevelType, SizeStateType> = {
     height: 16,
     mines: 99,
   },
-} as const
+}
 
-const widthDef: SizeRangeType = {
+const widthDef: Readonly<SizeRangeType> = {
   min: 9,
   max: 30,
   default: 9,
-} as const
+}
 
-const heightDef: SizeRangeType = {
+const heightDef: Readonly<SizeRangeType> = {
   min: 9,
   max: 24,
   default: 9,
-} as const
+}
 
 const minesDef = (n: number): SizeRangeType => {
   const pct = 10 + (n / 45 | 0)
@@ -49,12 +49,12 @@ const minesDef = (n: number): SizeRangeType => {
   }
 }
 
-const adjustParam = (value: number | undefined, rng: SizeRangeType): number => (
+const adjustParam = (value: number | undefined, rng: Readonly<SizeRangeType>): number => (
   value === undefined ? rng.default : Math.min(Math.max(value | 0, rng.min), rng.max)
 )
 
 const calcCustomSize = (
-  param: SizeSettingType,
+  param: Readonly<SizeSettingType>,
 ): SizeStateType => {
   const width = adjustParam(param.width, widthDef)
   const height = adjustParam(param.height, heightDef)

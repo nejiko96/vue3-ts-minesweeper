@@ -3,7 +3,7 @@ import { ref, computed, watch } from 'vue'
 
 import { TimerModeEnum, TimerModeType } from '@/types'
 
-const timeUnitTbl: Record<string, number> = {
+const timeUnitTbl: Readonly<Record<string, number>> = {
   ms: 1,
   s: 1000,
 }
