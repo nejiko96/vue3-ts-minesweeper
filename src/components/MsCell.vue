@@ -25,7 +25,7 @@ const themeClass = computed((): string => {
 
 const bgpos = computed((): string => {
   const { size } = game.theme
-  bgPosCache[size] ||= {}
+  bgPosCache[size] ??= {}
   const v = props.value
   if (bgPosCache[size][v] === undefined) {
     const i = styleIdx(v)
@@ -33,6 +33,7 @@ const bgpos = computed((): string => {
     const y = -size * (i / 3 | 0)
     bgPosCache[size][v] = `${x}px ${y}px`
   }
+
   return bgPosCache[size][v]
 })
 
