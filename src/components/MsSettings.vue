@@ -47,7 +47,7 @@ const mines = computed({
     id="drawer-right"
     class="
       --fixed absolute right-0 top-0 w-80
-      h-screen z-40 p-4 overflow-y-auto
+      --h-screen h-[calc(100vh_-_5rem)] z-40 p-4 overflow-y-auto
       bg-white dark:bg-gray-800
       transition-transform transform-none
     "

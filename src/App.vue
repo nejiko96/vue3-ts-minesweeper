@@ -55,10 +55,24 @@ const settingsOpen = ref(false)
         <fa icon="fa-gear" />
         Settings
       </button>
-      <ms-settings
-        v-if="settingsOpen"
-        @close="settingsOpen = false"
-      />
+      <transition name="slide-x">
+        <ms-settings
+          v-if="settingsOpen"
+          @close="settingsOpen = false"
+        />
+      </transition>
     </div>
   </main>
 </template>
+
+<style scoped>
+.slide-x-enter-active,
+.slide-x-leave-active {
+  transition: transform 0.5s ease;
+}
+
+.slide-x-enter-from,
+.slide-x-leave-to {
+  transform: translateX(100%);
+}
+</style>
