@@ -34,10 +34,24 @@ const useGameStore = defineStore('game', {
       this.theme = theme
     },
     changeSize(size: SizeSettingType): void {
-      gameModel.resetAll(this, size)
+      Object.assign(
+        this,
+        {
+          ...gameModel.initAll(size),
+          ...mouseModel.initState(),
+          touch: false,
+        },
+      )
     },
     restart(): void {
-      gameModel.resetBoard(this)
+      Object.assign(
+        this,
+        {
+          ...gameModel.initBoard(this),
+          ...mouseModel.initState(),
+          touch: false,
+        },
+      )
     },
     mouseDown({ button, row, col }: GridClickType): void {
       mouseModel.handleMouseDown(this, button, row, col)

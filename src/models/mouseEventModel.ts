@@ -24,7 +24,7 @@ type TgtModelType<S, P extends unknown[]> = {
 }
 
 // mouse events
-const eventEnum = {
+const EventEnum = {
   MOUSE_DOWN: 0,
   MOUSE_UP: 1,
   MOUSE_OVER: 2,
@@ -32,21 +32,21 @@ const eventEnum = {
 } as const
 
 // ev.button values
-const evBtnEnum = {
+const EvBtnEnum = {
   LEFT: 0,
   RIGHT: 2,
 } as const
 
 // state.pressed values
-const pressedEnum = {
+const PressedEnum = {
   LEFT: 1,
   RIGHT: 2,
 } as const
 
 // ev.button -> state.pressed value
 const pressedTbl: Readonly<Record<number, number>> = {
-  [evBtnEnum.LEFT]: pressedEnum.LEFT,
-  [evBtnEnum.RIGHT]: pressedEnum.RIGHT,
+  [EvBtnEnum.LEFT]: PressedEnum.LEFT,
+  [EvBtnEnum.RIGHT]: PressedEnum.RIGHT,
 }
 
 const makeDispatch = <S, P extends unknown[]>(
@@ -81,9 +81,7 @@ const makeDispatch = <S, P extends unknown[]>(
 const makeWrapper = <S, P extends unknown[]>(model: TgtModelType<S, P>) => ({
   dispatch: makeDispatch(model),
   initState(): MouseStateType {
-    return {
-      pressed: 0,
-    }
+    return { pressed: 0 }
   },
   handleMouseDown(
     state: MouseStateType & S,
@@ -91,7 +89,7 @@ const makeWrapper = <S, P extends unknown[]>(model: TgtModelType<S, P>) => ({
     ...args: P
   ): void {
     state.pressed |= pressedTbl[button]
-    this.dispatch[eventEnum.MOUSE_DOWN][state.pressed](state, ...args)
+    this.dispatch[EventEnum.MOUSE_DOWN][state.pressed](state, ...args)
   },
   handleMouseUp(
     state: MouseStateType & S,
@@ -100,21 +98,21 @@ const makeWrapper = <S, P extends unknown[]>(model: TgtModelType<S, P>) => ({
     if (state.pressed === 0) return
     const pressedOld = state.pressed
     state.pressed = 0
-    this.dispatch[eventEnum.MOUSE_UP][pressedOld](state, ...args)
+    this.dispatch[EventEnum.MOUSE_UP][pressedOld](state, ...args)
   },
   handleMouseOver(
     state: MouseStateType & S,
     ...args: P
   ): void {
     if (state.pressed === 0) return
-    this.dispatch[eventEnum.MOUSE_OVER][state.pressed](state, ...args)
+    this.dispatch[EventEnum.MOUSE_OVER][state.pressed](state, ...args)
   },
   handleMouseOut(
     state: MouseStateType & S,
     ...args: P
   ): void {
     if (state.pressed === 0) return
-    this.dispatch[eventEnum.MOUSE_OUT][state.pressed](state, ...args)
+    this.dispatch[EventEnum.MOUSE_OUT][state.pressed](state, ...args)
   },
 })
 

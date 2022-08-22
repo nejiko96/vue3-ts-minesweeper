@@ -211,14 +211,6 @@ const initAll = (param: SizeSettingType): GameModelStateType => {
   }
 }
 
-const resetAll = (state: GameModelStateType, size: SizeSettingType): void => {
-  Object.assign(state, initAll(size))
-}
-
-const resetBoard = (state: GameModelStateType): void => {
-  Object.assign(state, initBoard(state))
-}
-
 const handleLeftMouseDown = (
   state: GameModelStateType,
   i: number,
@@ -390,8 +382,7 @@ const handleLongPress = (
 
 export {
   initAll,
-  resetAll,
-  resetBoard,
+  initBoard,
   handleLeftMouseDown,
   handleLeftMouseOver,
   handleLeftMouseOut,
