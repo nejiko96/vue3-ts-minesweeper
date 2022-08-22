@@ -2,7 +2,6 @@
 import { defineEmits, computed } from 'vue'
 import { useSettingsStore } from '@/stores/settings'
 import { LevelType } from '@/types'
-import { toNumber } from '@/utils'
 
 const emit = defineEmits(['close'])
 
@@ -27,20 +26,18 @@ const level = computed({
 })
 
 const width = computed({
-  get: () => settings.board.width?.toString() ?? '',
-  set: (value: string) => {
-    settings.changeWidth(toNumber(value))
-  },
+  get: () => settings.board.width,
+  set: (value: number | undefined) => settings.changeWidth(value),
 })
 
 const height = computed({
-  get: () => settings.board.height?.toString() ?? '',
-  set: (value: string) => settings.changeHeight(toNumber(value)),
+  get: () => settings.board.height,
+  set: (value: number | undefined) => settings.changeHeight(value),
 })
 
 const mines = computed({
-  get: () => settings.board.mines?.toString() ?? '',
-  set: (value: string) => settings.changeMines(toNumber(value)),
+  get: () => settings.board.mines,
+  set: (value: number | undefined) => settings.changeMines(value),
 })
 
 </script>
@@ -233,7 +230,7 @@ const mines = computed({
           </label>
           <input
             id="width"
-            v-model="width"
+            v-model.number="width"
             class="
               block appearance-none w-full
               bg-gray-200 border border-gray-200 text-gray-700
@@ -256,7 +253,7 @@ const mines = computed({
           </label>
           <input
             id="height"
-            v-model="height"
+            v-model.number="height"
             class="
               block appearance-none w-full
               bg-gray-200 border border-gray-200 text-gray-700
@@ -279,7 +276,7 @@ const mines = computed({
           </label>
           <input
             id="mines"
-            v-model="mines"
+            v-model.number="mines"
             class="
               block appearance-none w-full
               bg-gray-200 border border-gray-200 text-gray-700

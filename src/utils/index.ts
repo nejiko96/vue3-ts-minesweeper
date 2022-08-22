@@ -23,13 +23,8 @@ const fillArray2D = <T>(
     )
   )
 
-const toNumber = (s: string): number | undefined => (
-  Number.isNaN(parseInt(s, 10)) ? undefined : Number(s)
-)
-
 export {
   noop,
   fillArray,
   fillArray2D,
-  toNumber,
 }
