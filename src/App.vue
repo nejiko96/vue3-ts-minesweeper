@@ -1,5 +1,21 @@
-<script setup lang="ts">
+<script lang="ts">
+import { ref } from 'vue'
+
 import MsView from '@/views/MsView.vue'
+import CatView from '@/views/CatView.vue'
+
+const viewsTbl = {
+  ms: MsView,
+  cat: CatView,
+} as const
+
+type ViewsKeyType = keyof typeof viewsTbl
+</script>
+
+<script setup lang="ts">
+
+const currentView = ref<ViewsKeyType>('ms')
+
 </script>
 
 <template>
@@ -23,12 +39,14 @@ import MsView from '@/views/MsView.vue'
               <a
                 href="#"
                 class="hover:bg-teal-600 px-8 py-2 rounded"
+                @click="currentView='ms'"
               >Minesweeper</a>
             </li>
             <li class="--border-none">
               <a
                 href="#"
                 class="hover:bg-teal-600 px-8 py-2 rounded"
+                @click="currentView='cat'"
               >Cat API</a>
             </li>
           </ul>
@@ -49,6 +67,6 @@ import MsView from '@/views/MsView.vue'
     </nav>
   </header>
   <main>
-    <ms-view />
+    <component :is="viewsTbl[currentView]" />
   </main>
 </template>
