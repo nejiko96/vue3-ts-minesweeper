@@ -37,8 +37,6 @@ const locale = computed((): Record<string, string> => initLocale(props.settings.
 
 const timerMode = computed((): TimerModeType => timerModeTbl[game.status])
 
-const clearMsg = computed((): string => (game.status === GameStatusEnum.CLEARED ? locale.value.cleared : ''))
-
 const handleRestart = () => game.restart()
 
 onMounted(
@@ -85,7 +83,11 @@ watch(
     />
     {{ locale.timer2 }}
     <span class="space" />
-    {{ clearMsg }}
+    <transition name="pyonpyon">
+      <span v-if="game.status === GameStatusEnum.CLEARED">
+        {{ locale.cleared }}
+      </span>
+    </transition>
     <br>
     <ms-board />
     <p />
@@ -103,23 +105,51 @@ watch(
 .container {
   padding: 2rem;
   white-space: nowrap;
-  -webkit-touch-callout: none;
   user-select: none;
+  -webkit-touch-callout: none;
   -webkit-tap-highlight-color: transparent;
+}
+
+.container span {
+  display: inline-block;
 }
 
 .text-box {
   background-color: #f5f5f5;
   color: #000;
   border: 1px solid #d3d3d3;
-  display: inline-block;
   padding-right: 2px;
   text-align: right;
   width: 40px;
 }
 
 .space {
-  display: inline-block;
   width: 20px;
+}
+
+.pyonpyon-enter-active {
+  animation: pyonpyon 1s ease-in-out;
+}
+
+@keyframes pyonpyon {
+  0% {
+    transform: translate(0, 0);
+  }
+
+  25% {
+    transform: translate(0, -10px);
+  }
+
+  50% {
+    transform: translate(0, 0);
+  }
+
+  75% {
+    transform: translate(0, -10px);
+  }
+
+  100% {
+    transform: translate(0, 0);
+  }
 }
 </style>
