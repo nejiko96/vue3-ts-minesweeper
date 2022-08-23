@@ -43,8 +43,8 @@ onBeforeMount(updateCatImage)
         px-4 py-2 rounded
         bg-red-500 hover:bg-red-600
         text-white font-semibold
-        border border-transparent  hover:border-gray-300
-        cursor-pointer transiion duration-300
+        border-2 border-transparent  hover:border-red-300
+        cursor-pointer transition duration-300
       "
       @click="handleClick"
     >

@@ -226,6 +226,8 @@ https://tailwindcss.com/docs/guides/vite
    <body class="dark:bg-black dark:text-white">
    ```
 
+1. VSCodeの拡張機能「Tailwind CSS IntelliSense」を入れておくと便利
+
 ### srylelintの導入
 
 1. パッケージ追加
