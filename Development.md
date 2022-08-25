@@ -1,17 +1,17 @@
-Vite + Vue.js + TypeScript アプリ開発
-===================================
+# Vite + Vue.js + TypeScript アプリ開発
 
 ## 環境構築
 
-1. Node.jsのインストール  
+1. Node.js のインストール  
    https://nodejs.org/ja/
+
    ```
    node --version
    npm install -g npm
    npm --version
    ```
 
-1. Yarnのインストール
+1. Yarn のインストール
    ```
    npm install -g yarn
    yarn --version
@@ -20,26 +20,30 @@ Vite + Vue.js + TypeScript アプリ開発
 ## プロジェクト作成
 
 1. ソース生成
+
    ```
    yarn create vite vue-ts-minesweeper --template vue-ts
    cd vue-ts-minesweeper
    ```
 
-1. Gitリポジトリも作っておく
+1. Git リポジトリも作っておく
    ```
    git init
    git add .
    git commit -m "initial import"
    ```
-## 開発
+
+## 開発の流れ
 
 1. アプリ起動
+
    ```
    yarn dev
    ```
+
    サーバが起動して  
    http://localhost:5173/  
-   といったURLが表示されるのでブラウザから開くとアプリが動かせる
+   といった URL が表示されるのでブラウザから開くとアプリが動かせる
 
 1. 起動した状態のままソースを追加・変更すると自動でブラウザに反映される
 
@@ -47,41 +51,47 @@ Vite + Vue.js + TypeScript アプリ開発
    Ctrl+C
 
 1. ビルド
+
    ```
    yarn build
    ```
-   ```dist```フォルダにビルド結果のindex.htmlなどが生成される
+
+   `dist`フォルダにビルド結果の index.html などが生成される
 
 1. Github Pages にデプロイ
    ```
    yarn deploy
    ```
 
-## VSCodeの設定
-※詳細はREADME.mdを参照
+## VSCode の設定
 
-### Volar(.vueの型チェック)
+※詳細は README.md を参照
 
-1. VSCodeの拡張機能で「Volar」をインストール
+### Volar (.vue の型チェック)
 
-1. Take Over Modeの有効化  
-   VSCodeの拡張機能で 「@builtin typescript」と検索し、  
+1. VSCode の拡張機能で「Volar」をインストール
+
+1. Take Over Mode の有効化  
+   VSCode の拡張機能で 「@builtin typescript」と検索し、  
    「TypeScript and JavaScript Languate Features」を右クリックして  
    「Disable(Workspace)」を選択
 
-### eslint(JavaScriptコードチェッカー)
-※コードが最新のTypeScriptやVueのお作法に沿って書かれているかチェックしてくれる
+### eslint (JavaScript コードチェッカー)
 
-1. ```eslint``` を開発用パッケージに追加
+※コードが最新の TypeScript や Vue のお作法に沿って書かれているかチェックしてくれる
+
+1. `eslint` を開発用パッケージに追加
+
    ```
    > yarn add --dev eslint
-   > yarn run eslint --version
+   > yarn eslint --version
    v8.21.0
    ```
 
-1. ```.eslintrc.yml``` を生成
+1. `.eslintrc.yml` を生成
+
    ```
-   > yarn run eslint --init
+   > yarn eslint --init
    ✔ How would you like to use ESLint? · style
    ✔ What type of modules does your project use? · esm
    ✔ Which framework does your project use? · vue
@@ -97,13 +107,16 @@ Vite + Vue.js + TypeScript アプリ開発
    ✔ Would you like to install them now? · Yes
    ✔ Which package manager do you want to use? · yarn
    ```
-   - Vue CLIでプロジェクトを生成すると```.eslintrc.js```ができるそうなので  
-     Vueの開発では```.eslintrc.js```が使われていることが多いが  
-     TypeScriptとJavaScriptを両方扱う設定がややこしいので今回はYAMLにした  
-     JavaScriptにすると中にロジックを書いて複雑な設定ができる  
 
-1. ```.eslintrc.yml``` 内のチェックに使用するルールセットを変更
+   - Vue CLI でプロジェクトを生成すると`.eslintrc.js`ができるそうなので  
+     Vue の開発では`.eslintrc.js`が使われていることが多いが  
+     TypeScript と JavaScript を両方扱う設定がややこしいので今回は YAML にした  
+     JavaScript にすると中にロジックを書いて複雑な設定ができる
+
+1. `.eslintrc.yml` 内のチェックに使用するルールセットを変更
+
    ```
+   parser: 'vue-eslint-parser' # 書かなくても勝手に組み込まれているようだが、分かりやすさのため
    extends:
      - eslint:recommended
      - plugin:@typescript-eslint/recommended
@@ -113,22 +126,24 @@ Vite + Vue.js + TypeScript アプリ開発
      - '@vue/typescript/recommended'
    ```
 
-1. ここで ```yarn run eslint .``` を実行するといくつかエラーが出るので対応していく
+1. ここで `yarn eslint .` を実行するといくつかエラーが出るので対応していく
 
    1. 足りないパッケージを追加
+
       ```
       yarn add --dev eslint-config-airbnb-typescript
       yarn add --dev @vue/eslint-config-typescript @rushstack/eslint-patch
       ```
-   
-   1. ```.eslintrc.yml``` に ```parserOptions.project``` を追加
+
+   1. `.eslintrc.yml` に `parserOptions.project` を追加
+
       ```
       parserOptions:
         ... ,
         project: './tsconfig.json'
       ```
-   
-   1. ```tsconfig.json``` の ```include``` に ```./vite.config.ts``` を追加
+
+   1. `tsconfig.json` の `include` に `./vite.config.ts` を追加
       ```
       "include": [
         ... ,
@@ -136,26 +151,23 @@ Vite + Vue.js + TypeScript アプリ開発
       ],
       ```
 
-   1. ```.eslintrc.yml``` に ```ignorePatterns``` を追加
-      ```
-      ignorePatterns:
-        - dist
-      ```
+1. `package.json` の `scripts` にコマンド追加
 
-1. ```package.json``` の ```scripts``` にコマンド追加
    ```
-   "lint": "yarn run eslint --ext .ts,.tsx,.vue ."
+   "lint": "yarn eslint --ext .ts,.tsx,.vue --ignore-path .gitignore ."
    ```
-   ※デフォルトでは ```.vue``` がチェック対象にならないので拡張子の指定が必要
 
-1. ```yarn lint``` でコードチェック、  
-　　```yarn lint --fix``` でコード修正が行われるようになる
+   - デフォルトでは `.vue` がチェック対象にならないので拡張子の指定が必要
+   - `dist` フォルダなどをチェック対象から除外
 
-1. VSCodeの拡張機能で「ESLint」をインストール
+1. `yarn lint` でコードチェック、  
+   　　`yarn lint --fix` でコード修正が行われるようになる
+
+1. VSCode の拡張機能で「ESLint」をインストール
 
    1. エディタでソースを開くとコードチェックエラーが「問題」タブに出てくるようになる
 
-   1. ```.vscode/settings.json``` に以下の設定をするとソース保存時に自動で修正される
+   1. `.vscode/settings.json` に以下の設定をするとソース保存時に自動で修正される
       ```
       {
         "editor.codeActionsOnSave": {
@@ -164,22 +176,25 @@ Vite + Vue.js + TypeScript アプリ開発
       }
       ```
 
-1. cssのlinterやvueのテンプレート部分のlinterも設定できるらしいが、  
-   もっと学習が進んでからやってみる
+## CSS 環境
 
-## CSS環境
-### Tailwind CSS (CSSライブラリ)の導入
+### Tailwind CSS (CSS ライブラリ) の導入
+
 https://tailwindcss.com/docs/guides/vite
 
 1. パッケージ追加〜初期化
+
    ```
    yarn add --dev tailwindcss@latest postcss@latest autoprefixer@latest
    npx tailwindcss init -p
    ```
-   - ```tailwind.config.cjs``` と ```postcss.config.cjs``` が生成される
 
-1. 追加された ```*.cjs``` がeslintの対象となっておらずエラーが出るので対応
-   - ```tsconfig.eslint.json``` を追加
+   - `tailwind.config.cjs` と `postcss.config.cjs` が生成される
+
+1. 追加された `*.cjs` が eslint の対象となっておらずエラーが出るので対応
+
+   - `tsconfig.eslint.json` を追加
+
    ```
    {
     　"extends": "./tsconfig.json",
@@ -188,14 +203,17 @@ https://tailwindcss.com/docs/guides/vite
     　]
    }
    ```
-   - ```.eslintrc.yml``` のプロジェクトを修正
+
+   - `.eslintrc.yml` のプロジェクトを修正
+
    ```
    parserOptions:
      ...
      project: './tsconfig.eslint.json'
    ```
 
-1. ```tailwind.config.cjs``` にパスを追加
+1. `tailwind.config.cjs` にパスを追加
+
    ```
    module.exports = {
      content: [
@@ -206,60 +224,70 @@ https://tailwindcss.com/docs/guides/vite
    }
    ```
 
-1. tailwindの読込み設定
-   - ```src/index.css``` を作成
+1. tailwind の読込み設定
+
+   - `src/index.css` を作成
+
    ```
    @tailwind base;
    @tailwind components;
    @tailwind utilities;
    ```
-   - ```src/main.ts``` から ```src/index.css```の読み込み
+
+   - `src/main.ts` から `src/index.css`の読み込み
+
    ```src/main.ts
    ...
    import './index.css'
    ...
    ```
 
-1. cssを適用してみる
-   - とりあえず ```index.html``` にダークモード用のスタイルを適用
+1. css を適用してみる
+
+   - とりあえず `index.html` にダークモード用のスタイルを適用
+
    ```
    <body class="dark:bg-black dark:text-white">
    ```
 
-1. VSCodeの拡張機能「Tailwind CSS IntelliSense」を入れておくと便利
+1. VSCode の拡張機能「Tailwind CSS IntelliSense」を入れておくと便利
 
-### srylelintの導入
+### srylelint (CSS コードチェッカー) の導入
 
 1. パッケージ追加
+
    ```
    yarn add --dev stylelint stylelint-config-standard
    yarn add --dev postcss-html stylelint-config-recommended-vue
-   yarn run stylelint --version
+   yarn stylelint --version
    ```
 
-1. ```.stylelintrc```作成
+1. `.stylelintrc.yml` を作成
+
    ```
-   {
-     "extends": ["stylelint-config-recommended-vue", "stylelint-config-standard"]
-   }
+   extends:
+     - stylelint-config-recommended-vue
+     - stylelint-config-standard
    ```
 
-1. ```package.json```にコマンド追加
+1. `package.json` にコマンド追加
+
    ```
    "scripts": {
      ...
-     "lint:style": "yarn run stylelint src/**/*.{css,vue}"
+     "lint:style": "yarn stylelint src/**/*.{css,vue}"
    },
    ```
 
 1. 動作確認
+
    ```
    yarn lint:style
    ```
 
-1. VSCodeの拡張機能で「Stylelint」をインストール  
+1. VSCode の拡張機能で「Stylelint」をインストール
 
-1. ```.vscode/settings.json``` を変更
+1. `.vscode/settings.json` を変更
    ```
    {
      "editor.codeActionsOnSave": {
@@ -273,11 +301,12 @@ https://tailwindcss.com/docs/guides/vite
      ],
    }
    ```
-   - エディタで保存時にeslintとstyleのエラーを自動修正
-   - VSCode本体のcssチェックは内容がかぶるので無効化
-   - デフォルトでは```.vue```がチェックされないのでチェク対象に追加
+   - エディタで保存時に eslint と style のエラーを自動修正
+   - VSCode 本体の css チェックは内容がかぶるので無効化
+   - デフォルトでは`.vue`がチェックされないのでチェク対象に追加
 
-### Font Awesome (アイコンライブラリ)の導入
+### Font Awesome (アイコンライブラリ) の導入
+
 https://fontawesome.com/docs/web/use-with/vue/
 
 ```
@@ -288,23 +317,96 @@ yarn add @fortawesome/free-brands-svg-icons
 yarn add @fortawesome/vue-fontawesome@latest-3
 ```
 
+## Prettier （コードフォーマッター） の導入
+
+コードをいい感じに整形してくれる
+
+1. パッケージ追加
+
+   ```
+   yarn add --dev prettier eslint-plugin-prettier @vue/eslint-config-prettier
+   ```
+
+   - prettier 本体
+   - eslint のルールで prettier と競合するものを無効化
+
+   ```
+   yarn add --dev stylelint-config-prettier
+   ```
+
+   - stylelint のルールで prettier と競合するものを無効化
+
+1. `.prettierrc.yml` を作成
+
+   ```
+   singleQuote: true
+   semi: false
+   vueIndentScriptAndStyle: true
+   ```
+
+1. `.eslintrc.yml` の設定追加
+
+   ```
+   extends:
+     ...
+     - prettier
+   ```
+
+1. `.stylelintrc.yml` の設定追加
+
+   ```
+   extends:
+     ...
+     - stylelint-config-prettier
+   ```
+
+1. 一括フォーマットするコマンド
+
+   ```
+   yarn prettier --write --ignore-path .gitignore .
+   ```
+
+1. VSCode の拡張機能で「Prettier」をインストール
+
+1. `.vscode/settings.json` の設定追加
+
+   ```
+   // ESLint拡張機能のフォーマットを無効化
+   "eslint.format.enable": false,
+   // 保存時にPrettierによる整形を行う
+   "editor.formatOnSave": true,
+   "[javascript]": {
+     "editor.defaultFormatter": "esbenp.prettier-vscode",
+   },
+   "[json]": {
+     "editor.defaultFormatter": "esbenp.prettier-vscode",
+   },
+   "[typescript]": {
+     "editor.defaultFormatter": "esbenp.prettier-vscode",
+   },
+   "[vue]": {
+     "editor.defaultFormatter": "esbenp.prettier-vscode",
+   },
+   ```
+
 ## デプロイの設定
 
 1. GitHub にリポジトリを作りソースを登録
 
 1. GitHub Pages の設定
-   - ※publicリポジトリは無料で使えるが、privateリポジトリは有料
+
+   - ※public リポジトリは無料で使えるが、private リポジトリは有料
    - リポジトリの 「Settings > Pages」
      - Source: Deploy from a branch
      - Branch: gh-pages を選んで Save
-   - 一度抜けて戻ってくると公開先のURLが表示されている
+   - 一度抜けて戻ってくると公開先の URL が表示されている
 
 1. プロジェクトの設定
-   - ```gh-pages``` パッケージを追加
+   - `gh-pages` パッケージを追加
      ```
      yarn add --dev gh-pages
      ```
-   - ```vite.config.ts``` の修正  
+   - `vite.config.ts` の修正  
      アセットへのリンクを相対パスにする
      ```
      export default defineConfig({
@@ -312,7 +414,7 @@ yarn add @fortawesome/vue-fontawesome@latest-3
        base: '',
      })
      ```
-   - ```package.json``` にコマンド追加
+   - `package.json` にコマンド追加
      ```
      "scripts": {
        ...

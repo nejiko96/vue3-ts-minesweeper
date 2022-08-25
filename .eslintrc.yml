@@ -2,23 +2,23 @@ root: true
 env:
   browser: true
   es2021: true
-extends:
-  - eslint:recommended
-  - plugin:@typescript-eslint/recommended
-  - airbnb-base
-  - airbnb-typescript/base
-  - plugin:vue/vue3-recommended
-  - '@vue/typescript/recommended'
+parser: 'vue-eslint-parser'
 parserOptions:
   ecmaVersion: latest
-  parser: '@typescript-eslint/parser'
+  parser: '@typescript-eslint/parser' # vue-eslint-parserのオプション
   sourceType: module
   project: './tsconfig.eslint.json'
-ignorePatterns:
-  - dist
 plugins:
   - vue
   - '@typescript-eslint'
+extends:
+  - eslint:recommended
+  - airbnb-base
+  - plugin:@typescript-eslint/recommended
+  - airbnb-typescript/base
+  - plugin:vue/vue3-recommended
+  - '@vue/typescript/recommended'
+  - prettier
 rules:
   '@typescript-eslint/semi':
     - error
@@ -26,16 +26,13 @@ rules:
   import/prefer-default-export: off
   no-bitwise:
     - off
-    -
-      int32Hint: true
+    - int32Hint: true
   no-plusplus:
     - error
-    -
-      allowForLoopAfterthoughts: true
+    - allowForLoopAfterthoughts: true
   no-param-reassign:
     - error
-    -
-      props: false
+    - props: false
 settings:
   import/resolver:
     typescript: []
