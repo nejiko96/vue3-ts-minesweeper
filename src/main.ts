@@ -14,7 +14,4 @@ library.add(faGear)
 library.add(faGithub)
 library.add(faXmark)
 
-createApp(App)
-  .component('fa', FontAwesomeIcon)
-  .use(createPinia())
-  .mount('#app')
+createApp(App).component('fa', FontAwesomeIcon).use(createPinia()).mount('#app')

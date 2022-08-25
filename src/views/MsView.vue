@@ -1,28 +1,22 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+  import { ref } from 'vue'
 
-import { SettingsType } from '@/types'
-import { useSettingsStore } from '@/stores/settings'
+  import { SettingsType } from '@/types'
+  import { useSettingsStore } from '@/stores/settings'
 
-import MsGame from '@/components/MsGame.vue'
-import MsSettings from '@/components/MsSettings.vue'
+  import MsGame from '@/components/MsGame.vue'
+  import MsSettings from '@/components/MsSettings.vue'
 
-const settings: SettingsType = useSettingsStore()
+  const settings: SettingsType = useSettingsStore()
 
-const settingsOpen = ref(false)
+  const settingsOpen = ref(false)
 </script>
 
 <template>
   <div class="relative">
     <ms-game :settings="settings" />
     <button
-      class="
-        text-white bg-teal-500 hover:bg-teal-400
-        font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2
-        focus:ring-4 focus:outline-none
-        focus:ring-teal-300 dark:focus:ring-teal-800
-        absolute top-2.5 right-2.5
-      "
+      class="text-white bg-teal-500 hover:bg-teal-400 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 absolute top-2.5 right-2.5"
       type="button"
       aria-controls="drawer-right"
       @click="settingsOpen = true"
@@ -31,22 +25,19 @@ const settingsOpen = ref(false)
       Settings
     </button>
     <transition name="slide-x">
-      <ms-settings
-        v-if="settingsOpen"
-        @close="settingsOpen = false"
-      />
+      <ms-settings v-if="settingsOpen" @close="settingsOpen = false" />
     </transition>
   </div>
 </template>
 
 <style scoped>
-.slide-x-enter-active,
-.slide-x-leave-active {
-  transition: transform 0.5s ease;
-}
+  .slide-x-enter-active,
+  .slide-x-leave-active {
+    transition: transform 0.5s ease;
+  }
 
-.slide-x-enter-from,
-.slide-x-leave-to {
-  transform: translateX(100%);
-}
+  .slide-x-enter-from,
+  .slide-x-leave-to {
+    transform: translateX(100%);
+  }
 </style>

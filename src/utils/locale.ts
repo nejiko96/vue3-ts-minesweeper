@@ -17,8 +17,7 @@ const localeBundle: Readonly<Record<string, Record<string, string>>> = {
   },
 }
 
-const initLocale = (lang: string): Record<string, string> => (
+const initLocale = (lang: string): Record<string, string> =>
   localeBundle[lang] ?? localeBundle.en
-)
 
 export { initLocale }

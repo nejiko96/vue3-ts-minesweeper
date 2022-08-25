@@ -1,16 +1,12 @@
 import { defineStore } from 'pinia'
 
-import {
-  ThemeSettingType,
-  SizeSettingType,
-  GameStoreStateType,
-} from '@/types'
+import { ThemeSettingType, SizeSettingType, GameStoreStateType } from '@/types'
 import * as gameModel from '@/models/gameModel'
 import { makeWrapper } from '@/models/mouseEventModel'
 
 type GridPosType = {
-  row: number,
-  col: number,
+  row: number
+  col: number
 }
 
 type GridClickType = { button: number } & GridPosType
@@ -26,7 +22,7 @@ const useGameStore = defineStore('game', {
   }),
 
   getters: {
-    remain: (state) => (state.mines - Object.keys(state.markPos).length),
+    remain: (state) => state.mines - Object.keys(state.markPos).length,
   },
 
   actions: {
@@ -34,24 +30,18 @@ const useGameStore = defineStore('game', {
       this.theme = theme
     },
     changeSize(size: SizeSettingType): void {
-      Object.assign(
-        this,
-        {
-          ...gameModel.initAll(size),
-          ...mouseModel.initState(),
-          touch: false,
-        },
-      )
+      Object.assign(this, {
+        ...gameModel.initAll(size),
+        ...mouseModel.initState(),
+        touch: false,
+      })
     },
     restart(): void {
-      Object.assign(
-        this,
-        {
-          ...gameModel.initBoard(this),
-          ...mouseModel.initState(),
-          touch: false,
-        },
-      )
+      Object.assign(this, {
+        ...gameModel.initBoard(this),
+        ...mouseModel.initState(),
+        touch: false,
+      })
     },
     mouseDown({ button, row, col }: GridClickType): void {
       mouseModel.handleMouseDown(this, button, row, col)

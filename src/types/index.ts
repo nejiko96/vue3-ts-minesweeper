@@ -2,24 +2,24 @@
 // Game Settings
 //------------------------------------------------------------------------------
 export type ThemeSettingType = {
-  name: string,
-  size: number,
+  name: string
+  size: number
 }
 
 export type StdLevelType = 'easy' | 'medium' | 'hard'
 export type CustomLevelType = 'custom'
 export type LevelType = StdLevelType | CustomLevelType
 export type SizeSettingType = {
-  level: LevelType,
-  width?: number,
-  height?: number,
-  mines?: number,
+  level: LevelType
+  width?: number
+  height?: number
+  mines?: number
 }
 
 export type SettingsType = {
-  lang: string,
-  theme: ThemeSettingType,
-  board: SizeSettingType,
+  lang: string
+  theme: ThemeSettingType
+  board: SizeSettingType
 }
 
 //------------------------------------------------------------------------------
@@ -38,19 +38,19 @@ export const GameStatusFlags = {
 } as const
 
 export type SizeStateType = {
-  width: number,
-  height: number,
-  mines: number,
+  width: number
+  height: number
+  mines: number
 }
 
 export type GameStatusType = typeof GameStatusEnum[keyof typeof GameStatusEnum]
 
 export type BoardStateType = {
-  status: GameStatusType,
-  grid: number[][],
-  minePos: Record<string, number[]>,
-  markPos: Record<string, number[]>,
-  countDown: number,
+  status: GameStatusType
+  grid: number[][]
+  minePos: Record<string, number[]>
+  markPos: Record<string, number[]>
+  countDown: number
 }
 
 export type GameModelStateType = SizeStateType & BoardStateType
@@ -61,12 +61,10 @@ export type MouseStateType = { pressed: number }
 
 export type TouchStateType = { touch: boolean }
 
-export type GameStoreStateType = (
-  ThemeStatusType
-  & GameModelStateType
-  & MouseStateType
-  & TouchStateType
-)
+export type GameStoreStateType = ThemeStatusType &
+  GameModelStateType &
+  MouseStateType &
+  TouchStateType
 
 //------------------------------------------------------------------------------
 // Timer Constants

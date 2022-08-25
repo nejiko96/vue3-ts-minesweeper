@@ -1,37 +1,28 @@
 <script lang="ts">
-import { ref } from 'vue'
+  import { ref } from 'vue'
 
-import MsView from '@/views/MsView.vue'
-import CatView from '@/views/CatView.vue'
+  import MsView from '@/views/MsView.vue'
+  import CatView from '@/views/CatView.vue'
 
-const viewsTbl = {
-  ms: MsView,
-  cat: CatView,
-} as const
+  const viewsTbl = {
+    ms: MsView,
+    cat: CatView,
+  } as const
 
-type ViewsKeyType = keyof typeof viewsTbl
+  type ViewsKeyType = keyof typeof viewsTbl
 </script>
 
 <script setup lang="ts">
-
-const currentView = ref<ViewsKeyType>('ms')
-
+  const currentView = ref<ViewsKeyType>('ms')
 </script>
 
 <template>
   <header>
-    <nav
-      class="bg-teal-500 text-white"
-    >
+    <nav class="bg-teal-500 text-white">
       <div
-        class="
-          container mx-auto px-2 py-4 h-16
-          flex justify-between items-center
-        "
+        class="container mx-auto px-2 py-4 h-16 flex justify-between items-center"
       >
-        <h1 class="text-xl font-semibold">
-          Vue3 + TypeScript demo page
-        </h1>
+        <h1 class="text-xl font-semibold">Vue3 + TypeScript demo page</h1>
 
         <div>
           <ul class="flex justify-end items-center pb-0">
@@ -39,15 +30,17 @@ const currentView = ref<ViewsKeyType>('ms')
               <a
                 href="#"
                 class="hover:bg-teal-600 px-8 py-2 rounded"
-                @click="currentView='ms'"
-              >Minesweeper</a>
+                @click="currentView = 'ms'"
+                >Minesweeper</a
+              >
             </li>
             <li class="--border-none">
               <a
                 href="#"
                 class="hover:bg-teal-600 px-8 py-2 rounded"
-                @click="currentView='cat'"
-              >Cat API</a>
+                @click="currentView = 'cat'"
+                >Cat API</a
+              >
             </li>
           </ul>
         </div>
@@ -58,10 +51,7 @@ const currentView = ref<ViewsKeyType>('ms')
           title="View source on GitHub"
           aria-label="View source on GitHub"
         >
-          <fa
-            icon="fa-brands fa-github"
-            size="2xl"
-          />
+          <fa icon="fa-brands fa-github" size="2xl" />
         </a>
       </div>
     </nav>
