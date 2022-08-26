@@ -116,7 +116,9 @@
 1. `.eslintrc.yml` 内のチェックに使用するルールセットを変更
 
    ```
-   parser: 'vue-eslint-parser' # 書かなくても勝手に組み込まれているようだが、分かりやすさのため
+   parser: 'vue-eslint-parser' # 書かなくても勝手に組み込まれるようだが、明示的に入れておく
+   parserOptions:
+     parser: '@typescript-eslint/parser' # 上と似たような設定で混乱するが、こちらはvue-eslint-parserの設定という扱い
    extends:
      - eslint:recommended
      - plugin:@typescript-eslint/recommended
@@ -376,9 +378,6 @@ yarn add @fortawesome/vue-fontawesome@latest-3
    // 保存時にPrettierによる整形を行う
    "editor.formatOnSave": true,
    "[javascript]": {
-     "editor.defaultFormatter": "esbenp.prettier-vscode",
-   },
-   "[json]": {
      "editor.defaultFormatter": "esbenp.prettier-vscode",
    },
    "[typescript]": {

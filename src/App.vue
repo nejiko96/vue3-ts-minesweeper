@@ -1,19 +1,12 @@
 <script lang="ts">
-  import { ref } from 'vue'
+  import { shallowRef } from 'vue'
 
   import MsView from '@/views/MsView.vue'
   import CatView from '@/views/CatView.vue'
-
-  const viewsTbl = {
-    ms: MsView,
-    cat: CatView,
-  } as const
-
-  type ViewsKeyType = keyof typeof viewsTbl
 </script>
 
 <script setup lang="ts">
-  const currentView = ref<ViewsKeyType>('ms')
+  const currentView = shallowRef(MsView)
 </script>
 
 <template>
@@ -30,7 +23,7 @@
               <a
                 href="#"
                 class="hover:bg-teal-600 px-8 py-2 rounded"
-                @click="currentView = 'ms'"
+                @click="currentView = MsView"
                 >Minesweeper</a
               >
             </li>
@@ -38,7 +31,7 @@
               <a
                 href="#"
                 class="hover:bg-teal-600 px-8 py-2 rounded"
-                @click="currentView = 'cat'"
+                @click="currentView = CatView"
                 >Cat API</a
               >
             </li>
@@ -57,6 +50,8 @@
     </nav>
   </header>
   <main>
-    <component :is="viewsTbl[currentView]" />
+    <keep-alive>
+      <component :is="currentView" />
+    </keep-alive>
   </main>
 </template>
