@@ -38,7 +38,7 @@
 <template>
   <div class="p-4">
     <button
-      class="block mx-auto px-4 py-2 rounded bg-red-500 hover:bg-red-600 text-white font-semibold border-2 border-transparent hover:border-red-300 cursor-pointer transition duration-300"
+      class="mx-auto block cursor-pointer rounded border-2 border-transparent bg-red-500 px-4 py-2 font-semibold text-white transition duration-300 hover:border-red-300 hover:bg-red-600"
       @click="handleClick"
     >
       Today's Cat

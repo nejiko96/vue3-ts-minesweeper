@@ -44,7 +44,7 @@
 <template>
   <div
     id="drawer-right"
-    class="--fixed absolute right-0 top-0 w-80 --h-screen h-[calc(100vh_-_5rem)] z-40 p-4 overflow-y-auto bg-white dark:bg-gray-800 transition-transform transform-none"
+    class="--fixed --h-screen absolute right-0 top-0 z-40 h-[calc(100vh_-_5rem)] w-80 transform-none overflow-y-auto bg-white p-4 transition-transform dark:bg-gray-800"
     tabindex="-1"
     aria-labelledby="drawer-right-label"
     aria-modal="true"
@@ -52,7 +52,7 @@
   >
     <span
       id="drawer-right-label"
-      class="inline-flex items-center mb-4 text-base font-semibold"
+      class="mb-4 inline-flex items-center text-base font-semibold"
     >
       <fa icon="fa-gear" />
       Settings
@@ -61,7 +61,7 @@
     <button
       type="button"
       aria-controls="drawer-right"
-      class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white rounded-lg text-sm p-1.5 absolute top-2.5 right-2.5 inline-flex items-center"
+      class="absolute top-2.5 right-2.5 inline-flex items-center rounded-lg bg-transparent p-1.5 text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white"
       @click="emit('close')"
     >
       <fa icon="fa-xmark" size="lg" />
@@ -69,9 +69,9 @@
     </button>
 
     <form class="w-full">
-      <div class="w-full px-3 mb-6">
+      <div class="mb-6 w-full px-3">
         <label
-          class="block tracking-wide text-sm font-semibold mb-2"
+          class="mb-2 block text-sm font-semibold tracking-wide"
           for="lang"
         >
           Language
@@ -80,7 +80,7 @@
           <select
             id="lang"
             v-model="lang"
-            class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-1 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+            class="block w-full appearance-none rounded border border-gray-200 bg-gray-200 py-1 px-4 pr-8 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
           >
             <option value="en">English</option>
             <option value="ja">日本語</option>
@@ -92,9 +92,9 @@
           </div>
         </div>
       </div>
-      <div class="w-full px-3 mb-6">
+      <div class="mb-6 w-full px-3">
         <label
-          class="block tracking-wide text-sm font-semibold mb-2"
+          class="mb-2 block text-sm font-semibold tracking-wide"
           for="theme"
         >
           Theme
@@ -103,7 +103,7 @@
           <select
             id="theme"
             v-model="theme"
-            class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-1 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+            class="block w-full appearance-none rounded border border-gray-200 bg-gray-200 py-1 px-4 pr-8 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
           >
             <option value="green_32">green(32px)</option>
             <option value="MS_32">MS(32px)</option>
@@ -117,9 +117,9 @@
           </div>
         </div>
       </div>
-      <div class="w-full px-3 mb-6">
+      <div class="mb-6 w-full px-3">
         <label
-          class="block tracking-wide text-sm font-semibold mb-2"
+          class="mb-2 block text-sm font-semibold tracking-wide"
           for="level"
         >
           Level
@@ -128,7 +128,7 @@
           <select
             id="level"
             v-model="level"
-            class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-1 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+            class="block w-full appearance-none rounded border border-gray-200 bg-gray-200 py-1 px-4 pr-8 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
           >
             <option value="easy">Easy</option>
             <option value="medium">Medium</option>
@@ -144,9 +144,9 @@
       </div>
       <transition name="slide-x">
         <div v-if="level === 'custom'">
-          <div class="w-full px-3 mb-6">
+          <div class="mb-6 w-full px-3">
             <label
-              class="block tracking-wide text-sm font-semibold mb-2"
+              class="mb-2 block text-sm font-semibold tracking-wide"
               for="width"
             >
               Width
@@ -154,7 +154,7 @@
             <input
               id="width"
               v-model.number="width"
-              class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-1 px-4 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              class="block w-full appearance-none rounded border border-gray-200 bg-gray-200 py-1 px-4 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
               type="number"
               min="9"
               max="30"
@@ -162,9 +162,9 @@
               placeholder="9 - 30"
             />
           </div>
-          <div class="w-full px-3 mb-6">
+          <div class="mb-6 w-full px-3">
             <label
-              class="block tracking-wide text-sm font-semibold mb-2"
+              class="mb-2 block text-sm font-semibold tracking-wide"
               for="height"
             >
               Height
@@ -172,7 +172,7 @@
             <input
               id="height"
               v-model.number="height"
-              class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-1 px-4 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              class="block w-full appearance-none rounded border border-gray-200 bg-gray-200 py-1 px-4 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
               type="number"
               min="9"
               max="24"
@@ -180,9 +180,9 @@
               placeholder="9 - 24"
             />
           </div>
-          <div class="w-full px-3 mb-6">
+          <div class="mb-6 w-full px-3">
             <label
-              class="block tracking-wide text-sm font-semibold mb-2"
+              class="mb-2 block text-sm font-semibold tracking-wide"
               for="mines"
             >
               Mines
@@ -190,7 +190,7 @@
             <input
               id="mines"
               v-model.number="mines"
-              class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-1 px-4 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              class="block w-full appearance-none rounded border border-gray-200 bg-gray-200 py-1 px-4 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
               type="number"
               min="10"
               max="999"

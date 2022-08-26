@@ -13,16 +13,16 @@
   <header>
     <nav class="bg-teal-500 text-white">
       <div
-        class="container mx-auto px-2 py-4 h-16 flex justify-between items-center"
+        class="container mx-auto flex h-16 items-center justify-between px-2 py-4"
       >
         <h1 class="text-xl font-semibold">Vue3 + TypeScript demo page</h1>
 
         <div>
-          <ul class="flex justify-end items-center pb-0">
+          <ul class="flex items-center justify-end pb-0">
             <li>
               <a
                 href="#"
-                class="hover:bg-teal-600 px-8 py-2 rounded"
+                class="rounded px-8 py-2 hover:bg-teal-600"
                 @click="currentView = MsView"
                 >Minesweeper</a
               >
@@ -30,7 +30,7 @@
             <li class="--border-none">
               <a
                 href="#"
-                class="hover:bg-teal-600 px-8 py-2 rounded"
+                class="rounded px-8 py-2 hover:bg-teal-600"
                 @click="currentView = CatView"
                 >Cat API</a
               >

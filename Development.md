@@ -388,6 +388,13 @@ yarn add @fortawesome/vue-fontawesome@latest-3
    },
    ```
 
+1. prettier-plugin-tailwindcss の導入
+   - class の並び順をソートしてくれる  
+     ずらずら並ぶのはそのまま
+   ```
+   yarn add --dev prettier-plugin-tailwindcss
+   ```
+
 ## デプロイの設定
 
 1. GitHub にリポジトリを作りソースを登録

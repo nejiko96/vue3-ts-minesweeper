@@ -16,7 +16,7 @@
   <div class="relative">
     <ms-game :settings="settings" />
     <button
-      class="text-white bg-teal-500 hover:bg-teal-400 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 absolute top-2.5 right-2.5"
+      class="absolute top-2.5 right-2.5 mr-2 mb-2 rounded-lg bg-teal-500 px-5 py-2.5 text-sm font-medium text-white hover:bg-teal-400 focus:outline-none focus:ring-4 focus:ring-teal-300 dark:focus:ring-teal-800"
       type="button"
       aria-controls="drawer-right"
       @click="settingsOpen = true"

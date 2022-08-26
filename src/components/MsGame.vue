@@ -80,7 +80,7 @@
     <ms-board />
     <p />
     <button
-      class="bg-gray-400 hover:bg-gray-300 text-black rounded px-4 py-2"
+      class="rounded bg-gray-400 px-4 py-2 text-black hover:bg-gray-300"
       type="button"
       @click="handleRestart"
     >
