@@ -55,14 +55,11 @@ export type BoardStateType = {
 
 export type GameModelStateType = SizeStateType & BoardStateType
 
-export type ThemeStatusType = { theme: ThemeSettingType }
-
 export type MouseStateType = { pressed: number }
 
 export type TouchStateType = { touch: boolean }
 
-export type GameStoreStateType = ThemeStatusType &
-  GameModelStateType &
+export type GameStoreStateType = GameModelStateType &
   MouseStateType &
   TouchStateType
 

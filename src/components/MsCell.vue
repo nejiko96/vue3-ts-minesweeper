@@ -1,15 +1,15 @@
 <script lang="ts">
   import { ref, computed, watch } from 'vue'
 
-  import { useGameStore } from '@/stores/game'
   import { styleIdx } from '@/models/cellModel'
-  import { GridClickType, GridPosType } from '@/types'
+  import { ThemeSettingType, GridClickType, GridPosType } from '@/types'
 
   const bgPosCache: Record<number, Record<number, string>> = {}
 </script>
 
 <script setup lang="ts">
   const props = defineProps<{
+    theme: ThemeSettingType
     row: number
     col: number
     value: number
@@ -25,17 +25,15 @@
     (e: 'longpress', params: GridPosType): void
   }>()
 
-  const game = useGameStore()
-
   const touched = ref(false)
 
   const themeClass = computed((): string => {
-    const { name, size } = game.theme
+    const { name, size } = props.theme
     return `${name}-${size}`.toLowerCase()
   })
 
   const bgpos = computed((): string => {
-    const { size } = game.theme
+    const { size } = props.theme
     bgPosCache[size] ??= {}
     const v = props.value
     if (bgPosCache[size][v] === undefined) {

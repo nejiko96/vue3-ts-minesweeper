@@ -40,30 +40,8 @@
 
   const handleRestart = () => game.restart()
 
-  onMounted(() => {
-    game.changeTheme(props.settings.theme)
-    game.changeSize(props.settings.board)
-  })
-
-  watch(
-    () => props.settings.theme,
-    () => {
-      game.changeTheme(props.settings.theme)
-    },
-    { deep: true }
-  )
-
-  watch(
-    () => props.settings.board,
-    () => {
-      game.changeSize(props.settings.board)
-    },
-    { deep: true }
-  )
-
-  const handleMouseDown = (params: GridClickType): void => {
+  const handleMouseDown = (params: GridClickType): void =>
     game.mouseDown(params)
-  }
 
   const handleMouseUp = (params: GridPosType): void => game.mouseUp(params)
 
@@ -77,6 +55,18 @@
   const handleTouchEnd = (params: GridPosType): void => game.touchEnd(params)
 
   const handleLongPress = (params: GridPosType): void => game.longPress(params)
+
+  onMounted(() => {
+    game.changeSize(props.settings.board)
+  })
+
+  watch(
+    () => props.settings.board,
+    () => {
+      game.changeSize(props.settings.board)
+    },
+    { deep: true }
+  )
 </script>
 
 <template>
@@ -100,6 +90,7 @@
     <ms-board :grid="game.grid" :overlay="game.overlay">
       <template #cell="cellProps">
         <ms-cell
+          :theme="props.settings.theme"
           :row="cellProps.row"
           :col="cellProps.col"
           :value="cellProps.value"
