@@ -1,27 +1,21 @@
 <script setup lang="ts">
-  import { computed } from 'vue'
-
-  import { GameStatusFlags } from '@/types'
-  import { useGameStore } from '@/stores/game'
-
-  const game = useGameStore()
-
-  const overlay = computed(
-    () => (game.status & GameStatusFlags.ENABLED) > 0 && game.touch
-  )
+  const props = defineProps<{
+    grid: number[][]
+    overlay: boolean
+  }>()
 </script>
 
 <template>
   <div class="board">
     <div class="cells">
-      <template v-for="(arr, i) in game.grid" :key="i">
+      <template v-for="(arr, i) in props.grid" :key="i">
         <template v-for="(value, j) in arr" :key="`${i}_${j}`">
           <slot name="cell" :row="i" :col="j" :value="value"></slot>
         </template>
         <br />
       </template>
     </div>
-    <div v-if="overlay" class="cells-overlay" />
+    <div v-if="props.overlay" class="cells-overlay" />
   </div>
 </template>
 
