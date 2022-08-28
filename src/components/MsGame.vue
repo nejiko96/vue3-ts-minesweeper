@@ -4,10 +4,12 @@
   import {
     SettingsType,
     GameStatusEnum,
+    GameStatusFlags,
     GameStatusType,
+    GridClickType,
+    GridPosType,
     TimerModeEnum,
     TimerModeType,
-    GameStatusFlags,
   } from '@/types'
   import { initLocale } from '@/utils/locale'
   import { useGameStore } from '@/stores/game'
@@ -63,6 +65,23 @@
     },
     { deep: true }
   )
+
+  const handleMouseDown = (params: GridClickType): void => {
+    game.mouseDown(params)
+  }
+
+  const handleMouseUp = (params: GridPosType): void => game.mouseUp(params)
+
+  const handleMouseOver = (params: GridPosType): void => game.mouseOver(params)
+
+  const handleMouseOut = (params: GridPosType): void => game.mouseOut(params)
+
+  const handleTouchStart = (params: GridPosType): void =>
+    game.touchStart(params)
+
+  const handleTouchEnd = (params: GridPosType): void => game.touchEnd(params)
+
+  const handleLongPress = (params: GridPosType): void => game.longPress(params)
 </script>
 
 <template>
@@ -89,6 +108,13 @@
           :row="cellProps.row"
           :col="cellProps.col"
           :value="cellProps.value"
+          @mousedown="handleMouseDown"
+          @mouseup="handleMouseUp"
+          @mouseover="handleMouseOver"
+          @mouseout="handleMouseOut"
+          @touchstart="handleTouchStart"
+          @touchend="handleTouchEnd"
+          @longpress="handleLongPress"
         />
       </template>
     </ms-board>

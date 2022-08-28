@@ -3,6 +3,7 @@
 
   import { useGameStore } from '@/stores/game'
   import { styleIdx } from '@/models/cellModel'
+  import { GridClickType, GridPosType } from '@/types'
 
   const bgPosCache: Record<number, Record<number, string>> = {}
 </script>
@@ -12,6 +13,16 @@
     row: number
     col: number
     value: number
+  }>()
+
+  const emits = defineEmits<{
+    (e: 'mousedown', params: GridClickType): void
+    (e: 'mouseup', params: GridPosType): void
+    (e: 'mouseover', params: GridPosType): void
+    (e: 'mouseout', params: GridPosType): void
+    (e: 'touchstart', params: GridPosType): void
+    (e: 'touchend', params: GridPosType): void
+    (e: 'longpress', params: GridPosType): void
   }>()
 
   const game = useGameStore()
@@ -53,27 +64,27 @@
   }
 
   const handleMouseDown = (ev: MouseEvent): void => {
-    game.mouseDown({
+    emits('mousedown', {
       button: ev.button,
       ...props,
     })
   }
 
-  const handleMouseUp = (): void => game.mouseUp(props)
+  const handleMouseUp = (): void => emits('mouseup', props)
 
-  const handleMouseOver = (): void => game.mouseOver(props)
+  const handleMouseOver = (): void => emits('mouseover', props)
 
-  const handleMouseOut = (): void => game.mouseOut(props)
+  const handleMouseOut = (): void => emits('mouseout', props)
 
   const handleTouchStart = (): void => {
-    game.touchStart(props)
+    emits('touchstart', props)
     touched.value = true
   }
 
   const handleTouchEnd = (): void => {
     if (!touched.value) return
     touched.value = false
-    game.touchEnd(props)
+    emits('touchend', props)
   }
 
   watch(
@@ -83,7 +94,7 @@
       if (touched.value) {
         timeoutObj.start(() => {
           touched.value = false
-          game.longPress(props)
+          emits('longpress', props)
         }, 300)
       }
     }

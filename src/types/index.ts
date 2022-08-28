@@ -67,6 +67,16 @@ export type GameStoreStateType = ThemeStatusType &
   TouchStateType
 
 //------------------------------------------------------------------------------
+// Event Parameters
+//------------------------------------------------------------------------------
+export type GridPosType = {
+  row: number
+  col: number
+}
+
+export type GridClickType = { button: number } & GridPosType
+
+//------------------------------------------------------------------------------
 // Timer Constants
 //------------------------------------------------------------------------------
 export const TimerModeEnum = {
