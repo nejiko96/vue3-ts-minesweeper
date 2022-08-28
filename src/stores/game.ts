@@ -6,6 +6,7 @@ import {
   GameStoreStateType,
   GridClickType,
   GridPosType,
+  GameStatusFlags,
 } from '@/types'
 import * as gameModel from '@/models/gameModel'
 import { makeWrapper } from '@/models/mouseEventModel'
@@ -22,6 +23,8 @@ const useGameStore = defineStore('game', {
 
   getters: {
     remain: (state) => state.mines - Object.keys(state.markPos).length,
+    overlay: (state) =>
+      (state.status & GameStatusFlags.ENABLED) > 0 && state.touch,
   },
 
   actions: {

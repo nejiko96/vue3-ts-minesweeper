@@ -4,7 +4,6 @@
   import {
     SettingsType,
     GameStatusEnum,
-    GameStatusFlags,
     GameStatusType,
     GridClickType,
     GridPosType,
@@ -38,10 +37,6 @@
   )
 
   const timerMode = computed((): TimerModeType => timerModeTbl[game.status])
-
-  const overlay = computed(
-    () => (game.status & GameStatusFlags.ENABLED) > 0 && game.touch
-  )
 
   const handleRestart = () => game.restart()
 
@@ -102,7 +97,7 @@
       </span>
     </transition>
     <br />
-    <ms-board :grid="game.grid" :overlay="overlay">
+    <ms-board :grid="game.grid" :overlay="game.overlay">
       <template #cell="cellProps">
         <ms-cell
           :row="cellProps.row"

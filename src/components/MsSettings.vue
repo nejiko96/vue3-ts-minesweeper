@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { defineEmits, computed } from 'vue'
+  import { computed } from 'vue'
   import { useSettingsStore } from '@/stores/settings'
   import { LevelType } from '@/types'
 
