@@ -4,8 +4,6 @@
   import { GameStatusFlags } from '@/types'
   import { useGameStore } from '@/stores/game'
 
-  import MsCell from './MsCell.vue'
-
   const game = useGameStore()
 
   const overlay = computed(
@@ -17,13 +15,9 @@
   <div class="board">
     <div class="cells">
       <template v-for="(arr, i) in game.grid" :key="i">
-        <ms-cell
-          v-for="(value, j) in arr"
-          :key="`${i}_${j}`"
-          :row="i"
-          :col="j"
-          :value="value"
-        />
+        <template v-for="(value, j) in arr" :key="`${i}_${j}`">
+          <slot name="cell" :row="i" :col="j" :value="value"></slot>
+        </template>
         <br />
       </template>
     </div>

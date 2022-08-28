@@ -13,6 +13,7 @@
 
   import MsTimer from './MsTimer.vue'
   import MsBoard from './MsBoard.vue'
+  import MsCell from './MsCell.vue'
 
   const timerModeTbl: Readonly<Record<GameStatusType, TimerModeType>> = {
     [GameStatusEnum.READY]: TimerModeEnum.READY,
@@ -77,7 +78,15 @@
       </span>
     </transition>
     <br />
-    <ms-board />
+    <ms-board>
+      <template #cell="cellProps">
+        <ms-cell
+          :row="cellProps.row"
+          :col="cellProps.col"
+          :value="cellProps.value"
+        />
+      </template>
+    </ms-board>
     <p />
     <button
       class="rounded bg-gray-400 px-4 py-2 text-black hover:bg-gray-300"
