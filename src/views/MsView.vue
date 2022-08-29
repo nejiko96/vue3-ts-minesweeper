@@ -14,7 +14,7 @@
 
 <template>
   <div class="relative">
-    <ms-game :settings="settings" />
+    <MsGame :settings="settings" />
     <button
       class="absolute top-2.5 right-2.5 mr-2 mb-2 rounded-lg bg-teal-500 px-5 py-2.5 text-sm font-medium text-white hover:bg-teal-400 focus:outline-none focus:ring-4 focus:ring-teal-300 dark:focus:ring-teal-800"
       type="button"
@@ -25,7 +25,7 @@
       Settings
     </button>
     <transition name="slide-x">
-      <ms-settings v-if="settingsOpen" @close="settingsOpen = false" />
+      <MsSettings v-if="settingsOpen" @close="settingsOpen = false" />
     </transition>
   </div>
 </template>

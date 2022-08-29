@@ -78,7 +78,7 @@
     {{ locale.remain2 }}
     <span class="space" />
     {{ locale.timer1 }}
-    <ms-timer class="text-box" interval="1s" :limit="999" :mode="timerMode" />
+    <MsTimer class="text-box" interval="1s" :limit="999" :mode="timerMode" />
     {{ locale.timer2 }}
     <span class="space" />
     <transition name="pyonpyon">
@@ -87,9 +87,9 @@
       </span>
     </transition>
     <br />
-    <ms-board :grid="game.grid" :overlay="game.overlay">
+    <MsBoard :grid="game.grid" :overlay="game.overlay">
       <template #cell="cellProps">
-        <ms-cell
+        <MsCell
           :theme="props.settings.theme"
           :row="cellProps.row"
           :col="cellProps.col"
@@ -103,7 +103,7 @@
           @longpress="handleLongPress"
         />
       </template>
-    </ms-board>
+    </MsBoard>
     <p />
     <button
       class="rounded bg-gray-400 px-4 py-2 text-black hover:bg-gray-300"
