@@ -173,10 +173,79 @@
       ```
       {
         "editor.codeActionsOnSave": {
-          "source.fixAll": true
+          "source.fixAll.eslint": true,
         }
       }
       ```
+
+### Prettier （コードフォーマッター） の導入
+
+コードをいい感じに整形してくれる
+
+1. パッケージ追加
+
+   ```
+   yarn add --dev prettier eslint-plugin-prettier @vue/eslint-config-prettier
+   ```
+
+   - prettier 本体
+   - eslint のルールで prettier と競合するものを無効化
+
+   ```
+   yarn add --dev stylelint-config-prettier
+   ```
+
+   - stylelint のルールで prettier と競合するものを無効化
+
+1. `.prettierrc.yml` を作成
+
+   ```
+   singleQuote: true
+   semi: false
+   vueIndentScriptAndStyle: true
+   ```
+
+1. `.eslintrc.yml` の設定追加
+
+   ```
+   extends:
+     ...
+     - prettier
+   ```
+
+1. `.stylelintrc.yml` の設定追加
+
+   ```
+   extends:
+     ...
+     - stylelint-config-prettier
+   ```
+
+1. 一括フォーマットするコマンド
+
+   ```
+   yarn prettier --write --ignore-path .gitignore .
+   ```
+
+1. VSCode の拡張機能で「Prettier」をインストール
+
+1. `.vscode/settings.json` の設定追加
+
+   ```
+   // ESLint拡張機能のフォーマットを無効化
+   "eslint.format.enable": false,
+   // 保存時にPrettierによる整形を行う
+   "editor.formatOnSave": true,
+   "[javascript]": {
+     "editor.defaultFormatter": "esbenp.prettier-vscode",
+   },
+   "[typescript]": {
+     "editor.defaultFormatter": "esbenp.prettier-vscode",
+   },
+   "[vue]": {
+     "editor.defaultFormatter": "esbenp.prettier-vscode",
+   },
+   ```
 
 ## CSS 環境
 
@@ -254,6 +323,13 @@ https://tailwindcss.com/docs/guides/vite
 
 1. VSCode の拡張機能「Tailwind CSS IntelliSense」を入れておくと便利
 
+1. prettier-plugin-tailwindcss の導入
+   - class の並び順をソートしてくれる  
+     ずらずら並ぶのはそのまま
+   ```
+   yarn add --dev prettier-plugin-tailwindcss
+   ```
+
 ### srylelint (CSS コードチェッカー) の導入
 
 1. パッケージ追加
@@ -318,82 +394,6 @@ yarn add @fortawesome/free-regular-svg-icons
 yarn add @fortawesome/free-brands-svg-icons
 yarn add @fortawesome/vue-fontawesome@latest-3
 ```
-
-## Prettier （コードフォーマッター） の導入
-
-コードをいい感じに整形してくれる
-
-1. パッケージ追加
-
-   ```
-   yarn add --dev prettier eslint-plugin-prettier @vue/eslint-config-prettier
-   ```
-
-   - prettier 本体
-   - eslint のルールで prettier と競合するものを無効化
-
-   ```
-   yarn add --dev stylelint-config-prettier
-   ```
-
-   - stylelint のルールで prettier と競合するものを無効化
-
-1. `.prettierrc.yml` を作成
-
-   ```
-   singleQuote: true
-   semi: false
-   vueIndentScriptAndStyle: true
-   ```
-
-1. `.eslintrc.yml` の設定追加
-
-   ```
-   extends:
-     ...
-     - prettier
-   ```
-
-1. `.stylelintrc.yml` の設定追加
-
-   ```
-   extends:
-     ...
-     - stylelint-config-prettier
-   ```
-
-1. 一括フォーマットするコマンド
-
-   ```
-   yarn prettier --write --ignore-path .gitignore .
-   ```
-
-1. VSCode の拡張機能で「Prettier」をインストール
-
-1. `.vscode/settings.json` の設定追加
-
-   ```
-   // ESLint拡張機能のフォーマットを無効化
-   "eslint.format.enable": false,
-   // 保存時にPrettierによる整形を行う
-   "editor.formatOnSave": true,
-   "[javascript]": {
-     "editor.defaultFormatter": "esbenp.prettier-vscode",
-   },
-   "[typescript]": {
-     "editor.defaultFormatter": "esbenp.prettier-vscode",
-   },
-   "[vue]": {
-     "editor.defaultFormatter": "esbenp.prettier-vscode",
-   },
-   ```
-
-1. prettier-plugin-tailwindcss の導入
-   - class の並び順をソートしてくれる  
-     ずらずら並ぶのはそのまま
-   ```
-   yarn add --dev prettier-plugin-tailwindcss
-   ```
 
 ## デプロイの設定
 

@@ -70,9 +70,9 @@
 
   const handleMouseUp = (): void => emits('mouseup', props)
 
-  const handleMouseOver = (): void => emits('mouseover', props)
+  const handleMouseEnter = (): void => emits('mouseover', props)
 
-  const handleMouseOut = (): void => emits('mouseout', props)
+  const handleMouseLeave = (): void => emits('mouseout', props)
 
   const handleTouchStart = (): void => {
     emits('touchstart', props)
@@ -105,8 +105,8 @@
     :class="themeClass"
     @mousedown="handleMouseDown"
     @mouseup="handleMouseUp"
-    @mouseover="handleMouseOver"
-    @mouseout="handleMouseOut"
+    @mouseenter="handleMouseEnter"
+    @mouseleave="handleMouseLeave"
     @touchstart.prevent="handleTouchStart"
     @touchend="handleTouchEnd"
   />
