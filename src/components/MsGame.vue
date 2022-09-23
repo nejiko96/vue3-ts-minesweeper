@@ -88,12 +88,12 @@
     </transition>
     <br />
     <MsBoard :grid="game.grid" :overlay="game.overlay">
-      <template #cell="cellProps">
+      <template #cell="{ row, col, value }">
         <MsCell
           :theme="props.settings.theme"
-          :row="cellProps.row"
-          :col="cellProps.col"
-          :value="cellProps.value"
+          :row="row"
+          :col="col"
+          :value="value"
           @mousedown="handleMouseDown"
           @mouseup="handleMouseUp"
           @mouseover="handleMouseOver"
