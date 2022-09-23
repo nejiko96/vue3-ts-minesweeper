@@ -91,6 +91,11 @@
   resolved "https://registry.yarnpkg.com/@fortawesome/vue-fontawesome/-/vue-fontawesome-3.0.1.tgz#ced35cefc52b364f7db973f2fe9f50c3dd160715"
   integrity sha512-CdXZJoCS+aEPec26ZP7hWWU3SaJlQPZSCGdgpQ2qGl2HUmtUUNrI3zC4XWdn1JUmh3t5OuDeRG1qB4eGRNSD4A==
 
+"@headlessui/vue@^1.7.2":
+  version "1.7.2"
+  resolved "https://registry.yarnpkg.com/@headlessui/vue/-/vue-1.7.2.tgz#da0bb42bcc3e21636f8621322115c3a93adf2331"
+  integrity sha512-nmmFpQxnAy6zgf5r0pwdAH3Qw2IsSbTgvkpov9RkEVE8A6aPAT4iaAaPEAzdI+sPL5Wby05mhciJXSqtkLu+vQ==
+
 "@humanwhocodes/config-array@^0.10.4":
   version "0.10.4"
   resolved "https://registry.yarnpkg.com/@humanwhocodes/config-array/-/config-array-0.10.4.tgz#01e7366e57d2ad104feea63e72248f22015c520c"
