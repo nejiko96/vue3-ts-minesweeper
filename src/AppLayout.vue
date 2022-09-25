@@ -43,28 +43,30 @@
               <MenuItems
                 class="absolute right-0 z-10 mt-2 w-44 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
               >
-                <template v-for="item in props.menuItems" :key="item.id">
-                  <div class="px-1 py-1">
-                    <MenuItem
-                      v-slot="{ active }"
-                      :disabled="item.id === props.selected"
+                <div
+                  v-for="item in props.menuItems"
+                  :key="item.id"
+                  class="px-1 py-1"
+                >
+                  <MenuItem
+                    v-slot="{ active }"
+                    :disabled="item.id === props.selected"
+                  >
+                    <button
+                      :class="[
+                        active
+                          ? 'bg-teal-500 text-white'
+                          : item.id === props.selected
+                          ? 'text-gray-400'
+                          : 'text-gray-900',
+                        'group flex w-full items-center rounded-md px-2 py-2 text-sm',
+                      ]"
+                      @click="() => emits('menuselect', item.id)"
                     >
-                      <button
-                        :class="[
-                          active
-                            ? 'bg-teal-500 text-white'
-                            : item.id === props.selected
-                            ? 'text-gray-400'
-                            : 'text-gray-900',
-                          'group flex w-full items-center rounded-md px-2 py-2 text-sm',
-                        ]"
-                        @click="() => emits('menuselect', item.id)"
-                      >
-                        {{ item.title }}
-                      </button>
-                    </MenuItem>
-                  </div>
-                </template>
+                      {{ item.title }}
+                    </button>
+                  </MenuItem>
+                </div>
               </MenuItems>
             </transition>
           </Menu>
