@@ -44,7 +44,7 @@
 <template>
   <div
     id="drawer-right"
-    class="--fixed --h-screen absolute right-0 top-0 z-40 h-[calc(100vh_-_5rem)] w-80 transform-none overflow-y-auto bg-white p-4 transition-transform dark:bg-gray-800"
+    class="--fixed --h-screen absolute right-0 top-0 h-[calc(100vh_-_5rem)] w-80 transform-none overflow-y-auto bg-white p-4 transition-transform dark:bg-gray-800"
     tabindex="-1"
     aria-labelledby="drawer-right-label"
     aria-modal="true"
