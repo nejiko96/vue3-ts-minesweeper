@@ -3,6 +3,7 @@
 
   import MsView from '@/views/MsView.vue'
   import CatView from '@/views/CatView.vue'
+  import WordleView from '@/views/WordleView.vue'
   import AppLayout from './AppLayout.vue'
 
   const menuItems = [
@@ -15,6 +16,11 @@
       id: 'CAT',
       title: 'Cat API',
       view: CatView,
+    },
+    {
+      id: 'WORDLE',
+      title: 'Wordle Helper',
+      view: WordleView,
     },
   ]
 </script>
