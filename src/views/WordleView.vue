@@ -1,70 +1,89 @@
 <script setup lang="ts">
-  const chars = 'aerosunityquirk'
-  const hints = '  ?  ? !  !!!!!'.split('')
+  import { ref } from 'vue'
 
-  const charClass = (k: number): string => {
-    if (!chars[k]) return 'empty'
-    if (hints[k] === '?') return 'present'
-    if (hints[k] === '!') return 'correct'
-    return 'absent'
+  const grid = ref<string[][]>([
+    ['A0', 'E0', 'R0', 'O0', 'S0'],
+    ['U1', 'N0', 'I2', 'T0', 'Y0'],
+    ['Q2', 'U2', 'I2', 'R2', 'K2'],
+  ])
+
+  const searchResult = ['BENNI', 'DENIM', 'GENIC', 'GENIE']
+
+  const suggestion = ['GUIMP', 'GRAMP']
+
+  const charClass = (i: number, j: number): string => {
+    if (i >= grid.value.length) return 'empty'
+    const st = grid.value[i][j].substring(1)
+    return ['absent', 'present', 'correct'][Number(st)]
+  }
+
+  const toggleCharState = (i: number, j: number): void => {
+    if (i >= grid.value.length) return
+    const [c, st] = grid.value[i][j].split('')
+    const st2 = (Number(st) + 1) % 3
+    const v2 = c + st2
+    grid.value[i][j] = v2
+  }
+
+  const pushWord = (s: string): void => {
+    if (grid.value.length >= 6) return
+    const arr = s.split('').map((c) => `${c}0`)
+    grid.value.push(arr)
+  }
+
+  const popWord = (): void => {
+    if (grid.value.length <= 0) return
+    grid.value.pop()
+  }
+
+  const clearWords = (): void => {
+    grid.value.splice(0)
   }
 </script>
 
 <template>
   <div class="p-4 text-center">
-    <h1 class="text-3xl font-semibold">Wordle Helper</h1>
-    <div class="--items-center flex grow justify-evenly pt-10">
+    <h1 class="mb-10 text-3xl font-semibold">Wordle Helper</h1>
+    <div class="--items-center flex grow justify-evenly">
       <div class="--text-left --w-96">
         <h3 class="mb-2 text-2xl font-semibold">
-          Select From Search Result(10)
+          Select From Search Result({{ searchResult.length }})
         </h3>
         <ul class="mb-2 grid grid-cols-3 grid-rows-3 gap-x-2 gap-y-2">
           <li
+            v-for="w in searchResult"
+            :key="w"
             class="w-40 rounded-lg bg-sky-500 p-2 text-xl text-white hover:bg-sky-300"
+            @click="pushWord(w)"
           >
-            BENNI
-          </li>
-          <li
-            class="w-40 rounded-lg bg-sky-500 p-2 text-xl text-white hover:bg-sky-300"
-          >
-            DENIM
-          </li>
-          <li
-            class="w-40 rounded-lg bg-sky-500 p-2 text-xl text-white hover:bg-sky-300"
-          >
-            GENIC
-          </li>
-          <li
-            class="w-40 rounded-lg bg-sky-500 p-2 text-xl text-white hover:bg-sky-300"
-          >
-            GENIE
+            {{ w }}
           </li>
         </ul>
 
         <h3 class="mb-2 text-2xl font-semibold">Select From Suggestion</h3>
         <ul class="mb-2 grid grid-cols-3 grid-rows-2 gap-x-2 gap-y-2">
           <li
+            v-for="w in suggestion"
+            :key="w"
             class="w-40 rounded-lg bg-pink-500 p-2 text-xl text-white hover:bg-pink-300"
+            @click="pushWord(w)"
           >
-            GUIMP
-          </li>
-          <li
-            class="w-40 rounded-lg bg-pink-500 p-2 text-xl text-white hover:bg-pink-300"
-          >
-            GRAMP
+            {{ w }}
           </li>
         </ul>
 
-        <h3 class="mb-2 text-2xl font-semibold">Edit Menu</h3>
+        <h3 class="mb-2 text-2xl font-semibold">Edit</h3>
         <ul class="grid grid-cols-3 grid-rows-1 gap-x-2 gap-y-2">
           <li
             class="w-40 rounded-lg bg-slate-500 p-2 text-xl text-white hover:bg-slate-300"
+            @click="popWord"
           >
             <fa icon="fa-rotate-left" size="sm" />
             Undo
           </li>
           <li
             class="w-40 rounded-lg bg-slate-500 p-2 text-xl text-white hover:bg-slate-300"
+            @click="clearWords"
           >
             <fa icon="fa-trash-can" size="sm" />
             Clear
@@ -75,13 +94,18 @@
       <div>
         <h3 class="mb-2 text-2xl font-semibold">Present/Correct/Absent</h3>
         <div class="grid grid-cols-5 grid-rows-6 gap-x-2 gap-y-2">
-          <template v-for="(_, k) in 30" :key="k">
-            <div
-              class="box-border inline-flex h-16 w-16 items-center justify-center uppercase text-white"
-              :class="charClass(k)"
-            >
-              <span class="text-4xl font-bold">{{ chars[k] }}</span>
-            </div>
+          <template v-for="(_n, i) in 6" :key="i">
+            <template v-for="(_m, j) in 5" :key="`${i}_${j}`">
+              <div
+                class="box-border inline-flex h-16 w-16 items-center justify-center uppercase text-white"
+                :class="charClass(i, j)"
+                @click="toggleCharState(i, j)"
+              >
+                <span v-if="i < grid.length" class="text-4xl font-bold">{{
+                  grid[i][j][0]
+                }}</span>
+              </div>
+            </template>
           </template>
         </div>
       </div>
