@@ -1,10 +1,10 @@
-//------------------------------------------------------------------------------
-// Menu Items
-//------------------------------------------------------------------------------
+// --- Menu --------------------------------------------------------------------
 export type MenuItemType = {
   id: string
   title: string
 }
+
+// --- Minesweeper -------------------------------------------------------------
 
 //------------------------------------------------------------------------------
 // Game Settings
@@ -92,4 +92,12 @@ export const TimerModeEnum = {
 
 export type TimerModeType = typeof TimerModeEnum[keyof typeof TimerModeEnum]
 
-//------------------------------------------------------------------------------
+// --- Wordle Helper -----------------------------------------------------------
+
+export type WordleStateType = '' | '?' | '!'
+
+export type WordleHintType = {
+  position: number
+  letter: string
+  state: WordleStateType
+}

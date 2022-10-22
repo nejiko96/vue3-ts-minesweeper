@@ -1,33 +1,39 @@
 <script setup lang="ts">
-  import { ref } from 'vue'
+  import WordleHelper from '@/models/WordleHelper'
+  import { WordleHintType } from '@/types'
+  import { ref, watch } from 'vue'
 
-  const grid = ref<string[][]>([
-    ['A0', 'E0', 'R0', 'O0', 'S0'],
-    ['U1', 'N0', 'I2', 'T0', 'Y0'],
-    ['Q2', 'U2', 'I2', 'R2', 'K2'],
-  ])
+  const charStateTbl = {
+    '': { class: 'absent', next: '?' },
+    '?': { class: 'present', next: '!' },
+    '!': { class: 'correct', next: '' },
+  } as const
 
-  const searchResult = ['BENNI', 'DENIM', 'GENIC', 'GENIE']
+  const grid = ref<WordleHintType[][]>([])
 
-  const suggestion = ['GUIMP', 'GRAMP']
+  const searchCount = ref<number>(0)
+
+  const searchList = ref<string[]>([])
+
+  const suggestion = ref<string[]>([])
 
   const charClass = (i: number, j: number): string => {
     if (i >= grid.value.length) return 'empty'
-    const st = grid.value[i][j].substring(1)
-    return ['absent', 'present', 'correct'][Number(st)]
+    const st = grid.value[i][j].state
+    return charStateTbl[st].class
   }
 
   const toggleCharState = (i: number, j: number): void => {
     if (i >= grid.value.length) return
-    const [c, st] = grid.value[i][j].split('')
-    const st2 = (Number(st) + 1) % 3
-    const v2 = c + st2
-    grid.value[i][j] = v2
+    const h = grid.value[i][j]
+    h.state = charStateTbl[h.state].next
   }
 
   const pushWord = (s: string): void => {
     if (grid.value.length >= 6) return
-    const arr = s.split('').map((c) => `${c}0`)
+    const arr = s
+      .split('')
+      .map<WordleHintType>((c, i) => ({ position: i, letter: c, state: '' }))
     grid.value.push(arr)
   }
 
@@ -39,6 +45,17 @@
   const clearWords = (): void => {
     grid.value.splice(0)
   }
+
+  watch(
+    () => grid,
+    () => {
+      const wordle = new WordleHelper(grid.value.flat())
+      searchCount.value = wordle.search.length
+      searchList.value = wordle.searchN(9)
+      suggestion.value = wordle.suggestN(6).map((sg) => sg.w)
+    },
+    { immediate: true, deep: true }
+  )
 </script>
 
 <template>
@@ -47,11 +64,11 @@
     <div class="--items-center flex grow justify-evenly">
       <div class="--text-left --w-96">
         <h3 class="mb-2 text-2xl font-semibold">
-          Select From Search Result({{ searchResult.length }})
+          Search Result(total: {{ searchCount }})
         </h3>
         <ul class="mb-2 grid grid-cols-3 grid-rows-3 gap-x-2 gap-y-2">
           <li
-            v-for="w in searchResult"
+            v-for="w in searchList"
             :key="w"
             class="w-40 rounded-lg bg-sky-500 p-2 text-xl text-white hover:bg-sky-300"
             @click="pushWord(w)"
@@ -60,7 +77,7 @@
           </li>
         </ul>
 
-        <h3 class="mb-2 text-2xl font-semibold">Select From Suggestion</h3>
+        <h3 class="mb-2 text-2xl font-semibold">Suggestion</h3>
         <ul class="mb-2 grid grid-cols-3 grid-rows-2 gap-x-2 gap-y-2">
           <li
             v-for="w in suggestion"
@@ -102,7 +119,7 @@
                 @click="toggleCharState(i, j)"
               >
                 <span v-if="i < grid.length" class="text-4xl font-bold">{{
-                  grid[i][j][0]
+                  grid[i][j].letter
                 }}</span>
               </div>
             </template>
