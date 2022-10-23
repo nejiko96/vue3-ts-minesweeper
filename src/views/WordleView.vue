@@ -62,35 +62,28 @@
   <div class="p-4 text-center">
     <h1 class="mb-10 text-3xl font-semibold">Wordle Helper</h1>
     <div class="--items-center flex grow justify-evenly">
-      <div class="--text-left --w-96">
-        <h3 class="mb-2 text-2xl font-semibold">
-          Search Result (total {{ searchCount }} words)
-        </h3>
-        <ul class="mb-2 grid grid-cols-3 grid-rows-3 gap-x-2 gap-y-2">
-          <li
-            v-for="w in searchList"
-            :key="w"
-            class="w-40 rounded-lg bg-sky-500 p-2 text-xl text-white hover:bg-sky-300"
-            @click="pushWord(w)"
-          >
-            {{ w }}
-          </li>
-        </ul>
+      <div>
+        <h3 class="mb-2 text-2xl font-semibold">Present/Correct/Absent</h3>
+        <div class="grid grid-cols-5 grid-rows-6 gap-x-2 gap-y-2">
+          <template v-for="(_n, i) in 6" :key="i">
+            <template v-for="(_m, j) in 5" :key="`${i}_${j}`">
+              <div
+                class="box-border inline-flex h-16 w-16 items-center justify-center uppercase text-white"
+                :class="charClass(i, j)"
+                @click="toggleCharState(i, j)"
+              >
+                <span v-if="i < grid.length" class="text-4xl font-bold">{{
+                  grid[i][j].letter
+                }}</span>
+              </div>
+            </template>
+          </template>
+        </div>
+      </div>
 
-        <h3 class="mb-2 text-2xl font-semibold">Suggestion</h3>
-        <ul class="mb-2 grid grid-cols-3 grid-rows-2 gap-x-2 gap-y-2">
-          <li
-            v-for="w in suggestion"
-            :key="w"
-            class="w-40 rounded-lg bg-pink-500 p-2 text-xl text-white hover:bg-pink-300"
-            @click="pushWord(w)"
-          >
-            {{ w }}
-          </li>
-        </ul>
-
+      <div>
         <h3 class="mb-2 text-2xl font-semibold">Command</h3>
-        <ul class="grid grid-cols-3 grid-rows-1 gap-x-2 gap-y-2">
+        <ul class="mb-2 grid grid-cols-3 grid-rows-1 gap-x-2 gap-y-2">
           <a
             href="https://www.nytimes.com/games/wordle/index.html"
             class="w-40 rounded-lg bg-slate-500 p-2 text-xl text-white hover:bg-slate-300"
@@ -113,25 +106,32 @@
             Clear
           </li>
         </ul>
-      </div>
 
-      <div>
-        <h3 class="mb-2 text-2xl font-semibold">Present/Correct/Absent</h3>
-        <div class="grid grid-cols-5 grid-rows-6 gap-x-2 gap-y-2">
-          <template v-for="(_n, i) in 6" :key="i">
-            <template v-for="(_m, j) in 5" :key="`${i}_${j}`">
-              <div
-                class="box-border inline-flex h-16 w-16 items-center justify-center uppercase text-white"
-                :class="charClass(i, j)"
-                @click="toggleCharState(i, j)"
-              >
-                <span v-if="i < grid.length" class="text-4xl font-bold">{{
-                  grid[i][j].letter
-                }}</span>
-              </div>
-            </template>
-          </template>
-        </div>
+        <h3 class="mb-2 text-2xl font-semibold">Suggestion</h3>
+        <ul class="mb-2 grid grid-cols-3 grid-rows-2 gap-x-2 gap-y-2">
+          <li
+            v-for="w in suggestion"
+            :key="w"
+            class="w-40 rounded-lg bg-pink-500 p-2 text-xl text-white hover:bg-pink-300"
+            @click="pushWord(w)"
+          >
+            {{ w }}
+          </li>
+        </ul>
+
+        <h3 class="mb-2 text-2xl font-semibold">
+          Search Result (total {{ searchCount }} words)
+        </h3>
+        <ul class="mb-2 grid grid-cols-3 grid-rows-3 gap-x-2 gap-y-2">
+          <li
+            v-for="w in searchList"
+            :key="w"
+            class="w-40 rounded-lg bg-sky-500 p-2 text-xl text-white hover:bg-sky-300"
+            @click="pushWord(w)"
+          >
+            {{ w }}
+          </li>
+        </ul>
       </div>
     </div>
   </div>
