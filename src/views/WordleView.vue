@@ -64,7 +64,7 @@
     <div class="--items-center flex grow justify-evenly">
       <div class="--text-left --w-96">
         <h3 class="mb-2 text-2xl font-semibold">
-          Search Result(total: {{ searchCount }})
+          Search Result (total {{ searchCount }} words)
         </h3>
         <ul class="mb-2 grid grid-cols-3 grid-rows-3 gap-x-2 gap-y-2">
           <li
@@ -89,8 +89,15 @@
           </li>
         </ul>
 
-        <h3 class="mb-2 text-2xl font-semibold">Edit</h3>
+        <h3 class="mb-2 text-2xl font-semibold">Command</h3>
         <ul class="grid grid-cols-3 grid-rows-1 gap-x-2 gap-y-2">
+          <a
+            href="https://www.nytimes.com/games/wordle/index.html"
+            class="w-40 rounded-lg bg-slate-500 p-2 text-xl text-white hover:bg-slate-300"
+            target="_blank"
+            rel="noreferrer noopener"
+            >Open Wordle</a
+          >
           <li
             class="w-40 rounded-lg bg-slate-500 p-2 text-xl text-white hover:bg-slate-300"
             @click="popWord"
