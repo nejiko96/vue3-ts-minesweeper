@@ -94,10 +94,15 @@ export type TimerModeType = typeof TimerModeEnum[keyof typeof TimerModeEnum]
 
 // --- Wordle Helper -----------------------------------------------------------
 
-export type WordleStateType = '' | '?' | '!'
-
 export type WordleHintType = {
   position: number
   letter: string
-  state: WordleStateType
+  state: number
+}
+
+export type WordleSuggestionType = {
+  w: string
+  r1: number
+  r2: number
+  r3: number
 }

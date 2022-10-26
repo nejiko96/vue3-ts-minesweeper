@@ -3,11 +3,11 @@
   import { WordleHintType } from '@/types'
   import { ref, watch } from 'vue'
 
-  const charStateTbl = {
-    '': { class: 'absent', next: '?' },
-    '?': { class: 'present', next: '!' },
-    '!': { class: 'correct', next: '' },
-  } as const
+  const wordleStateTbl = [
+    { class: 'absent' },
+    { class: 'present' },
+    { class: 'correct' },
+  ] as const
 
   const grid = ref<WordleHintType[][]>([])
 
@@ -20,20 +20,20 @@
   const charClass = (i: number, j: number): string => {
     if (i >= grid.value.length) return 'empty'
     const st = grid.value[i][j].state
-    return charStateTbl[st].class
+    return wordleStateTbl[st].class
   }
 
   const toggleCharState = (i: number, j: number): void => {
     if (i >= grid.value.length) return
     const h = grid.value[i][j]
-    h.state = charStateTbl[h.state].next
+    h.state = (h.state + 1) % 3
   }
 
   const pushWord = (s: string): void => {
     if (grid.value.length >= 6) return
     const arr = s
       .split('')
-      .map<WordleHintType>((c, i) => ({ position: i, letter: c, state: '' }))
+      .map<WordleHintType>((c, i) => ({ position: i, letter: c, state: 0 }))
     grid.value.push(arr)
   }
 
@@ -120,7 +120,7 @@
         </ul>
 
         <h3 class="mb-2 text-2xl font-semibold">
-          Search Result (total {{ searchCount }} words)
+          Search Result ({{ searchCount }})
         </h3>
         <ul class="mb-2 grid grid-cols-3 grid-rows-3 gap-x-2 gap-y-2">
           <li
@@ -151,10 +151,6 @@
     --color-tone-10: #000;
     --color-tone-11: #787c7e;
     --color-tone-12: #363636;
-    --color-nav-hover: #f4f4f4;
-    --opacity-50: rgb(255 255 255 / 50%);
-    --error-background: #e3e3e1;
-    --icon-disabled: #a6a6a6;
     --green: #6aaa64;
     --darkened-green: #538d4e;
     --yellow: #c9b458;
@@ -178,10 +174,6 @@
       --color-tone-10: #dfdfdf;
       --color-tone-11: #dfdfdf;
       --color-tone-12: #dfdfdf;
-      --color-nav-hover: #2f2f31;
-      --opacity-50: rgb(0 0 0 / 50%);
-      --error-background: var(--color-tone-7);
-      --icon-disabled: #59595a;
       --color-present: var(--darkened-yellow);
       --color-correct: var(--darkened-green);
       --color-absent: var(--color-tone-4);
