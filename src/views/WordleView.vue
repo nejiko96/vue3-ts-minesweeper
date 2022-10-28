@@ -61,8 +61,10 @@
 <template>
   <div class="p-4 text-center">
     <h1 class="mb-10 text-3xl font-semibold">Wordle Helper</h1>
-    <div class="--items-center flex grow justify-evenly">
-      <div>
+    <div
+      class="flex flex-col items-center justify-center md:flex-row md:items-start md:justify-evenly"
+    >
+      <div class="mb-10">
         <h3 class="mb-2 text-2xl font-semibold">Present/Correct/Absent</h3>
         <div class="grid grid-cols-5 grid-rows-6 gap-x-2 gap-y-2">
           <template v-for="(_n, i) in 6" :key="i">
@@ -81,7 +83,7 @@
         </div>
       </div>
 
-      <div>
+      <div class="mb-10">
         <h3 class="mb-2 text-2xl font-semibold">Command</h3>
         <ul class="mb-2 grid grid-cols-3 grid-rows-1 gap-x-2 gap-y-2">
           <a
