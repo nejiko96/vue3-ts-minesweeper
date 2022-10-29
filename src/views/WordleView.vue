@@ -17,7 +17,7 @@
 
   const suggestion = ref<string[]>([])
 
-  const charClass = (i: number, j: number): string => {
+  const charStateClass = (i: number, j: number): string => {
     if (i >= grid.value.length) return 'empty'
     const st = grid.value[i][j].state
     return wordleStateTbl[st].class
@@ -65,13 +65,15 @@
       class="flex flex-col items-center justify-center md:flex-row md:items-start md:justify-evenly"
     >
       <div class="mb-10">
-        <h3 class="mb-2 text-2xl font-semibold">Present/Correct/Absent</h3>
+        <h3 class="mb-2 text-2xl font-semibold">
+          🟨Present 🟩Correct ⬛Absent
+        </h3>
         <div class="grid grid-cols-5 grid-rows-6 gap-x-2 gap-y-2">
           <template v-for="(_n, i) in 6" :key="i">
             <template v-for="(_m, j) in 5" :key="`${i}_${j}`">
               <div
                 class="box-border inline-flex h-16 w-16 items-center justify-center uppercase text-white"
-                :class="charClass(i, j)"
+                :class="charStateClass(i, j)"
                 @click="toggleCharState(i, j)"
               >
                 <span v-if="i < grid.length" class="text-4xl font-bold">{{
@@ -84,14 +86,15 @@
       </div>
 
       <div class="mb-10">
-        <h3 class="mb-2 text-2xl font-semibold">Command</h3>
+        <!-- <h3 class="mb-2 text-2xl font-semibold">Command</h3> -->
         <ul class="mb-2 grid grid-cols-3 grid-rows-1 gap-x-2 gap-y-2">
           <a
             href="https://www.nytimes.com/games/wordle/index.html"
             class="w-40 rounded-lg bg-slate-500 p-2 text-xl text-white hover:bg-slate-300"
             target="_blank"
             rel="noreferrer noopener"
-            >Open Wordle</a
+            ><fa icon="fa-arrow-up-right-from-square" size="sm" /> Open
+            Wordle</a
           >
           <li
             class="w-40 rounded-lg bg-slate-500 p-2 text-xl text-white hover:bg-slate-300"

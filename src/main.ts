@@ -5,6 +5,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import {
   faAngleDown,
+  faArrowUpRightFromSquare,
   faGear,
   faRotateLeft,
   faTrashCan,
@@ -16,6 +17,7 @@ import './index.css'
 import App from './App.vue'
 
 library.add(faAngleDown)
+library.add(faArrowUpRightFromSquare)
 library.add(faGear)
 library.add(faGithub)
 library.add(faRotateLeft)
