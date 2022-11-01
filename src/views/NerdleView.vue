@@ -27,7 +27,7 @@
     h.state = (h.state + 1) % 3
   }
 
-  const pushExpr = (s: string): void => {
+  const push = (s: string): void => {
     if (grid.value.length >= 6) return
     const arr = s
       .split('')
@@ -35,29 +35,25 @@
     grid.value.push(arr)
   }
 
-  const popExpr = (): void => {
+  const pop = (): void => {
     if (grid.value.length <= 2) return
     grid.value.pop()
   }
 
-  const clearExprs = (): void => {
+  const reset = (): void => {
     grid.value.splice(0)
-    NerdleHelper.suggest.forEach((sg) => pushExpr(sg))
+    NerdleHelper.suggest.forEach((sg) => push(sg))
   }
 
-  onMounted(() => {
-    NerdleHelper.suggest.forEach((sg) => pushExpr(sg))
-  })
+  const update = async () => {
+    const nerdle = new NerdleHelper(grid.value.flat())
+    searchCount.value = nerdle.search.length
+    searchList.value = nerdle.searchN(12)
+  }
 
-  watch(
-    () => grid,
-    () => {
-      const nerdle = new NerdleHelper(grid.value.flat())
-      searchCount.value = nerdle.search.length
-      searchList.value = nerdle.searchN(12)
-    },
-    { immediate: true, deep: true }
-  )
+  onMounted(reset)
+
+  watch(() => grid, update, { immediate: true, deep: true })
 </script>
 
 <template>
@@ -102,17 +98,17 @@
           >
           <li
             class="w-40 rounded-lg bg-slate-500 p-2 text-xl text-white hover:bg-slate-300"
-            @click="popExpr"
+            @click="pop"
           >
             <fa icon="fa-rotate-left" size="sm" />
             Undo
           </li>
           <li
             class="w-40 rounded-lg bg-slate-500 p-2 text-xl text-white hover:bg-slate-300"
-            @click="clearExprs"
+            @click="reset"
           >
             <fa icon="fa-trash-can" size="sm" />
-            Clear
+            Reset
           </li>
         </ul>
 
@@ -124,7 +120,7 @@
             v-for="w in searchList"
             :key="w"
             class="w-60 rounded-lg bg-sky-500 p-2 text-xl text-white hover:bg-sky-300"
-            @click="pushExpr(w)"
+            @click="push(w)"
           >
             {{ w }}
           </li>
