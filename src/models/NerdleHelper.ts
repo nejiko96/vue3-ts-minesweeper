@@ -177,6 +177,10 @@ class NerdleHelper {
     }
     return this.#search
   }
+
+  searchN(n: number): string[] {
+    return this.search.slice(0, n)
+  }
 }
 
 export default NerdleHelper

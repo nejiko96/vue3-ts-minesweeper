@@ -1,26 +1,24 @@
 <script setup lang="ts">
-  import WordleHelper from '@/models/WordleHelper'
-  import { WordleHintType } from '@/types'
-  import { ref, watch } from 'vue'
+  import NerdleHelper from '@/models/NerdleHelper'
+  import { NerdleHintType } from '@/types'
+  import { onMounted, ref, watch } from 'vue'
 
-  const wordleStateTbl = [
+  const nerdleStateTbl = [
     { class: 'absent' },
     { class: 'present' },
     { class: 'correct' },
   ] as const
 
-  const grid = ref<WordleHintType[][]>([])
+  const grid = ref<NerdleHintType[][]>([])
 
   const searchCount = ref<number>(0)
 
   const searchList = ref<string[]>([])
 
-  const suggestion = ref<string[]>([])
-
   const charStateClass = (i: number, j: number): string => {
     if (i >= grid.value.length) return 'empty'
     const st = grid.value[i][j].state
-    return wordleStateTbl[st].class
+    return nerdleStateTbl[st].class
   }
 
   const toggleCharState = (i: number, j: number): void => {
@@ -29,30 +27,34 @@
     h.state = (h.state + 1) % 3
   }
 
-  const pushWord = (s: string): void => {
+  const pushExpr = (s: string): void => {
     if (grid.value.length >= 6) return
     const arr = s
       .split('')
-      .map<WordleHintType>((c, i) => ({ position: i, letter: c, state: 0 }))
+      .map<NerdleHintType>((c, i) => ({ position: i, letter: c, state: 0 }))
     grid.value.push(arr)
   }
 
-  const popWord = (): void => {
-    if (grid.value.length <= 0) return
+  const popExpr = (): void => {
+    if (grid.value.length <= 2) return
     grid.value.pop()
   }
 
-  const clearWords = (): void => {
+  const clearExprs = (): void => {
     grid.value.splice(0)
+    NerdleHelper.suggest.forEach((sg) => pushExpr(sg))
   }
+
+  onMounted(() => {
+    NerdleHelper.suggest.forEach((sg) => pushExpr(sg))
+  })
 
   watch(
     () => grid,
     () => {
-      const wordle = new WordleHelper(grid.value.flat())
-      searchCount.value = wordle.search.length
-      searchList.value = wordle.searchN(12)
-      suggestion.value = wordle.suggestN(6).map((sg) => sg.w)
+      const nerdle = new NerdleHelper(grid.value.flat())
+      searchCount.value = nerdle.search.length
+      searchList.value = nerdle.searchN(12)
     },
     { immediate: true, deep: true }
   )
@@ -60,15 +62,15 @@
 
 <template>
   <div class="p-4 text-center">
-    <h1 class="mb-10 text-3xl font-semibold">Wordle Helper</h1>
+    <h1 class="mb-10 text-3xl font-semibold">Nerdle Helper</h1>
     <div
       class="flex flex-col items-center justify-center md:flex-row md:items-start md:justify-evenly"
     >
       <div class="mb-10">
         <h3 class="mb-2 text-2xl font-semibold">🟨Present 🟩Correct</h3>
-        <div class="grid grid-cols-5 grid-rows-6 gap-x-2 gap-y-2">
+        <div class="grid grid-cols-8 grid-rows-6 gap-x-2 gap-y-2">
           <template v-for="(_n, i) in 6" :key="i">
-            <template v-for="(_m, j) in 5" :key="`${i}_${j}`">
+            <template v-for="(_m, j) in 8" :key="`${i}_${j}`">
               <div
                 class="box-border inline-flex h-16 w-16 items-center justify-center"
                 :class="charStateClass(i, j)"
@@ -89,50 +91,38 @@
         <!-- <h3 class="mb-2 text-2xl font-semibold">Command</h3> -->
         <ul class="mb-2 grid grid-cols-3 grid-rows-1 gap-x-2 gap-y-2">
           <a
-            href="https://www.nytimes.com/games/wordle/index.html"
+            href="https://nerdlegame.com/"
             class="w-40 rounded-lg bg-slate-500 p-2 text-xl text-white hover:bg-slate-300"
             target="_blank"
             rel="noreferrer noopener"
             ><fa icon="fa-arrow-up-right-from-square" size="sm" /> Open
-            Wordle</a
+            Nerdle</a
           >
           <li
             class="w-40 rounded-lg bg-slate-500 p-2 text-xl text-white hover:bg-slate-300"
-            @click="popWord"
+            @click="popExpr"
           >
             <fa icon="fa-rotate-left" size="sm" />
             Undo
           </li>
           <li
             class="w-40 rounded-lg bg-slate-500 p-2 text-xl text-white hover:bg-slate-300"
-            @click="clearWords"
+            @click="clearExprs"
           >
             <fa icon="fa-trash-can" size="sm" />
             Clear
           </li>
         </ul>
 
-        <h3 class="mb-2 text-2xl font-semibold">Suggestion</h3>
-        <ul class="mb-2 grid grid-cols-3 grid-rows-2 gap-x-2 gap-y-2">
-          <li
-            v-for="w in suggestion"
-            :key="w"
-            class="w-40 rounded-lg bg-pink-500 p-2 text-xl text-white hover:bg-pink-300"
-            @click="pushWord(w)"
-          >
-            {{ w }}
-          </li>
-        </ul>
-
         <h3 class="mb-2 text-2xl font-semibold">
           Search Result ({{ searchCount }})
         </h3>
-        <ul class="mb-2 grid grid-cols-3 grid-rows-4 gap-x-2 gap-y-2">
+        <ul class="mb-2 grid grid-cols-2 grid-rows-6 gap-x-2 gap-y-2">
           <li
             v-for="w in searchList"
             :key="w"
-            class="w-40 rounded-lg bg-sky-500 p-2 text-xl text-white hover:bg-sky-300"
-            @click="pushWord(w)"
+            class="w-60 rounded-lg bg-sky-500 p-2 text-xl text-white hover:bg-sky-300"
+            @click="pushExpr(w)"
           >
             {{ w }}
           </li>

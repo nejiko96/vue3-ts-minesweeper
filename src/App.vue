@@ -4,6 +4,7 @@
   import MsView from '@/views/MsView.vue'
   import CatView from '@/views/CatView.vue'
   import WordleView from '@/views/WordleView.vue'
+  import NerdleView from '@/views/NerdleView.vue'
   import AppLayout from './AppLayout.vue'
 
   const menuItems = [
@@ -21,6 +22,11 @@
       id: 'WORDLE',
       title: 'Wordle Helper',
       view: WordleView,
+    },
+    {
+      id: 'NERDLE',
+      title: 'Nerdle Helper',
+      view: NerdleView,
     },
   ]
 </script>
