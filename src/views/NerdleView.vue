@@ -67,28 +67,30 @@
       class="flex flex-col items-center justify-center md:flex-row md:items-start md:justify-evenly"
     >
       <div class="mb-10">
-        <h3 class="mb-2 text-2xl font-semibold">🟨Present 🟩Correct</h3>
-        <div class="grid grid-cols-8 grid-rows-6 gap-x-2 gap-y-2">
+        <h3 class="mb-2 text-2xl font-semibold">🟪Present 🟩Correct</h3>
+        <div class="pb-2">
           <template v-for="(_n, i) in 6" :key="i">
-            <template v-for="(_m, j) in 8" :key="`${i}_${j}`">
-              <div
-                class="box-border inline-flex h-16 w-16 items-center justify-center"
-                :class="charStateClass(i, j)"
-                @click="toggleCharState(i, j)"
-              >
-                <span
-                  v-if="i < grid.length"
-                  class="text-4xl font-bold uppercase text-white"
-                  >{{ grid[i][j].letter }}</span
+            <div class="mb-1 flex justify-center">
+              <template v-for="(_m, j) in 8" :key="`${i}_${j}`">
+                <div
+                  __class="box-border inline-flex h-11 w-14 items-center justify-center"
+                  class="mx-0.5 flex h-14 w-14 items-center justify-center rounded"
+                  :class="charStateClass(i, j)"
+                  @click="toggleCharState(i, j)"
                 >
-              </div>
-            </template>
+                  <span
+                    v-if="i < grid.length"
+                    class="text-xl font-bold text-white"
+                    >{{ grid[i][j].letter }}</span
+                  >
+                </div>
+              </template>
+            </div>
           </template>
         </div>
       </div>
 
       <div class="mb-10">
-        <!-- <h3 class="mb-2 text-2xl font-semibold">Command</h3> -->
         <ul class="mb-2 grid grid-cols-3 grid-rows-1 gap-x-2 gap-y-2">
           <a
             href="https://nerdlegame.com/"
@@ -132,76 +134,32 @@
   </div>
 </template>
 
-<style>
-  :root {
-    --color-tone-1: #000;
-    --color-tone-2: #787c7e;
-    --color-tone-3: #878a8c;
-    --color-tone-4: #d3d6da;
-    --color-tone-5: #edeff1;
-    --color-tone-6: #f6f7f8;
-    --color-tone-7: #fff;
-    --color-tone-8: #121212;
-    --color-tone-9: #dfdfdf;
-    --color-tone-10: #000;
-    --color-tone-11: #787c7e;
-    --color-tone-12: #363636;
-    --green: #6aaa64;
-    --darkened-green: #538d4e;
-    --yellow: #c9b458;
-    --darkened-yellow: #b59f3b;
-    --color-present: var(--yellow);
-    --color-correct: var(--green);
-    --color-absent: var(--color-tone-2);
-  }
-
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --color-tone-1: #fff;
-      --color-tone-2: #818384;
-      --color-tone-3: #565758;
-      --color-tone-4: #3a3a3c;
-      --color-tone-5: #272729;
-      --color-tone-6: #1a1a1b;
-      --color-tone-7: #121213;
-      --color-tone-8: #fff;
-      --color-tone-9: #424242;
-      --color-tone-10: #dfdfdf;
-      --color-tone-11: #dfdfdf;
-      --color-tone-12: #dfdfdf;
-      --color-present: var(--darkened-yellow);
-      --color-correct: var(--darkened-green);
-      --color-absent: var(--color-tone-4);
-    }
-  }
-</style>
-
 <style scoped>
   .present {
-    background-color: var(--color-present);
+    background-color: #820458;
   }
 
   .present:hover {
-    background-color: #fef08a;
+    background-color: #97116b;
   }
 
   .correct {
-    background-color: var(--color-correct);
+    background-color: #398874;
   }
 
   .correct:hover {
-    background-color: #a1e1c7;
+    background-color: #4ca28d;
   }
 
   .absent {
-    background-color: var(--color-absent);
+    background-color: #161803;
   }
 
   .absent:hover {
-    background-color: #bcc1c4;
+    background-color: #262a08;
   }
 
   .empty {
-    border: 2px solid var(--color-tone-4);
+    background-color: #989484;
   }
 </style>
