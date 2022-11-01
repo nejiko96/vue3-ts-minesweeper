@@ -27,6 +27,8 @@ rules:
   no-bitwise:
     - off
     - int32Hint: true
+  no-continue:
+    - off
   no-plusplus:
     - error
     - allowForLoopAfterthoughts: true

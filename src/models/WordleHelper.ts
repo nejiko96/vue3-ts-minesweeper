@@ -1,11 +1,11 @@
 import { WordleHintType, WordleSuggestionType } from '@/types'
 import { deleteChars, selectChars, uniq, permutation } from '@/utils'
-import wordsRaw from './words.txt?raw'
+import wordsRaw from '@/resource/words.txt?raw'
 
 class WordleHelper {
   static ALL_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
-  static WORDS = wordsRaw.split('\n')
+  static WORDS: string[] = wordsRaw.split('\n')
 
   hs: WordleHintType[]
 
@@ -37,7 +37,7 @@ class WordleHelper {
       this.hs = ms.map<WordleHintType>((h, i) => ({
         position: i % 5,
         letter: h.charAt(0),
-        state: [' ', '?', '!'].indexOf(`${h} `.charAt(1)),
+        state: ['', '?', '!'].indexOf(h.charAt(1)),
       }))
     } else {
       this.hs = obj

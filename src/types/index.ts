@@ -106,3 +106,11 @@ export type WordleSuggestionType = {
   r2: number
   r3: number
 }
+
+// --- Nerdle Helper -----------------------------------------------------------
+
+export type NerdleHintType = {
+  position: number
+  letter: string
+  state: number
+}
