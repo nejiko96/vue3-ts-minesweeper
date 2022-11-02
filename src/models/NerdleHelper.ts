@@ -1,5 +1,13 @@
 import { NerdleHintType } from '@/types'
-import { deleteChars, selectChars, uniq, repeatedPermutation } from '@/utils'
+import {
+  deleteChars,
+  selectChars,
+  sample,
+  uniq,
+  repeatedPermutation,
+  fillArray,
+  permutation,
+} from '@/utils'
 import samplesRaw from '@/resource/nerdle-samples.txt?raw'
 import NerdleParser from './NerdleParser'
 
@@ -34,12 +42,27 @@ class NerdleHelper {
 
   static #SAMPLES: string[] = samplesRaw.split('\n')
 
+  static generateSamples(): string[] {
+    const ret: string[] = []
+    const ds = fillArray(10, (k) => k)
+    const ps = permutation(ds)
+    ps.forEach(([a, b, c, d, e, f, g, h, i, j]) => {
+      if (a === 0 || i === 0 || c === 0) return
+
+      const ab = a * 10 + b
+      if (ab % c) return
+      if (ab / c + d !== e) return
+
+      const ij = i * 10 + j
+      if (f * g - h !== ij) return
+
+      ret.push(`${ab}/${c}+${d}=${e} ${f}*${g}-${h}=${ij}`)
+    })
+    return ret
+  }
+
   static get suggest(): string[] {
-    const smp =
-      NerdleHelper.#SAMPLES[
-        Math.floor(Math.random() * NerdleHelper.#SAMPLES.length)
-      ]
-    return smp.split(' ')
+    return sample(NerdleHelper.#SAMPLES).split(' ')
   }
 
   hs: NerdleHintType[]
@@ -75,17 +98,8 @@ class NerdleHelper {
     }
   }
 
-  cs(i: number, s: number): string {
-    return this.hs
-      .filter((h) => h.position === i && h.state === s)
-      .map((h) => h.letter)
-      .join('')
-  }
-
   get got(): string {
-    this.#got ||= uniq(
-      this.hs.filter((h) => h.state > 0).map((h) => h.letter)
-    ).join('')
+    this.#got ||= this.#letters((h) => h.state > 0)
     return this.#got
   }
 
@@ -104,7 +118,7 @@ class NerdleHelper {
     return this.#ops
   }
 
-  get nums() {
+  get nums(): string[] {
     if (this.#nums === null) {
       const ds = new Set([...this.digits])
       const d0 = new Set(['0'])
@@ -119,20 +133,20 @@ class NerdleHelper {
     return this.#nums
   }
 
-  get excludePat() {
+  get excludePat(): RegExp {
     this.#excludePat ||= new RegExp(`[_${this.otherDigits}]`)
     return this.#excludePat
   }
 
-  get includePat() {
+  get includePat(): RegExp {
     if (this.#includePat === null) {
       const containsRe = [...this.got]
         .map((c) => `(?=.*${escapeOps(c)})`)
         .join('')
       const allowedRe = Array.from(Array(8))
         .map((_, i) => {
-          const cs2 = this.cs(i, 2)
-          const cs1 = this.cs(i, 1)
+          const cs2 = this.#letters((h) => h.position === i && h.state === 2)
+          const cs1 = this.#letters((h) => h.position === i && h.state === 1)
           return (
             (cs2.length && escapeOps(cs2[0])) ||
             (cs1.length && `[^${escapeMinus(cs1)}]`) ||
@@ -145,18 +159,29 @@ class NerdleHelper {
     return this.#includePat
   }
 
-  #chk(tokens: string[]) {
-    const r = new NerdleParser(tokens).expr()
-    if (r.d === 0) return
-    if (r.n % r.d) return
+  get search(): string[] {
+    if (this.#search === null) {
+      this.#search = []
+      this.#dfs([])
+    }
+    return this.#search
+  }
 
-    const ans = (r.n / r.d).toString()
+  #letters(fl: (h: NerdleHintType) => boolean): string {
+    return uniq(this.hs.filter(fl).map((h) => h.letter)).join('')
+  }
+
+  #chk(tokens: string[]): void {
+    const r = new NerdleParser(tokens).expr()
+    if (!r.isValid()) return
+
+    const ans = r.toNumber().toString()
     if (ans.match(this.excludePat)) return
 
     const eq = `${tokens.join('')}=${ans}`
     if (!eq.match(this.includePat)) return
 
-    this.#search!.push(eq)
+    this.#search?.push(eq)
   }
 
   #dfs(tokens: string[]): void {
@@ -168,14 +193,6 @@ class NerdleHelper {
     } else {
       this.nums.forEach((num) => this.#dfs(tokens.concat(num)))
     }
-  }
-
-  get search(): string[] {
-    if (this.#search === null) {
-      this.#search = []
-      this.#dfs([])
-    }
-    return this.#search
   }
 
   searchN(n: number): string[] {

@@ -48,7 +48,7 @@
   const update = async () => {
     const nerdle = new NerdleHelper(grid.value.flat())
     searchCount.value = nerdle.search.length
-    searchList.value = nerdle.searchN(12)
+    searchList.value = nerdle.searchN(15)
   }
 
   onMounted(reset)
@@ -63,14 +63,12 @@
       class="flex flex-col items-center justify-center md:flex-row md:items-start md:justify-evenly"
     >
       <div class="mb-10">
-        <h3 class="mb-2 text-2xl font-semibold">🟪Present 🟩Correct</h3>
         <div class="pb-2">
           <template v-for="(_n, i) in 6" :key="i">
             <div class="mb-1 flex justify-center">
               <template v-for="(_m, j) in 8" :key="`${i}_${j}`">
                 <div
-                  __class="box-border inline-flex h-11 w-14 items-center justify-center"
-                  class="mx-0.5 flex h-14 w-14 items-center justify-center rounded"
+                  class="mx-0.5 flex h-[3.2rem] w-14 items-center justify-center rounded"
                   :class="charStateClass(i, j)"
                   @click="toggleCharState(i, j)"
                 >
@@ -84,6 +82,7 @@
             </div>
           </template>
         </div>
+        <h3 class="text-2xl font-semibold">🟪Present 🟩Correct</h3>
       </div>
 
       <div class="mb-10">
@@ -115,11 +114,11 @@
         <h3 class="mb-2 text-2xl font-semibold">
           Search Result ({{ searchCount }})
         </h3>
-        <ul class="mb-2 grid grid-cols-2 grid-rows-6 gap-x-2 gap-y-2">
+        <ul class="mb-2 grid grid-cols-3 grid-rows-5 gap-x-2 gap-y-2">
           <li
             v-for="w in searchList"
             :key="w"
-            class="w-60 rounded-lg bg-sky-500 p-2 text-xl text-white hover:bg-sky-300"
+            class="w-40 rounded-lg bg-sky-500 p-2 text-xl text-white hover:bg-sky-300"
             @click="push(w)"
           >
             {{ w }}

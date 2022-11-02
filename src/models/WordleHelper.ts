@@ -44,22 +44,13 @@ class WordleHelper {
     }
   }
 
-  cs(i: number, s: number): string {
-    return this.hs
-      .filter((h) => h.position === i && h.state === s)
-      .map((h) => h.letter)
-      .join('')
-  }
-
   get tried(): string {
-    this.#tried ||= uniq(this.hs.map((h) => h.letter)).join('')
+    this.#tried ||= this.#letters(() => true)
     return this.#tried
   }
 
   get got(): string {
-    this.#got ||= uniq(
-      this.hs.filter((h) => h.state > 0).map((h) => h.letter)
-    ).join('')
+    this.#got ||= this.#letters((h) => h.state > 0)
     return this.#got
   }
 
@@ -83,8 +74,8 @@ class WordleHelper {
       const containsRe = [...this.got].map((c) => `(?=.*${c})`).join('')
       const allowedRe = Array.from(Array(5))
         .map((_, i) => {
-          const cs2 = this.cs(i, 2)
-          const cs1 = this.cs(i, 1)
+          const cs2 = this.#letters((h) => h.position === i && h.state === 2)
+          const cs1 = this.#letters((h) => h.position === i && h.state === 1)
           return (cs2.length && cs2[0]) || (cs1.length && `[^${cs1}]`) || '.'
         })
         .join('')
@@ -163,6 +154,10 @@ class WordleHelper {
       }
     }
     return this.#suggest
+  }
+
+  #letters(fl: (h: WordleHintType) => boolean): string {
+    return uniq(this.hs.filter(fl).map((h) => h.letter)).join('')
   }
 
   searchN(n: number): string[] {

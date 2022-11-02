@@ -1,3 +1,5 @@
+import NerdleRational from './NerdleRational'
+
 class NerdleParser {
   #tokens: string[]
 
@@ -8,35 +10,35 @@ class NerdleParser {
     this.#pos = 0
   }
 
-  peek() {
+  peek(): string {
     return this.#tokens[this.#pos]
   }
 
-  consume() {
+  consume(): void {
     this.#pos += 1
   }
 
-  number() {
+  number(): NerdleRational {
     const x = this.peek()
 
     this.consume()
-    return { d: 1, n: parseInt(x, 10) }
+    return new NerdleRational(1, Number(x))
   }
 
-  term() {
+  term(): NerdleRational {
     let x = this.number()
     for (;;) {
       switch (this.peek()) {
         case '*': {
           this.consume()
           const y = this.number()
-          x = { d: x.d * y.d, n: x.n * y.n }
+          x = x.mul(y)
           continue
         }
         case '/': {
           this.consume()
-          const z = this.number()
-          x = { d: x.d * z.n, n: x.n * z.d }
+          const y = this.number()
+          x = x.div(y)
           continue
         }
         default:
@@ -47,20 +49,20 @@ class NerdleParser {
     return x
   }
 
-  expr() {
+  expr(): NerdleRational {
     let x = this.term()
     for (;;) {
       switch (this.peek()) {
         case '+': {
           this.consume()
           const y = this.term()
-          x = { d: x.d * y.d, n: x.n * y.d + x.d * y.n }
+          x = x.add(y)
           continue
         }
         case '-': {
           this.consume()
-          const z = this.term()
-          x = { d: x.d * z.d, n: x.n * z.d - x.d * z.n }
+          const y = this.term()
+          x = x.sub(y)
           continue
         }
         default:
