@@ -2,12 +2,28 @@
   import NerdleHelper from '@/models/NerdleHelper'
   import { NerdleHintType } from '@/types'
   import { onMounted, ref, watch } from 'vue'
+  import IconBase from '@/icons/IconBase.vue'
+  import IconPlus from '@/icons/IconPlus.vue'
+  import IconMinus from '@/icons/IconMinus.vue'
+  import IconMultiply from '@/icons/IconMultiply.vue'
+  import IconDivide from '@/icons/IconDivide.vue'
+  import IconEquals from '@/icons/IconEquals.vue'
 
-  const nerdleStateTbl = [
-    { class: 'absent' },
-    { class: 'present' },
-    { class: 'correct' },
-  ] as const
+  type StatePropType = {
+    state: number
+    label: string
+    class: string
+  }
+
+  const stateTbl: Record<number, StatePropType> = [
+    { state: 0, label: 'absent', class: 'bg-[#161803] hover:bg-[#262a08]' },
+    { state: 1, label: 'present', class: 'bg-[#820458] hover:bg-[#97116b]' },
+    { state: 2, label: 'correct', class: 'bg-[#398874] hover:bg-[#4ca28d]' },
+    { state: 9, label: 'undefined', class: 'bg-[#989484]' },
+  ].reduce<Record<number, StatePropType>>((h, o) => {
+    h[o.state] = o
+    return h
+  }, {})
 
   const grid = ref<NerdleHintType[][]>([])
 
@@ -15,13 +31,22 @@
 
   const searchList = ref<string[]>([])
 
-  const charStateClass = (i: number, j: number): string => {
-    if (i >= grid.value.length) return 'empty'
-    const st = grid.value[i][j].state
-    return nerdleStateTbl[st].class
+  const getCellProp = (
+    i: number,
+    j: number
+  ): NerdleHintType & StatePropType => {
+    const h: NerdleHintType = (grid.value[i] && grid.value[i][j]) || {
+      position: j,
+      letter: '',
+      state: 9,
+    }
+    const pr: StatePropType = stateTbl[h.state]
+    return { ...h, ...pr }
   }
 
-  const toggleCharState = (i: number, j: number): void => {
+  const cell: NerdleHintType & StatePropType = getCellProp(-1, -1)
+
+  const toggleCellState = (i: number, j: number): void => {
     if (i >= grid.value.length) return
     const h = grid.value[i][j]
     h.state = (h.state + 1) % 3
@@ -62,21 +87,45 @@
     <div
       class="flex flex-col items-center justify-center md:flex-row md:items-start md:justify-evenly"
     >
-      <div class="mb-10">
+      <div class="mb-10 p-4 dark:bg-gray-800">
         <div class="pb-2">
           <template v-for="(_n, i) in 6" :key="i">
             <div class="mb-1 flex justify-center">
-              <template v-for="(_m, j) in 8" :key="`${i}_${j}`">
+              <template
+                v-for="(_m, j) in 8"
+                :key="(cell = getCellProp(i, j)) && `${i}_${j}`"
+              >
                 <div
-                  class="mx-0.5 flex h-[3.2rem] w-14 items-center justify-center rounded"
-                  :class="charStateClass(i, j)"
-                  @click="toggleCharState(i, j)"
+                  class="mx-0.5 flex h-[3.2rem] w-14 items-center justify-center rounded text-lg font-bold text-white"
+                  :class="cell.class"
+                  role="navigation"
+                  :aria-label="`${cell.letter} ${cell.label}`"
+                  @click="toggleCellState(i, j)"
                 >
-                  <span
-                    v-if="i < grid.length"
-                    class="text-xl font-bold text-white"
-                    >{{ grid[i][j].letter }}</span
-                  >
+                  <template v-if="i < grid.length">
+                    <IconBase v-if="cell.letter === '+'" icon-name="plus"
+                      ><IconPlus
+                    /></IconBase>
+                    <IconBase v-else-if="cell.letter === '-'" icon-name="minus"
+                      ><IconMinus
+                    /></IconBase>
+                    <IconBase
+                      v-else-if="cell.letter === '*'"
+                      icon-name="multiply"
+                      ><IconMultiply
+                    /></IconBase>
+                    <IconBase
+                      v-else-if="cell.letter === '/'"
+                      icon-name="divide"
+                      viewBox="0 0 640 512"
+                      style="height: 1rem; transform: rotate(90deg)"
+                      ><IconDivide
+                    /></IconBase>
+                    <IconBase v-else-if="cell.letter === '='" icon-name="equals"
+                      ><IconEquals
+                    /></IconBase>
+                    <span v-else>{{ cell.letter }}</span>
+                  </template>
                 </div>
               </template>
             </div>
@@ -128,33 +177,3 @@
     </div>
   </div>
 </template>
-
-<style scoped>
-  .present {
-    background-color: #820458;
-  }
-
-  .present:hover {
-    background-color: #97116b;
-  }
-
-  .correct {
-    background-color: #398874;
-  }
-
-  .correct:hover {
-    background-color: #4ca28d;
-  }
-
-  .absent {
-    background-color: #161803;
-  }
-
-  .absent:hover {
-    background-color: #262a08;
-  }
-
-  .empty {
-    background-color: #989484;
-  }
-</style>

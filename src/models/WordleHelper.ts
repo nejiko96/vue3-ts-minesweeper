@@ -132,7 +132,7 @@ class WordleHelper {
         this.#suggest = []
       } else {
         const ch = this.charHist
-        const sgs = WordleHelper.WORDS.map((w) => {
+        const sgs = WordleHelper.WORDS.map<WordleSuggestionType>((w) => {
           const r1 = [...uniq(deleteChars(w, this.tried))].reduce(
             (r, c) => r + ch[c],
             0
