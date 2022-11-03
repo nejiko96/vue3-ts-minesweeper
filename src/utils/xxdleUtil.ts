@@ -4,6 +4,8 @@ const deleteChars = (str: string, chars: string): string =>
 const selectChars = (str: string, chars: string): string =>
   str.replace(new RegExp(`[^${chars}]`, 'g'), '')
 
+const sample = <T>(arr: T[]): T => arr[Math.floor(Math.random() * arr.length)]
+
 type Uniq = {
   (str: string): string
   <T>(arr: T[]): T[]
@@ -54,4 +56,11 @@ const repeatedPermutation: RepeatedPermutation = <T>(
   )
 }
 
-export { deleteChars, selectChars, uniq, permutation, repeatedPermutation }
+export {
+  deleteChars,
+  selectChars,
+  sample,
+  uniq,
+  permutation,
+  repeatedPermutation,
+}

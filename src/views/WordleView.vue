@@ -29,7 +29,7 @@
     h.state = (h.state + 1) % 3
   }
 
-  const pushWord = (s: string): void => {
+  const push = (s: string): void => {
     if (grid.value.length >= 6) return
     const arr = s
       .split('')
@@ -37,25 +37,23 @@
     grid.value.push(arr)
   }
 
-  const popWord = (): void => {
+  const pop = (): void => {
     if (grid.value.length <= 0) return
     grid.value.pop()
   }
 
-  const clearWords = (): void => {
+  const reset = (): void => {
     grid.value.splice(0)
   }
 
-  watch(
-    () => grid,
-    () => {
-      const wordle = new WordleHelper(grid.value.flat())
-      searchCount.value = wordle.search.length
-      searchList.value = wordle.searchN(9)
-      suggestion.value = wordle.suggestN(6).map((sg) => sg.w)
-    },
-    { immediate: true, deep: true }
-  )
+  const update = async (): Promise<void> => {
+    const wordle = new WordleHelper(grid.value.flat())
+    searchCount.value = wordle.search.length
+    searchList.value = wordle.searchN(12)
+    suggestion.value = wordle.suggestN(6).map((sg) => sg.w)
+  }
+
+  watch(() => grid, update, { immediate: true, deep: true })
 </script>
 
 <template>
@@ -65,8 +63,7 @@
       class="flex flex-col items-center justify-center md:flex-row md:items-start md:justify-evenly"
     >
       <div class="mb-10">
-        <h3 class="mb-2 text-2xl font-semibold">🟨Present 🟩Correct</h3>
-        <div class="grid grid-cols-5 grid-rows-6 gap-x-2 gap-y-2">
+        <div class="mb-2 grid grid-cols-5 grid-rows-6 gap-x-2 gap-y-2">
           <template v-for="(_n, i) in 6" :key="i">
             <template v-for="(_m, j) in 5" :key="`${i}_${j}`">
               <div
@@ -83,10 +80,10 @@
             </template>
           </template>
         </div>
+        <h3 class="text-2xl font-semibold">🟨Present 🟩Correct</h3>
       </div>
 
       <div class="mb-10">
-        <!-- <h3 class="mb-2 text-2xl font-semibold">Command</h3> -->
         <ul class="mb-2 grid grid-cols-3 grid-rows-1 gap-x-2 gap-y-2">
           <a
             href="https://www.nytimes.com/games/wordle/index.html"
@@ -98,14 +95,14 @@
           >
           <li
             class="w-40 rounded-lg bg-slate-500 p-2 text-xl text-white hover:bg-slate-300"
-            @click="popWord"
+            @click="pop"
           >
             <fa icon="fa-rotate-left" size="sm" />
             Undo
           </li>
           <li
             class="w-40 rounded-lg bg-slate-500 p-2 text-xl text-white hover:bg-slate-300"
-            @click="clearWords"
+            @click="reset"
           >
             <fa icon="fa-trash-can" size="sm" />
             Clear
@@ -118,7 +115,7 @@
             v-for="w in suggestion"
             :key="w"
             class="w-40 rounded-lg bg-pink-500 p-2 text-xl text-white hover:bg-pink-300"
-            @click="pushWord(w)"
+            @click="push(w)"
           >
             {{ w }}
           </li>
@@ -127,12 +124,12 @@
         <h3 class="mb-2 text-2xl font-semibold">
           Search Result ({{ searchCount }})
         </h3>
-        <ul class="mb-2 grid grid-cols-3 grid-rows-3 gap-x-2 gap-y-2">
+        <ul class="mb-2 grid grid-cols-3 grid-rows-4 gap-x-2 gap-y-2">
           <li
             v-for="w in searchList"
             :key="w"
             class="w-40 rounded-lg bg-sky-500 p-2 text-xl text-white hover:bg-sky-300"
-            @click="pushWord(w)"
+            @click="push(w)"
           >
             {{ w }}
           </li>
