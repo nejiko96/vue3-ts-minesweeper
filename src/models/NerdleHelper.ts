@@ -11,9 +11,9 @@ import {
 import samplesRaw from '@/resource/nerdle-samples.txt?raw'
 import NerdleParser from './NerdleParser'
 
-const escapeOps = (str: string) => str.replace(/[*+/=]/g, '\\$&')
+const escapeOps = (str: string): string => str.replace(/[*+/=]/g, '\\$&')
 
-const escapeMinus = (str: string) => str.replace(/-/g, '\\$&')
+const escapeMinus = (str: string): string => str.replace(/-/g, '\\$&')
 
 const intersection = <T>(setA: Set<T>, setB: Set<T>): Set<T> => {
   const ret = new Set<T>()

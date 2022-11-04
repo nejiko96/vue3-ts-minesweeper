@@ -1,13 +1,32 @@
 <script setup lang="ts">
   import WordleHelper from '@/models/WordleHelper'
   import { WordleHintType } from '@/types'
+  import { fillArray } from '@/utils'
   import { ref, watch } from 'vue'
 
-  const wordleStateTbl = [
-    { class: 'absent' },
-    { class: 'present' },
-    { class: 'correct' },
-  ] as const
+  type StatePropType = {
+    state: number
+    label: string
+    class: string
+  }
+
+  type CellPropType = WordleHintType & StatePropType
+
+  const emptyHint: WordleHintType = {
+    position: -1,
+    letter: '',
+    state: 9,
+  } as const
+
+  const stateTbl = [
+    { state: 0, label: 'absent', class: 'absent' },
+    { state: 1, label: 'present', class: 'present' },
+    { state: 2, label: 'correct', class: 'correct' },
+    { state: 9, label: 'empty', class: 'empty' },
+  ].reduce<Record<number, StatePropType>>((h, o) => {
+    h[o.state] = o
+    return h
+  }, {})
 
   const grid = ref<WordleHintType[][]>([])
 
@@ -17,13 +36,16 @@
 
   const suggestion = ref<string[]>([])
 
-  const charStateClass = (i: number, j: number): string => {
-    if (i >= grid.value.length) return 'empty'
-    const st = grid.value[i][j].state
-    return wordleStateTbl[st].class
+  const getCellProp = (i: number, j: number): CellPropType => {
+    const h: WordleHintType = (grid.value[i] && grid.value[i][j]) || emptyHint
+    const pr: StatePropType = stateTbl[h.state]
+    return { ...h, ...pr }
   }
 
-  const toggleCharState = (i: number, j: number): void => {
+  const getCellProps = (i: number): CellPropType[] =>
+    fillArray(5, (j) => getCellProp(i, j))
+
+  const toggleCellState = (i: number, j: number): void => {
     if (i >= grid.value.length) return
     const h = grid.value[i][j]
     h.state = (h.state + 1) % 3
@@ -65,17 +87,17 @@
       <div class="mb-10">
         <div class="mb-2 grid grid-cols-5 grid-rows-6 gap-x-2 gap-y-2">
           <template v-for="(_n, i) in 6" :key="i">
-            <template v-for="(_m, j) in 5" :key="`${i}_${j}`">
+            <template v-for="(cell, j) in getCellProps(i)" :key="`${i}_${j}`">
               <div
-                class="box-border inline-flex h-16 w-16 items-center justify-center"
-                :class="charStateClass(i, j)"
-                @click="toggleCharState(i, j)"
+                class="box-border inline-flex h-16 w-16 select-none items-center justify-center text-4xl font-bold uppercase text-white"
+                :class="cell.class"
+                role="img"
+                aria-roledescription="tile"
+                :aria-label="`${cell.letter} ${cell.label}`"
+                aria-live="polite"
+                @click="toggleCellState(i, j)"
               >
-                <span
-                  v-if="i < grid.length"
-                  class="text-4xl font-bold uppercase text-white"
-                  >{{ grid[i][j].letter }}</span
-                >
+                <span v-if="cell.letter">{{ cell.letter }}</span>
               </div>
             </template>
           </template>

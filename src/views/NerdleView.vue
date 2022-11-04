@@ -8,6 +8,7 @@
   import IconMultiply from '@/icons/IconMultiply.vue'
   import IconDivide from '@/icons/IconDivide.vue'
   import IconEquals from '@/icons/IconEquals.vue'
+  import { fillArray } from '@/utils'
 
   type StatePropType = {
     state: number
@@ -15,11 +16,19 @@
     class: string
   }
 
+  type CellPropType = NerdleHintType & StatePropType
+
+  const emptyHint: NerdleHintType = {
+    position: -1,
+    letter: '',
+    state: 9,
+  } as const
+
   const stateTbl: Record<number, StatePropType> = [
     { state: 0, label: 'absent', class: 'bg-[#161803] hover:bg-[#262a08]' },
     { state: 1, label: 'present', class: 'bg-[#820458] hover:bg-[#97116b]' },
     { state: 2, label: 'correct', class: 'bg-[#398874] hover:bg-[#4ca28d]' },
-    { state: 9, label: 'undefined', class: 'bg-[#989484]' },
+    { state: 9, label: 'empty', class: 'bg-[#989484]' },
   ].reduce<Record<number, StatePropType>>((h, o) => {
     h[o.state] = o
     return h
@@ -31,20 +40,14 @@
 
   const searchList = ref<string[]>([])
 
-  const getCellProp = (
-    i: number,
-    j: number
-  ): NerdleHintType & StatePropType => {
-    const h: NerdleHintType = (grid.value[i] && grid.value[i][j]) || {
-      position: j,
-      letter: '',
-      state: 9,
-    }
+  const getCellProp = (i: number, j: number): CellPropType => {
+    const h: NerdleHintType = (grid.value[i] && grid.value[i][j]) || emptyHint
     const pr: StatePropType = stateTbl[h.state]
     return { ...h, ...pr }
   }
 
-  const cell: NerdleHintType & StatePropType = getCellProp(-1, -1)
+  const getCellProps = (i: number): CellPropType[] =>
+    fillArray(8, (j) => getCellProp(i, j))
 
   const toggleCellState = (i: number, j: number): void => {
     if (i >= grid.value.length) return
@@ -91,12 +94,9 @@
         <div class="pb-2">
           <template v-for="(_n, i) in 6" :key="i">
             <div class="mb-1 flex justify-center">
-              <template
-                v-for="(_m, j) in 8"
-                :key="(cell = getCellProp(i, j)) && `${i}_${j}`"
-              >
+              <template v-for="(cell, j) in getCellProps(i)" :key="`${i}_${j}`">
                 <div
-                  class="mx-0.5 flex h-[3.2rem] w-14 items-center justify-center rounded text-lg font-bold text-white"
+                  class="mx-0.5 flex h-[3.2rem] w-14 select-none items-center justify-center rounded text-lg font-bold text-white"
                   :class="cell.class"
                   role="navigation"
                   :aria-label="`${cell.letter} ${cell.label}`"
@@ -124,7 +124,7 @@
                     <IconBase v-else-if="cell.letter === '='" icon-name="equals"
                       ><IconEquals
                     /></IconBase>
-                    <span v-else>{{ cell.letter }}</span>
+                    <span v-else-if="cell.letter">{{ cell.letter }}</span>
                   </template>
                 </div>
               </template>
