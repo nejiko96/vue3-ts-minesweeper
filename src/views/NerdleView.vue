@@ -112,30 +112,26 @@
                   :aria-label="`${cell.letter} ${cell.label}`"
                   @click="toggleCellState(i, j)"
                 >
-                  <template v-if="i < grid.length">
-                    <IconBase v-if="cell.letter === '+'" icon-name="plus"
-                      ><IconPlus
-                    /></IconBase>
-                    <IconBase v-else-if="cell.letter === '-'" icon-name="minus"
-                      ><IconMinus
-                    /></IconBase>
-                    <IconBase
-                      v-else-if="cell.letter === '*'"
-                      icon-name="multiply"
-                      ><IconMultiply
-                    /></IconBase>
-                    <IconBase
-                      v-else-if="cell.letter === '/'"
-                      icon-name="divide"
-                      viewBox="0 0 640 512"
-                      style="height: 1rem; transform: rotate(90deg)"
-                      ><IconDivide
-                    /></IconBase>
-                    <IconBase v-else-if="cell.letter === '='" icon-name="equals"
-                      ><IconEquals
-                    /></IconBase>
-                    <span v-else-if="cell.letter">{{ cell.letter }}</span>
-                  </template>
+                  <IconBase v-if="cell.letter === '+'" icon-name="plus"
+                    ><IconPlus
+                  /></IconBase>
+                  <IconBase v-else-if="cell.letter === '-'" icon-name="minus"
+                    ><IconMinus
+                  /></IconBase>
+                  <IconBase v-else-if="cell.letter === '*'" icon-name="multiply"
+                    ><IconMultiply
+                  /></IconBase>
+                  <IconBase
+                    v-else-if="cell.letter === '/'"
+                    icon-name="divide"
+                    viewBox="0 0 640 512"
+                    style="height: 1rem; transform: rotate(90deg)"
+                    ><IconDivide
+                  /></IconBase>
+                  <IconBase v-else-if="cell.letter === '='" icon-name="equals"
+                    ><IconEquals
+                  /></IconBase>
+                  <span v-else-if="cell.letter">{{ cell.letter }}</span>
                 </div>
               </template>
             </div>
