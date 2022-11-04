@@ -1,6 +1,7 @@
 <script setup lang="ts">
-  import NerdleHelper from '@/models/NerdleHelper'
   import { NerdleHintType } from '@/types'
+  import NerdleHelper from '@/models/NerdleHelper'
+  import { fillArray } from '@/utils'
   import { onMounted, ref, watch } from 'vue'
   import IconBase from '@/icons/IconBase.vue'
   import IconPlus from '@/icons/IconPlus.vue'
@@ -8,7 +9,6 @@
   import IconMultiply from '@/icons/IconMultiply.vue'
   import IconDivide from '@/icons/IconDivide.vue'
   import IconEquals from '@/icons/IconEquals.vue'
-  import { fillArray } from '@/utils'
 
   type StatePropType = {
     state: number
@@ -39,6 +39,8 @@
   const searchCount = ref<number>(0)
 
   const searchList = ref<string[]>([])
+
+  const timeoutId = ref<number>(0)
 
   const getCellProp = (i: number, j: number): CellPropType => {
     const h: NerdleHintType = (grid.value[i] && grid.value[i][j]) || emptyHint
@@ -73,15 +75,23 @@
     NerdleHelper.suggest.forEach((sg) => push(sg))
   }
 
-  const update = async () => {
+  const update = () => {
     const nerdle = new NerdleHelper(grid.value.flat())
     searchCount.value = nerdle.search.length
     searchList.value = nerdle.searchN(15)
   }
 
+  const lazyUpdate = () => {
+    if (timeoutId.value) window.clearTimeout(timeoutId.value)
+    timeoutId.value = window.setTimeout(() => {
+      update()
+      timeoutId.value = 0
+    }, 1500)
+  }
+
   onMounted(reset)
 
-  watch(() => grid, update, { immediate: true, deep: true })
+  watch(() => grid, lazyUpdate, { immediate: true, deep: true })
 </script>
 
 <template>
@@ -160,19 +170,24 @@
           </li>
         </ul>
 
-        <h3 class="mb-2 text-2xl font-semibold">
-          Search Result ({{ searchCount }})
-        </h3>
-        <ul class="mb-2 grid grid-cols-3 grid-rows-5 gap-x-2 gap-y-2">
-          <li
-            v-for="w in searchList"
-            :key="w"
-            class="w-40 rounded-lg bg-sky-500 p-2 text-xl text-white hover:bg-sky-300"
-            @click="push(w)"
-          >
-            {{ w }}
-          </li>
-        </ul>
+        <template v-if="timeoutId">
+          <h3 class="mb-2 text-2xl font-semibold">Loading...</h3>
+        </template>
+        <template v-else>
+          <h3 class="mb-2 text-2xl font-semibold">
+            Search Result ({{ searchCount }})
+          </h3>
+          <ul class="mb-2 grid grid-cols-3 grid-rows-5 gap-x-2 gap-y-2">
+            <li
+              v-for="w in searchList"
+              :key="w"
+              class="w-40 rounded-lg bg-sky-500 p-2 text-xl text-white hover:bg-sky-300"
+              @click="push(w)"
+            >
+              {{ w }}
+            </li>
+          </ul>
+        </template>
       </div>
     </div>
   </div>
