@@ -76,11 +76,11 @@
       {{ game.remain }}
     </span>
     {{ locale.remain2 }}
-    <span class="space" />
+    <span class="space"></span>
     {{ locale.timer1 }}
     <MsTimer class="text-box" interval="1s" :limit="999" :mode="timerMode" />
     {{ locale.timer2 }}
-    <span class="space" />
+    <span class="space"></span>
     <transition name="pyonpyon">
       <span v-if="game.status === GameStatusEnum.CLEARED">
         {{ locale.cleared }}
@@ -104,7 +104,7 @@
         />
       </template>
     </MsBoard>
-    <p />
+    <br />
     <button
       class="rounded bg-gray-400 px-4 py-2 text-black hover:bg-gray-300"
       type="button"
