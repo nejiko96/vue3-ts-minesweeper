@@ -5,6 +5,7 @@
   import CatView from '@/views/CatView.vue'
   import WordleView from '@/views/WordleView.vue'
   import NerdleView from '@/views/NerdleView.vue'
+  import SlidePuzzleView from '@/views/SlidePuzzleView.vue'
   import AppLayout from './AppLayout.vue'
 
   const menuItems = [
@@ -27,6 +28,11 @@
       id: 'NERDLE',
       title: 'Nerdle Helper',
       view: NerdleView,
+    },
+    {
+      id: 'SLIDE',
+      title: 'Slide Puzzle',
+      view: SlidePuzzleView,
     },
   ]
 </script>
