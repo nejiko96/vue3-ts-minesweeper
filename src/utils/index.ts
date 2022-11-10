@@ -1,21 +1,24 @@
-import { noop, fillArray, fillArray2D } from './msUtil'
+import { deleteChars, selectChars } from './stringUtil'
 import {
-  deleteChars,
-  selectChars,
   sample,
+  shuffle,
   uniq,
   permutation,
   repeatedPermutation,
-} from './xxdleUtil'
-
-export {
-  noop,
   fillArray,
   fillArray2D,
+} from './arrayUtil'
+import { noop } from './funcUtil'
+
+export {
   deleteChars,
   selectChars,
   sample,
+  shuffle,
   uniq,
   permutation,
   repeatedPermutation,
+  fillArray,
+  fillArray2D,
+  noop,
 }

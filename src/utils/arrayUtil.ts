@@ -1,10 +1,13 @@
-const deleteChars = (str: string, chars: string): string =>
-  str.replace(new RegExp(`[${chars}]`, 'g'), '')
-
-const selectChars = (str: string, chars: string): string =>
-  str.replace(new RegExp(`[^${chars}]`, 'g'), '')
-
 const sample = <T>(arr: T[]): T => arr[Math.floor(Math.random() * arr.length)]
+
+const shuffle = <T>(arr: T[]): T[] => {
+  const ret = [...arr]
+  for (let i = ret.length - 1; i >= 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[ret[i], ret[j]] = [ret[j], ret[i]]
+  }
+  return ret
+}
 
 type Uniq = {
   (str: string): string
@@ -56,11 +59,24 @@ const repeatedPermutation: RepeatedPermutation = <T>(
   )
 }
 
+const fillArray = <T>(n: number, fn: (i: number) => T): T[] =>
+  Array.from({ length: n }, (_, i) => fn(i))
+
+const fillArray2D = <T>(
+  w: number,
+  h: number,
+  fn: (i: number, j: number) => T
+): T[][] =>
+  Array.from({ length: h }, (_, i) =>
+    Array.from({ length: w }, (__, j) => fn(i, j))
+  )
+
 export {
-  deleteChars,
-  selectChars,
   sample,
+  shuffle,
   uniq,
   permutation,
   repeatedPermutation,
+  fillArray,
+  fillArray2D,
 }
