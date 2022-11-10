@@ -2,29 +2,41 @@
   import { fillArray, shuffle } from '@/utils'
   import { onMounted, ref } from 'vue'
 
+  type NeighborType = {
+    di: number
+    dj: number
+    tr: string
+  }
+
   const N = 4
   const N2 = N * N
 
-  const neighbors = [
-    [0, 1],
-    [0, -1],
-    [1, 0],
-    [-1, 0],
-  ] as const
+  const neighbors: Readonly<NeighborType[]> = [
+    { di: 1, dj: 0, tr: 'down' },
+    { di: 0, dj: 1, tr: 'right' },
+    { di: -1, dj: 0, tr: 'up' },
+    { di: 0, dj: -1, tr: 'left' },
+  ]
 
   const grid = ref<number[][]>([])
 
+  const transitionName = ref<string>('')
+
   const isValid = (arr: number[]): boolean => {
     let invNum = 0 // 転倒数
-    let dist = 0 // 空きマスの移動距離
     for (let i = 0; i < arr.length; i++) {
       for (let j = i + 1; j < arr.length; j++) {
         if (arr[i] > arr[j]) invNum += 1
       }
+    }
+
+    let dist = 0 // 空きマスの移動距離
+    for (let i = 0; i < arr.length; i++) {
       if (arr[i] === N2) {
         dist = ((i / N) | 0) + (i % N)
       }
     }
+
     return (invNum + dist) % 2 === 0
   }
 
@@ -43,13 +55,14 @@
 
   const slide = (i: number, j: number): void => {
     const v = grid.value[i][j]
-    const p2 = neighbors
-      .map(([di, dj]) => [i + di, j + dj])
-      .find(([i2, j2]) => grid.value[i2] && grid.value[i2][j2] === N2)
-    if (p2) {
-      const [i2, j2] = p2
+    const nb = neighbors
+      .map(({ di, dj, tr }) => ({ i2: i + di, j2: j + dj, tr }))
+      .find(({ i2, j2 }) => grid.value[i2] && grid.value[i2][j2] === N2)
+    if (nb) {
+      const { i2, j2, tr } = nb
       grid.value[i2][j2] = v
       grid.value[i][j] = N2
+      transitionName.value = `slide-${tr}`
     }
   }
 
@@ -60,18 +73,23 @@
   <div class="p-4 text-center">
     <h1 class="mb-10 text-3xl font-semibold">Slide Puzzle</h1>
     <div
-      class="mx-auto mb-4 grid h-[400px] w-[400px] grid-cols-4 grid-rows-4 border-2 border-orange-200"
+      class="mx-auto mb-4 grid h-[400px] w-[400px] grid-cols-4 grid-rows-4 border-2 border-amber-200 bg-gray-400"
     >
       <template v-for="(arr, i) in grid" :key="i">
         <template v-for="(v, j) in arr" :key="`${i}_${j}`">
-          <div
-            v-if="v < N2"
-            class="inline-flex select-none items-center justify-center border-2 border-amber-200 bg-amber-500 text-4xl font-bold"
-            @click="() => slide(i, j)"
-          >
-            {{ v }}
-          </div>
-          <div v-else class="border-2 border-orange-200 bg-gray-500"></div>
+          <Transition :name="transitionName" mode="out-in">
+            <div
+              v-if="v < N2"
+              class="inline-flex select-none items-center justify-center border-2 border-amber-200 bg-amber-500 text-4xl font-bold"
+              @click="() => slide(i, j)"
+            >
+              {{ v }}
+            </div>
+            <div
+              v-else
+              class="border-2 border-transparent bg-transparent"
+            ></div>
+          </Transition>
         </template>
       </template>
     </div>
@@ -83,3 +101,28 @@
     </button>
   </div>
 </template>
+
+<style scoped>
+  .slide-up-leave-active,
+  .slide-down-leave-active,
+  .slide-left-leave-active,
+  .slide-right-leave-active {
+    transition: transform 0.5s ease;
+  }
+
+  .slide-up-leave-to {
+    transform: translateY(-100%);
+  }
+
+  .slide-down-leave-to {
+    transform: translateY(100%);
+  }
+
+  .slide-right-leave-to {
+    transform: translateX(100%);
+  }
+
+  .slide-left-leave-to {
+    transform: translateX(-100%);
+  }
+</style>
