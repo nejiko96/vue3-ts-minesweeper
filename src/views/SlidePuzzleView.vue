@@ -50,7 +50,9 @@
   const generate = (): void => {
     const arr = shuffle(fillArray(N2, (k) => k + 1))
     if (!isValid(arr)) swapFirst(arr)
+
     grid.value = fillArray(N, (i) => arr.slice(i * N, (i + 1) * N))
+    transitionName.value = ''
   }
 
   const slide = (i: number, j: number): void => {
@@ -80,15 +82,12 @@
           <Transition :name="transitionName" mode="out-in">
             <div
               v-if="v < N2"
-              class="inline-flex select-none items-center justify-center border-2 border-amber-200 bg-amber-500 text-4xl font-bold"
+              class="slidepanel inline-flex select-none items-center justify-center border-2 border-amber-200 bg-amber-500 text-4xl font-bold"
               @click="() => slide(i, j)"
             >
               {{ v }}
             </div>
-            <div
-              v-else
-              class="border-2 border-transparent bg-transparent"
-            ></div>
+            <div v-else class="border-2 border-amber-200 bg-transparent"></div>
           </Transition>
         </template>
       </template>
@@ -103,26 +102,40 @@
 </template>
 
 <style scoped>
-  .slide-up-leave-active,
-  .slide-down-leave-active,
-  .slide-left-leave-active,
-  .slide-right-leave-active {
-    transition: transform 0.5s ease;
+  .slidepanel.slide-up-leave-active,
+  .slidepanel.slide-down-leave-active,
+  .slidepanel.slide-left-leave-active,
+  .slidepanel.slide-right-leave-active {
+    transition: transform 0.25s ease;
   }
 
-  .slide-up-leave-to {
+  .slidepanel.slide-up-enter-active,
+  .slidepanel.slide-down-enter-active,
+  .slidepanel.slide-left-enter-active,
+  .slidepanel.slide-right-enter-active {
+    transition: opacity 0.1s steps(1, jump-end);
+  }
+
+  .slidepanel.slide-up-enter-from,
+  .slidepanel.slide-down-enter-from,
+  .slidepanel.slide-left-enter-from,
+  .slidepanel.slide-right-enter-from {
+    opacity: 0;
+  }
+
+  .slidepanel.slide-up-leave-to {
     transform: translateY(-100%);
   }
 
-  .slide-down-leave-to {
+  .slidepanel.slide-down-leave-to {
     transform: translateY(100%);
   }
 
-  .slide-right-leave-to {
+  .slidepanel.slide-right-leave-to {
     transform: translateX(100%);
   }
 
-  .slide-left-leave-to {
+  .slidepanel.slide-left-leave-to {
     transform: translateX(-100%);
   }
 </style>
