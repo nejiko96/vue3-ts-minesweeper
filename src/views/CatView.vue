@@ -1,4 +1,5 @@
 <script lang="ts">
+  import VueElementLoading from 'vue-element-loading'
   import { ref, onBeforeMount } from 'vue'
 
   interface CatCategory {
@@ -25,7 +26,10 @@
 <script setup lang="ts">
   const catImageUrl = ref('')
 
+  const isLoading = ref(false)
+
   const updateCatImage = async () => {
+    isLoading.value = true
     const image = await fetchCatImage()
     catImageUrl.value = image.url
   }
@@ -43,6 +47,14 @@
     >
       Today's Cat
     </button>
-    <img class="mx-auto mt-4" :src="catImageUrl" width="500" height="auto" />
+    <div class="mx-auto mt-4 w-[500px]">
+      <VueElementLoading
+        :active="isLoading"
+        color="orange"
+        :is-full-page="false"
+        spinner="line-scale"
+      />
+      <img class="h-auto w-full" :src="catImageUrl" @load="isLoading = false" />
+    </div>
   </div>
 </template>
