@@ -1,6 +1,10 @@
 <script setup lang="ts">
   import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
-  import { MenuItemType } from './types'
+
+  type MenuItemType = {
+    id: string
+    title: string
+  }
 
   const props = defineProps<{
     menuItems: MenuItemType[]

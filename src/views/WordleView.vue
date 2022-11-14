@@ -1,6 +1,8 @@
 <script setup lang="ts">
-  import { WordleHintType, WordleSuggestionType } from '@/types'
-  import WordleHelper from '@/models/WordleHelper'
+  import WordleHelper, {
+    WordleHintType,
+    WordleSuggestionType,
+  } from '@/models/WordleHelper'
   import { fillArray } from '@/utils'
   import { ref, watch } from 'vue'
 

@@ -1,6 +1,18 @@
-import { WordleHintType, WordleSuggestionType } from '@/types'
 import { deleteChars, selectChars, uniq, permutation } from '@/utils'
 import wordsRaw from '@/resource/words.txt?raw'
+
+export type WordleHintType = {
+  position: number
+  letter: string
+  state: number
+}
+
+export type WordleSuggestionType = {
+  w: string
+  r1: number
+  r2: number
+  r3: number
+}
 
 class WordleHelper {
   static ALL_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'

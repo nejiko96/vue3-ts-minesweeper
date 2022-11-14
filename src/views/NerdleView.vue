@@ -1,6 +1,5 @@
 <script setup lang="ts">
-  import { NerdleHintType } from '@/types'
-  import NerdleHelper from '@/models/NerdleHelper'
+  import NerdleHelper, { NerdleHintType } from '@/models/NerdleHelper'
   import { fillArray } from '@/utils'
   import { onMounted, ref, watch } from 'vue'
   import IconBase from '@/icons/IconBase.vue'

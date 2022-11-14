@@ -1,4 +1,3 @@
-import { NerdleHintType } from '@/types'
 import {
   deleteChars,
   selectChars,
@@ -10,6 +9,12 @@ import {
 } from '@/utils'
 import samplesRaw from '@/resource/nerdle-samples.txt?raw'
 import NerdleParser from './NerdleParser'
+
+export type NerdleHintType = {
+  position: number
+  letter: string
+  state: number
+}
 
 const escapeOps = (str: string): string => str.replace(/[*+/=]/g, '\\$&')
 

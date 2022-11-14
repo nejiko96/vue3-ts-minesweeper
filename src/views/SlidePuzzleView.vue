@@ -113,7 +113,7 @@
   .slidepanel.slide-down-enter-active,
   .slidepanel.slide-left-enter-active,
   .slidepanel.slide-right-enter-active {
-    transition: opacity 0.1s steps(1, jump-end);
+    transition: opacity 0.1s step-end;
   }
 
   .slidepanel.slide-up-enter-from,
