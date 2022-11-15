@@ -34,7 +34,9 @@
     catImageUrl.value = image.url
   }
 
-  const handleClick = updateCatImage
+  const loadedCatImage = () => {
+    isLoading.value = false
+  }
 
   onBeforeMount(updateCatImage)
 </script>
@@ -43,18 +45,18 @@
   <div class="p-4">
     <button
       class="mx-auto block cursor-pointer rounded border-2 border-transparent bg-red-500 px-4 py-2 font-semibold text-white transition duration-300 hover:border-red-300 hover:bg-red-600"
-      @click="handleClick"
+      @click="updateCatImage"
     >
       Today's Cat
     </button>
-    <div class="mx-auto mt-4 w-[500px]">
+    <div class="mx-auto mt-4 w-[600px]">
       <VueElementLoading
         :active="isLoading"
         color="orange"
         :is-full-page="false"
         spinner="line-scale"
       />
-      <img class="h-auto w-full" :src="catImageUrl" @load="isLoading = false" />
+      <img class="h-auto w-full" :src="catImageUrl" @load="loadedCatImage" />
     </div>
   </div>
 </template>

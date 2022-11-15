@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts">
   import { fillArray, shuffle } from '@/utils'
   import { onMounted, ref } from 'vue'
 
@@ -17,7 +17,9 @@
     { di: -1, dj: 0, tr: 'up' },
     { di: 0, dj: -1, tr: 'left' },
   ]
+</script>
 
+<script setup lang="ts">
   const grid = ref<number[][]>([])
 
   const transitionName = ref<string>('')
@@ -69,20 +71,41 @@
   }
 
   onMounted(generate)
+
+  const imgRef = ref<HTMLImageElement>()
+
+  const basewidth = ref<number>(500)
+
+  const baseheight = ref<number>(500)
+
+  const handleImageLoad = () => {
+    basewidth.value = (imgRef.value && imgRef.value.width) || 500
+    baseheight.value = (imgRef.value && imgRef.value.height) || 500
+  }
+
+  const bgpos = (v: number): string => {
+    const k = v - 1
+    const i = (k / N) | 0
+    const j = k % N
+    const x = ((basewidth.value * j) / N) | 0
+    const y = ((baseheight.value * i) / N) | 0
+    return `-${x}px -${y}px`
+  }
 </script>
 
 <template>
   <div class="p-4 text-center">
     <h1 class="mb-10 text-3xl font-semibold">Slide Puzzle</h1>
     <div
-      class="mx-auto mb-4 grid h-[400px] w-[400px] grid-cols-4 grid-rows-4 border-2 border-amber-200 bg-gray-400"
+      class="basepanel mx-auto mb-4 grid grid-cols-4 grid-rows-4 border-2 border-amber-200 bg-gray-400"
     >
       <template v-for="(arr, i) in grid" :key="i">
         <template v-for="(v, j) in arr" :key="`${i}_${j}`">
           <Transition :name="transitionName" mode="out-in">
             <div
               v-if="v < N2"
-              class="slidepanel inline-flex select-none items-center justify-center border-2 border-amber-200 bg-amber-500 text-4xl font-bold"
+              class="slidepanel --bg-amber-500 inline-flex select-none items-center justify-center border-2 border-amber-200 text-4xl font-bold"
+              :style="`background-position: ${bgpos(v)}`"
               @click="() => slide(i, j)"
             >
               {{ v }}
@@ -98,10 +121,26 @@
     >
       Restart
     </button>
+    <img
+      ref="imgRef"
+      src="https://cdn2.thecatapi.com/images/3fs.jpg"
+      class="--hidden mx-auto w-3/5"
+      @load="handleImageLoad"
+    />
   </div>
 </template>
 
 <style scoped>
+  .basepanel {
+    width: v-bind(basewidth + 'px');
+    height: v-bind(baseheight + 'px');
+  }
+
+  .slidepanel {
+    background-image: url('https://cdn2.thecatapi.com/images/3fs.jpg');
+    background-size: v-bind(basewidth + 'px') v-bind(baseheight + 'px');
+  }
+
   .slidepanel.slide-up-leave-active,
   .slidepanel.slide-down-leave-active,
   .slidepanel.slide-left-leave-active,
