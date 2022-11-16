@@ -2,6 +2,7 @@
   import { ref, onMounted, computed } from 'vue'
   import { fetchCatImage } from '@/models/catApi'
   import { fillArray, shuffle } from '@/utils'
+  import VueElementLoading from 'vue-element-loading'
 
   type NeighborType = {
     di: number
@@ -26,7 +27,11 @@
 
   const transitionName = ref<string>('')
 
-  const isValid = (arr: number[]): boolean => {
+  const active = computed(() =>
+    grid.value.some((arr, i) => arr.some((v, j) => i * N + j !== v - 1))
+  )
+
+  const isValidGrid = (arr: number[]): boolean => {
     let invNum = 0 // 転倒数
     for (let i = 0; i < arr.length; i++) {
       for (let j = i + 1; j < arr.length; j++) {
@@ -44,22 +49,23 @@
     return (invNum + dist) % 2 === 0
   }
 
-  const swapFirst = (arr: number[]): void => {
+  const swapGrid = (arr: number[]): void => {
     let [i, j] = [0, 1]
     if (arr[0] === N2) [i, j] = [1, 2]
     if (arr[1] === N2) [i, j] = [0, 2]
     ;[arr[i], arr[j]] = [arr[j], arr[i]]
   }
 
-  const generate = (): void => {
+  const initGrid = (): void => {
     const arr = shuffle(fillArray(N2, (k) => k + 1))
-    if (!isValid(arr)) swapFirst(arr)
+    // const arr = fillArray(N2, (k) => k + 1)
+    if (!isValidGrid(arr)) swapGrid(arr)
 
     grid.value = fillArray(N, (i) => arr.slice(i * N, (i + 1) * N))
     transitionName.value = ''
   }
 
-  const slide = (i: number, j: number): void => {
+  const slideGrid = (i: number, j: number): void => {
     const v = grid.value[i][j]
     const nb = neighbors
       .map(({ di, dj, move }) => ({ i2: i + di, j2: j + dj, move }))
@@ -102,7 +108,7 @@
   const loadedCatImage = () => {
     basewidth.value = (imgRef.value && imgRef.value.width) || 500
     baseheight.value = (imgRef.value && imgRef.value.height) || 500
-    generate()
+    initGrid()
     isLoading.value = false
   }
 
@@ -110,26 +116,44 @@
 </script>
 
 <template>
+  <VueElementLoading
+    :active="isLoading"
+    color="orange"
+    is-full-page
+    spinner="line-scale"
+  />
   <div class="p-4 text-center">
     <h1 class="mb-10 text-3xl font-semibold">Slide Puzzle</h1>
-    <div
-      class="basepanel mx-auto mb-4 grid grid-cols-4 grid-rows-4 border-2 border-amber-200 bg-gray-400"
-    >
-      <template v-for="(arr, i) in grid" :key="i">
-        <template v-for="(v, j) in arr" :key="`${i}_${j}`">
-          <Transition :name="transitionName" mode="out-in">
-            <div
-              v-if="v < N2"
-              class="slidepanel inline-flex select-none items-center justify-center border-2 border-amber-200 text-4xl font-bold"
-              :style="`background-position: ${bgpos(v)}`"
-              @click="() => slide(i, j)"
-            >
-              {{ v }}
-            </div>
-            <div v-else class="border-2 border-amber-200 bg-transparent"></div>
-          </Transition>
+    <div class="relative mx-auto mb-4 w-[600px]">
+      <img
+        ref="imgRef"
+        :src="catImageUrl"
+        class="h-auto w-full"
+        @load="loadedCatImage"
+      />
+      <div
+        v-if="active"
+        class="absolute top-0 left-0 bottom-0 right-0 grid grid-cols-4 grid-rows-4 border-2 border-amber-200 bg-gray-400"
+      >
+        <template v-for="(arr, i) in grid" :key="i">
+          <template v-for="(v, j) in arr" :key="`${i}_${j}`">
+            <Transition :name="transitionName" mode="out-in">
+              <div
+                v-if="v < N2"
+                class="slidepanel inline-flex select-none items-center justify-center border-2 border-amber-200 text-4xl font-bold"
+                :style="`background-position: ${bgpos(v)}`"
+                @click="() => slideGrid(i, j)"
+              >
+                {{ v }}
+              </div>
+              <div
+                v-else
+                class="border-2 border-amber-200 bg-transparent"
+              ></div>
+            </Transition>
+          </template>
         </template>
-      </template>
+      </div>
     </div>
     <button
       class="mb-4 cursor-pointer rounded border-2 border-transparent bg-amber-500 px-4 py-2 text-xl font-semibold text-white transition duration-300 hover:border-amber-300 hover:bg-amber-600"
@@ -137,21 +161,10 @@
     >
       Restart
     </button>
-    <img
-      ref="imgRef"
-      :src="catImageUrl"
-      class="mx-auto hidden w-3/5"
-      @load="loadedCatImage"
-    />
   </div>
 </template>
 
 <style scoped>
-  .basepanel {
-    width: v-bind(basewidth + 'px');
-    height: v-bind(baseheight + 'px');
-  }
-
   .slidepanel {
     background-image: v-bind(bgimg);
     background-size: v-bind(basewidth + 'px') v-bind(baseheight + 'px');
