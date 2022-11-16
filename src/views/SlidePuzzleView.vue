@@ -1,22 +1,24 @@
 <script lang="ts">
+  import { ref, onMounted, computed } from 'vue'
+  import { fetchCatImage } from '@/models/catApi'
   import { fillArray, shuffle } from '@/utils'
-  import { onMounted, ref } from 'vue'
 
   type NeighborType = {
     di: number
     dj: number
-    tr: string
+    move: string
   }
 
-  const N = 4
-  const N2 = N * N
-
   const neighbors: Readonly<NeighborType[]> = [
-    { di: 1, dj: 0, tr: 'down' },
-    { di: 0, dj: 1, tr: 'right' },
-    { di: -1, dj: 0, tr: 'up' },
-    { di: 0, dj: -1, tr: 'left' },
+    { di: 1, dj: 0, move: 'down' },
+    { di: 0, dj: 1, move: 'right' },
+    { di: -1, dj: 0, move: 'up' },
+    { di: 0, dj: -1, move: 'left' },
   ]
+
+  const N = 4
+
+  const N2 = N * N
 </script>
 
 <script setup lang="ts">
@@ -60,28 +62,21 @@
   const slide = (i: number, j: number): void => {
     const v = grid.value[i][j]
     const nb = neighbors
-      .map(({ di, dj, tr }) => ({ i2: i + di, j2: j + dj, tr }))
+      .map(({ di, dj, move }) => ({ i2: i + di, j2: j + dj, move }))
       .find(({ i2, j2 }) => grid.value[i2] && grid.value[i2][j2] === N2)
     if (nb) {
-      const { i2, j2, tr } = nb
+      const { i2, j2, move } = nb
       grid.value[i2][j2] = v
       grid.value[i][j] = N2
-      transitionName.value = `slide-${tr}`
+      transitionName.value = `slide-${move}`
     }
   }
-
-  onMounted(generate)
 
   const imgRef = ref<HTMLImageElement>()
 
   const basewidth = ref<number>(500)
 
   const baseheight = ref<number>(500)
-
-  const handleImageLoad = () => {
-    basewidth.value = (imgRef.value && imgRef.value.width) || 500
-    baseheight.value = (imgRef.value && imgRef.value.height) || 500
-  }
 
   const bgpos = (v: number): string => {
     const k = v - 1
@@ -91,6 +86,27 @@
     const y = ((baseheight.value * i) / N) | 0
     return `-${x}px -${y}px`
   }
+
+  const catImageUrl = ref('')
+
+  const isLoading = ref(false)
+
+  const bgimg = computed(() => `url('${catImageUrl.value}')`)
+
+  const updateCatImage = async () => {
+    isLoading.value = true
+    const image = await fetchCatImage()
+    catImageUrl.value = image.url
+  }
+
+  const loadedCatImage = () => {
+    basewidth.value = (imgRef.value && imgRef.value.width) || 500
+    baseheight.value = (imgRef.value && imgRef.value.height) || 500
+    generate()
+    isLoading.value = false
+  }
+
+  onMounted(updateCatImage)
 </script>
 
 <template>
@@ -104,7 +120,7 @@
           <Transition :name="transitionName" mode="out-in">
             <div
               v-if="v < N2"
-              class="slidepanel --bg-amber-500 inline-flex select-none items-center justify-center border-2 border-amber-200 text-4xl font-bold"
+              class="slidepanel inline-flex select-none items-center justify-center border-2 border-amber-200 text-4xl font-bold"
               :style="`background-position: ${bgpos(v)}`"
               @click="() => slide(i, j)"
             >
@@ -116,16 +132,16 @@
       </template>
     </div>
     <button
-      class="cursor-pointer rounded border-2 border-transparent bg-amber-500 px-4 py-2 text-xl font-semibold text-white transition duration-300 hover:border-amber-300 hover:bg-amber-600"
-      @click="generate"
+      class="mb-4 cursor-pointer rounded border-2 border-transparent bg-amber-500 px-4 py-2 text-xl font-semibold text-white transition duration-300 hover:border-amber-300 hover:bg-amber-600"
+      @click="updateCatImage"
     >
       Restart
     </button>
     <img
       ref="imgRef"
-      src="https://cdn2.thecatapi.com/images/3fs.jpg"
-      class="--hidden mx-auto w-3/5"
-      @load="handleImageLoad"
+      :src="catImageUrl"
+      class="mx-auto hidden w-3/5"
+      @load="loadedCatImage"
     />
   </div>
 </template>
@@ -137,7 +153,7 @@
   }
 
   .slidepanel {
-    background-image: url('https://cdn2.thecatapi.com/images/3fs.jpg');
+    background-image: v-bind(bgimg);
     background-size: v-bind(basewidth + 'px') v-bind(baseheight + 'px');
   }
 
