@@ -21,6 +21,12 @@
 </script>
 
 <template>
+  <VueElementLoading
+    :active="isLoading"
+    color="orange"
+    is-full-page
+    spinner="line-scale"
+  />
   <div class="p-4">
     <button
       class="mx-auto block cursor-pointer rounded border-2 border-transparent bg-red-500 px-4 py-2 font-semibold text-white transition duration-300 hover:border-red-300 hover:bg-red-600"
@@ -28,13 +34,7 @@
     >
       Today's Cat
     </button>
-    <div class="mx-auto mt-4 w-[600px]">
-      <VueElementLoading
-        :active="isLoading"
-        color="orange"
-        :is-full-page="false"
-        spinner="line-scale"
-      />
+    <div class="mx-auto mt-4 w-3/5">
       <img class="h-auto w-full" :src="catImageUrl" @load="loadedCatImage" />
     </div>
   </div>
