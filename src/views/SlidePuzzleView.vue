@@ -20,6 +20,38 @@
   const N = 4
 
   const N2 = N * N
+
+  const arrInitial = fillArray(N2, (k) => k + 1)
+
+  const arrToGrid = (arr: number[]): number[][] =>
+    fillArray(N, (i) => arr.slice(i * N, (i + 1) * N))
+
+  const clearStatus = JSON.stringify(arrToGrid(arrInitial))
+
+  // 転倒数
+  const inversionNumber = (arr: number[]): number => {
+    let ret = 0 // 転倒数
+    for (let i = 0; i < arr.length; i++) {
+      for (let j = i + 1; j < arr.length; j++) {
+        if (arr[i] > arr[j]) ret += 1
+      }
+    }
+    return ret
+  }
+
+  // 空きマスの移動距離
+  const movesOfEmptyCell = (arr: number[]): number => {
+    const i = arr.findIndex((v) => v === N2)
+    return ((i / N) | 0) + (i % N)
+  }
+
+  // 最初の２つを交換
+  const swapTop2 = (arr: number[]): void => {
+    let [i, j] = [0, 1]
+    if (arr[0] === N2) [i, j] = [1, 2]
+    if (arr[1] === N2) [i, j] = [0, 2]
+    ;[arr[i], arr[j]] = [arr[j], arr[i]]
+  }
 </script>
 
 <script setup lang="ts">
@@ -27,41 +59,14 @@
 
   const transitionName = ref<string>('')
 
-  const active = computed(() =>
-    grid.value.some((arr, i) => arr.some((v, j) => i * N + j !== v - 1))
-  )
-
-  const isValidGrid = (arr: number[]): boolean => {
-    let invNum = 0 // 転倒数
-    for (let i = 0; i < arr.length; i++) {
-      for (let j = i + 1; j < arr.length; j++) {
-        if (arr[i] > arr[j]) invNum += 1
-      }
-    }
-
-    let dist = 0 // 空きマスの移動距離
-    for (let i = 0; i < arr.length; i++) {
-      if (arr[i] === N2) {
-        dist = ((i / N) | 0) + (i % N)
-      }
-    }
-
-    return (invNum + dist) % 2 === 0
-  }
-
-  const swapGrid = (arr: number[]): void => {
-    let [i, j] = [0, 1]
-    if (arr[0] === N2) [i, j] = [1, 2]
-    if (arr[1] === N2) [i, j] = [0, 2]
-    ;[arr[i], arr[j]] = [arr[j], arr[i]]
-  }
+  const complete = computed(() => JSON.stringify(grid.value) === clearStatus)
 
   const initGrid = (): void => {
-    const arr = shuffle(fillArray(N2, (k) => k + 1))
-    // const arr = fillArray(N2, (k) => k + 1)
-    if (!isValidGrid(arr)) swapGrid(arr)
-
-    grid.value = fillArray(N, (i) => arr.slice(i * N, (i + 1) * N))
+    const arr = shuffle(arrInitial)
+    const invNum = inversionNumber(arr)
+    const dist = movesOfEmptyCell(arr)
+    if ((invNum + dist) % 2 > 0) swapTop2(arr)
+    grid.value = arrToGrid(arr)
     transitionName.value = ''
   }
 
@@ -80,39 +85,39 @@
 
   const imgRef = ref<HTMLImageElement>()
 
-  const basewidth = ref<number>(500)
+  const imgUrl = ref('')
 
-  const baseheight = ref<number>(500)
+  const isLoading = ref(false)
+
+  const updateImage = async () => {
+    isLoading.value = true
+    const image = await fetchCatImage()
+    imgUrl.value = image.url
+  }
+
+  const loadedImage = () => {
+    bgwidth.value = (imgRef.value && imgRef.value.width) || 500
+    bgheight.value = (imgRef.value && imgRef.value.height) || 500
+    initGrid()
+    isLoading.value = false
+  }
+
+  const bgwidth = ref<number>(500)
+
+  const bgheight = ref<number>(500)
+
+  const bgimg = computed(() => `url('${imgUrl.value}')`)
 
   const bgpos = (v: number): string => {
     const k = v - 1
     const i = (k / N) | 0
     const j = k % N
-    const x = ((basewidth.value * j) / N) | 0
-    const y = ((baseheight.value * i) / N) | 0
+    const x = ((bgwidth.value * j) / N) | 0
+    const y = ((bgheight.value * i) / N) | 0
     return `-${x}px -${y}px`
   }
 
-  const catImageUrl = ref('')
-
-  const isLoading = ref(false)
-
-  const bgimg = computed(() => `url('${catImageUrl.value}')`)
-
-  const updateCatImage = async () => {
-    isLoading.value = true
-    const image = await fetchCatImage()
-    catImageUrl.value = image.url
-  }
-
-  const loadedCatImage = () => {
-    basewidth.value = (imgRef.value && imgRef.value.width) || 500
-    baseheight.value = (imgRef.value && imgRef.value.height) || 500
-    initGrid()
-    isLoading.value = false
-  }
-
-  onMounted(updateCatImage)
+  onMounted(updateImage)
 </script>
 
 <template>
@@ -124,40 +129,42 @@
   />
   <div class="p-4 text-center">
     <h1 class="mb-10 text-3xl font-semibold">Slide Puzzle</h1>
-    <div class="relative mx-auto mb-4 w-[600px]">
+    <div class="relative mx-auto mb-6 w-[600px]">
       <img
         ref="imgRef"
-        :src="catImageUrl"
+        :src="imgUrl"
         class="h-auto w-full"
-        @load="loadedCatImage"
+        @load="loadedImage"
       />
-      <div
-        v-if="active"
-        class="absolute top-0 left-0 bottom-0 right-0 grid grid-cols-4 grid-rows-4 border-2 border-amber-200 bg-gray-400"
-      >
-        <template v-for="(arr, i) in grid" :key="i">
-          <template v-for="(v, j) in arr" :key="`${i}_${j}`">
-            <Transition :name="transitionName" mode="out-in">
-              <div
-                v-if="v < N2"
-                class="slidepanel inline-flex select-none items-center justify-center border-2 border-amber-200 text-4xl font-bold"
-                :style="`background-position: ${bgpos(v)}`"
-                @click="() => slideGrid(i, j)"
-              >
-                {{ v }}
-              </div>
-              <div
-                v-else
-                class="border-2 border-amber-200 bg-transparent"
-              ></div>
-            </Transition>
+      <Transition name="fade">
+        <div
+          v-if="!complete"
+          class="absolute top-0 left-0 bottom-0 right-0 grid grid-cols-4 grid-rows-4 border-2 border-amber-200 bg-gray-400"
+        >
+          <template v-for="(arr, i) in grid" :key="i">
+            <template v-for="(v, j) in arr" :key="`${i}_${j}`">
+              <Transition :name="transitionName" mode="out-in">
+                <div
+                  v-if="v < N2"
+                  class="slidepanel inline-flex select-none items-center justify-center border border-amber-200 text-4xl font-bold text-white"
+                  :style="`background-position: ${bgpos(v)}`"
+                  @click="() => slideGrid(i, j)"
+                >
+                  {{ v }}
+                </div>
+                <div
+                  v-else
+                  class="border border-amber-200 bg-transparent"
+                ></div>
+              </Transition>
+            </template>
           </template>
-        </template>
-      </div>
+        </div>
+      </Transition>
     </div>
     <button
-      class="mb-4 cursor-pointer rounded border-2 border-transparent bg-amber-500 px-4 py-2 text-xl font-semibold text-white transition duration-300 hover:border-amber-300 hover:bg-amber-600"
-      @click="updateCatImage"
+      class="cursor-pointer rounded border-2 border-transparent bg-amber-500 px-4 py-2 text-xl font-semibold text-white transition duration-300 hover:border-amber-300 hover:bg-amber-600"
+      @click="updateImage"
     >
       Restart
     </button>
@@ -167,7 +174,8 @@
 <style scoped>
   .slidepanel {
     background-image: v-bind(bgimg);
-    background-size: v-bind(basewidth + 'px') v-bind(baseheight + 'px');
+    background-size: v-bind(bgwidth + 'px') v-bind(bgheight + 'px');
+    -webkit-text-stroke: 1px #000;
   }
 
   .slidepanel.slide-up-leave-active,
@@ -205,5 +213,13 @@
 
   .slidepanel.slide-left-leave-to {
     transform: translateX(-100%);
+  }
+
+  .fade-leave-active {
+    transition: opacity 2s ease;
+  }
+
+  .fade-leave-to {
+    opacity: 0;
   }
 </style>
