@@ -114,7 +114,7 @@
     const j = k % N
     const x = ((bgwidth.value * j) / N) | 0
     const y = ((bgheight.value * i) / N) | 0
-    return `-${x}px -${y}px`
+    return `-${x + 2}px -${y + 2}px`
   }
 
   onMounted(updateImage)
@@ -129,7 +129,7 @@
   />
   <div class="p-4 text-center">
     <h1 class="mb-10 text-3xl font-semibold">Slide Puzzle</h1>
-    <div class="relative mx-auto mb-6 w-[600px]">
+    <div class="relative mx-auto mb-6 w-[600px] border-2 border-amber-200">
       <img
         ref="imgRef"
         :src="imgUrl"
@@ -139,14 +139,14 @@
       <Transition name="fade">
         <div
           v-if="!complete"
-          class="absolute top-0 left-0 bottom-0 right-0 grid grid-cols-4 grid-rows-4 border-2 border-amber-200 bg-gray-400"
+          class="absolute top-0 left-0 bottom-0 right-0 grid grid-cols-4 grid-rows-4 bg-gray-500"
         >
           <template v-for="(arr, i) in grid" :key="i">
             <template v-for="(v, j) in arr" :key="`${i}_${j}`">
               <Transition :name="transitionName" mode="out-in">
                 <div
                   v-if="v < N2"
-                  class="slidepanel inline-flex select-none items-center justify-center border border-amber-200 text-4xl font-bold text-white"
+                  class="slidepanel inline-flex select-none items-center justify-center border-2 border-amber-200 text-4xl font-bold text-white"
                   :style="`background-position: ${bgpos(v)}`"
                   @click="() => slideGrid(i, j)"
                 >
@@ -154,7 +154,7 @@
                 </div>
                 <div
                   v-else
-                  class="border border-amber-200 bg-transparent"
+                  class="border-2 border-amber-200 bg-transparent"
                 ></div>
               </Transition>
             </template>
