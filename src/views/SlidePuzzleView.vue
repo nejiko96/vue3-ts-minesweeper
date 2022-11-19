@@ -138,7 +138,7 @@
       />
       <Transition name="fade">
         <div
-          v-if="!complete"
+          v-show="!complete"
           class="absolute top-0 left-0 bottom-0 right-0 grid grid-cols-4 grid-rows-4 bg-gray-500"
         >
           <template v-for="(arr, i) in grid" :key="i">
@@ -189,7 +189,7 @@
   .slidepanel.slide-down-enter-active,
   .slidepanel.slide-left-enter-active,
   .slidepanel.slide-right-enter-active {
-    transition: opacity 0.1s step-end;
+    transition: opacity 0.2s step-end;
   }
 
   .slidepanel.slide-up-enter-from,
