@@ -1,57 +1,15 @@
 <script lang="ts">
   import { ref, onMounted, computed } from 'vue'
+  import SlidePuzzle from '@/models/SlidePuzzle'
   import { fetchCatImage } from '@/models/catApi'
-  import { fillArray, shuffle } from '@/utils'
+
   import VueElementLoading from 'vue-element-loading'
-
-  type NeighborType = {
-    di: number
-    dj: number
-    move: string
-  }
-
-  const neighbors: Readonly<NeighborType[]> = [
-    { di: 1, dj: 0, move: 'down' },
-    { di: 0, dj: 1, move: 'right' },
-    { di: -1, dj: 0, move: 'up' },
-    { di: 0, dj: -1, move: 'left' },
-  ]
 
   const N = 4
 
   const N2 = N * N
 
-  const arrInitial = fillArray(N2, (k) => k + 1)
-
-  const arrToGrid = (arr: number[]): number[][] =>
-    fillArray(N, (i) => arr.slice(i * N, (i + 1) * N))
-
-  const clearStatus = JSON.stringify(arrToGrid(arrInitial))
-
-  // 転倒数
-  const inversionNumber = (arr: number[]): number => {
-    let ret = 0 // 転倒数
-    for (let i = 0; i < arr.length; i++) {
-      for (let j = i + 1; j < arr.length; j++) {
-        if (arr[i] > arr[j]) ret += 1
-      }
-    }
-    return ret
-  }
-
-  // 空きマスの移動距離
-  const movesOfEmptyCell = (arr: number[]): number => {
-    const i = arr.findIndex((v) => v === N2)
-    return ((i / N) | 0) + (i % N)
-  }
-
-  // 最初の２つを交換
-  const swapTop2 = (arr: number[]): void => {
-    let [i, j] = [0, 1]
-    if (arr[0] === N2) [i, j] = [1, 2]
-    if (arr[1] === N2) [i, j] = [0, 2]
-    ;[arr[i], arr[j]] = [arr[j], arr[i]]
-  }
+  const model = new SlidePuzzle(N)
 </script>
 
 <script setup lang="ts">
@@ -59,28 +17,16 @@
 
   const transitionName = ref<string>('')
 
-  const complete = computed(() => JSON.stringify(grid.value) === clearStatus)
+  const complete = computed(() => model.isComplete(grid.value))
 
   const initGrid = (): void => {
-    const arr = shuffle(arrInitial)
-    const invNum = inversionNumber(arr)
-    const dist = movesOfEmptyCell(arr)
-    if ((invNum + dist) % 2 > 0) swapTop2(arr)
-    grid.value = arrToGrid(arr)
+    grid.value = model.generateGrid()
     transitionName.value = ''
   }
 
   const slideGrid = (i: number, j: number): void => {
-    const v = grid.value[i][j]
-    const nb = neighbors
-      .map(({ di, dj, move }) => ({ i2: i + di, j2: j + dj, move }))
-      .find(({ i2, j2 }) => grid.value[i2] && grid.value[i2][j2] === N2)
-    if (nb) {
-      const { i2, j2, move } = nb
-      grid.value[i2][j2] = v
-      grid.value[i][j] = N2
-      transitionName.value = `slide-${move}`
-    }
+    const move = model.slideAt(grid.value, i, j)
+    transitionName.value = `slide-${move}`
   }
 
   const imgRef = ref<HTMLImageElement>()
@@ -110,10 +56,11 @@
 
   const bgpos = (v: number): string => {
     const k = v - 1
-    const i = (k / N) | 0
-    const j = k % N
-    const x = ((bgwidth.value * j) / N) | 0
-    const y = ((bgheight.value * i) / N) | 0
+    const [i, j] = [(k / N) | 0, k % N]
+    const [x, y] = [
+      ((bgwidth.value * j) / N) | 0,
+      ((bgheight.value * i) / N) | 0,
+    ]
     return `-${x + 2}px -${y + 2}px`
   }
 
