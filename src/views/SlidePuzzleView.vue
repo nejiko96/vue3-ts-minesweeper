@@ -4,6 +4,7 @@
   import { fetchCatImage } from '@/models/catApi'
 
   import VueElementLoading from 'vue-element-loading'
+  import SlidePuzzleSolver from '@/models/SlidePuzzleSolver'
 
   const N = 4
 
@@ -19,6 +20,8 @@
 
   const complete = computed(() => model.isComplete(grid.value))
 
+  let path: number[][] = []
+
   const initGrid = (): void => {
     grid.value = model.generateGrid()
     transitionName.value = ''
@@ -27,6 +30,21 @@
   const slideGrid = (i: number, j: number): void => {
     const move = model.slideAt(grid.value, i, j)
     transitionName.value = `slide-${move}`
+  }
+
+  const startAutoPilot = () => {
+    const solver = new SlidePuzzleSolver(grid.value)
+    path = solver.solve()
+    // console.log(path)
+    nextAutoPilot()
+  }
+
+  const nextAutoPilot = () => {
+    if (path.length) {
+      const [i, j] = path.shift() as number[]
+      slideGrid(i, j)
+      window.setTimeout(nextAutoPilot, 500)
+    }
   }
 
   const imgRef = ref<HTMLImageElement>()
@@ -110,7 +128,14 @@
       </Transition>
     </div>
     <button
-      class="cursor-pointer rounded border-2 border-transparent bg-amber-500 px-4 py-2 text-xl font-semibold text-white transition duration-300 hover:border-amber-300 hover:bg-amber-600"
+      v-if="!complete"
+      class="mr-2 cursor-pointer rounded border-2 border-transparent bg-amber-500 px-4 py-2 text-xl font-semibold text-white transition duration-300 hover:border-amber-300 hover:bg-amber-600"
+      @click="startAutoPilot"
+    >
+      Auto Pilot
+    </button>
+    <button
+      class="mr-2 cursor-pointer rounded border-2 border-transparent bg-amber-500 px-4 py-2 text-xl font-semibold text-white transition duration-300 hover:border-amber-300 hover:bg-amber-600"
       @click="updateImage"
     >
       Restart
