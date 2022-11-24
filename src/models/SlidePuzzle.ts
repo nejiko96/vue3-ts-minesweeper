@@ -27,7 +27,7 @@ class SlidePuzzle {
 
   n: number
 
-  #n2: number | null = null
+  n2: number
 
   #panels: number[] | null = null
 
@@ -36,11 +36,7 @@ class SlidePuzzle {
   constructor(n: number) {
     if (n < 2) throw new Error('n must satisfy n >= 2.')
     this.n = n
-  }
-
-  get n2(): number {
-    this.#n2 ||= this.n * this.n
-    return this.#n2
+    this.n2 = this.n ** 2
   }
 
   get panels(): number[] {

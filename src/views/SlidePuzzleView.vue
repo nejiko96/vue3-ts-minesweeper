@@ -8,7 +8,7 @@
 
   const N = 4
 
-  const N2 = N * N
+  const N2 = N ** 2
 
   const model = new SlidePuzzle(N)
 </script>
@@ -18,32 +18,43 @@
 
   const transitionName = ref<string>('')
 
+  const path = ref<number[][] | null>(null)
+
   const complete = computed(() => model.isComplete(grid.value))
-
-  let path: number[][] = []
-
-  const initGrid = (): void => {
-    grid.value = model.generateGrid()
-    transitionName.value = ''
-  }
 
   const slideGrid = (i: number, j: number): void => {
     const move = model.slideAt(grid.value, i, j)
     transitionName.value = `slide-${move}`
   }
 
-  const startAutoPilot = () => {
-    const solver = new SlidePuzzleSolver(grid.value)
-    path = solver.solve()
-    // console.log(path)
-    nextAutoPilot()
+  const execAutopilot = () => {
+    if (path.value && path.value.length) {
+      const [i, j] = path.value.shift() as number[]
+      slideGrid(i, j)
+      window.setTimeout(execAutopilot, 500)
+    }
   }
 
-  const nextAutoPilot = () => {
-    if (path.length) {
-      const [i, j] = path.shift() as number[]
-      slideGrid(i, j)
-      window.setTimeout(nextAutoPilot, 500)
+  const handleRestart = (): void => {
+    isLoading.value = true
+    grid.value = model.generateGrid()
+    transitionName.value = ''
+    path.value = null
+    updateImage()
+  }
+
+  const handleClick = (i: number, j: number): void => {
+    if (path.value) return
+    slideGrid(i, j)
+  }
+
+  const toggleAutopilot = () => {
+    if (path.value) {
+      path.value = null
+    } else {
+      const solver = new SlidePuzzleSolver(grid.value)
+      path.value = solver.solve()
+      execAutopilot()
     }
   }
 
@@ -54,7 +65,6 @@
   const isLoading = ref(false)
 
   const updateImage = async () => {
-    isLoading.value = true
     const image = await fetchCatImage()
     imgUrl.value = image.url
   }
@@ -62,7 +72,6 @@
   const loadedImage = () => {
     bgwidth.value = (imgRef.value && imgRef.value.width) || 500
     bgheight.value = (imgRef.value && imgRef.value.height) || 500
-    initGrid()
     isLoading.value = false
   }
 
@@ -82,7 +91,7 @@
     return `-${x + 2}px -${y + 2}px`
   }
 
-  onMounted(updateImage)
+  onMounted(handleRestart)
 </script>
 
 <template>
@@ -113,7 +122,7 @@
                   v-if="v < N2"
                   class="slidepanel inline-flex select-none items-center justify-center border-2 border-amber-200 text-4xl font-bold text-white"
                   :style="`background-position: ${bgpos(v)}`"
-                  @click="() => slideGrid(i, j)"
+                  @click="() => handleClick(i, j)"
                 >
                   {{ v }}
                 </div>
@@ -130,13 +139,13 @@
     <button
       v-if="!complete"
       class="mr-2 cursor-pointer rounded border-2 border-transparent bg-amber-500 px-4 py-2 text-xl font-semibold text-white transition duration-300 hover:border-amber-300 hover:bg-amber-600"
-      @click="startAutoPilot"
+      @click="toggleAutopilot"
     >
-      Auto Pilot
+      {{ path ? 'Stop' : 'Start' }} Autopilot
     </button>
     <button
       class="mr-2 cursor-pointer rounded border-2 border-transparent bg-amber-500 px-4 py-2 text-xl font-semibold text-white transition duration-300 hover:border-amber-300 hover:bg-amber-600"
-      @click="updateImage"
+      @click="handleRestart"
     >
       Restart
     </button>
