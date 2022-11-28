@@ -1,4 +1,4 @@
-import { fillArray } from '@/utils'
+import { fillArray2D } from '@/utils'
 import SlidePuzzle from './SlidePuzzle'
 
 /**
@@ -6,39 +6,34 @@ import SlidePuzzle from './SlidePuzzle'
  */
 class SlidePuzzleSolver {
   /**
-   * 隣接するマスの相対位置
-   * @type {number[][]}
-   */
-  static NEIGHBORS: number[][] = [
-    [-1, 0],
-    [0, -1],
-    [0, 1],
-    [1, 0],
-  ]
-
-  /**
    * 現在の盤面
    * @type {number[][]}
    */
-  grid: number[][]
+  #grid: number[][] = []
 
   /**
-   * 盤面のサイズ(N)
+   * 盤面の幅(W)
    * @type {number}
    */
-  n: number
+  #w = 0
 
   /**
-   * マス数(NxN)
+   * 盤面の幅(H)
    * @type {number}
    */
-  n2: number
+  #h = 0
+
+  /**
+   * マス数(S=WxH)
+   * @type {number}
+   */
+  #s = 0
 
   /**
    * スライドパズルのロジック
    * @type {SlidePuzzle}
    */
-  #logic: SlidePuzzle
+  #logic: SlidePuzzle = new SlidePuzzle(2)
 
   /**
    * 移動の履歴
@@ -53,44 +48,38 @@ class SlidePuzzleSolver {
   #locked: Record<number, boolean> = {}
 
   /**
-   * コンストラクタ
-   * @param {nuber[][]} grid 盤面
-   */
-  constructor(grid: number[][]) {
-    this.grid = JSON.parse(JSON.stringify(grid))
-    this.n = this.grid.length
-    this.n2 = this.n ** 2
-    this.#logic = new SlidePuzzle(this.n)
-  }
-
-  /**
    * 指定されたパネルの現在位置を求める
-   * @param {number} x パネル番号(1...N^2)
-   * @return {number} 位置番号(0...N^2-1)
+   * @param {number} x パネル番号(1...S)
+   * @return {[number, number]} [縦位置, 横位置]
    */
-  currentPos(x: number): number {
-    return this.grid.flat().findIndex((v) => v === x)
-  }
-
-  /**
-   * 指定された位置が空いているか判定
-   * @param {umber} v 位置番号(0...N^2-1)
-   */
-  isVacant(v: number): boolean {
-    return this.grid[(v / this.n) | 0][v % this.n] === this.n2
+  #currentPos(x: number): [number, number] {
+    let [i, j] = [-1, -1]
+    i = this.#grid.findIndex((arr) => {
+      j = arr.findIndex((v) => v === x)
+      return j >= 0
+    })
+    return [i, j]
   }
 
   /**
    * 現在の状態から完成状態までのスライド履歴を生成する
+   * @param {nuber[][]} grid 盤面
    * @return {number[][]} 移動履歴
    */
-  solve(): number[][] {
+  solve(grid: number[][]): number[][] {
+    // console.log('solve: ')
+    this.#grid = JSON.parse(JSON.stringify(grid))
+    this.#w = this.#grid[0].length
+    this.#h = this.#grid.length
+    this.#s = this.#w * this.#h
+    this.#logic = new SlidePuzzle(this.#w, this.#h)
     this.#path = []
     this.#locked = {}
-    for (let v = 1; v <= this.n2 - this.n; v++) {
-      this.solveFor(v)
-      if (v + this.n > this.n2 - this.n && v + this.n < this.n2) {
-        this.solveFor(v + this.n)
+    for (let x = 1; x <= this.#s - this.#w; x++) {
+      this.#solveFor(x)
+      const y = x + this.#w
+      if (y > this.#s - this.#w) {
+        this.#solveFor(y)
       }
     }
     return this.#path
@@ -100,160 +89,170 @@ class SlidePuzzleSolver {
    * 指定されたパネルを目的地に移動させるまでのスライド履歴を生成する
    * @param {number} x パネル番号
    */
-  solveFor(x: number): void {
+  #solveFor(x: number): void {
     // console.log(`solveFor: ${x}`)
 
     // 空きマス移動のときに動かさないパネルに追加
     this.#locked[x] = true
     // 現在位置
-    const f = this.currentPos(x)
+    const [fi, fj] = this.#currentPos(x)
     // 目標位置
-    const t = x - 1
+    const [ti, tj] = this.#logic.pos2D(x - 1)
 
     // すでに目標の位置にいれば何もせず終了
-    if (f === t) {
+    if (fi === ti && fj === tj) {
       // console.log(' no move.')
       return
     }
 
-    if ([this.n2 - 1, this.n2 - this.n, this.n2 - this.n - 1].includes(x)) {
-      this.moveSimple(f, t)
-    } else if (x % this.n === 0) {
-      this.moveToRightEnd(f, t)
-    } else if (x > this.n2 - this.n) {
-      this.moveToBottomEnd(f, t)
+    if (tj === this.#w - 1 && ti === this.#h - 1) {
+      // 何もしない
+    } else if (tj >= this.#w - 2 && ti >= this.#h - 2) {
+      this.#moveSimple(fi, fj, ti, tj)
+    } else if (tj === this.#w - 1) {
+      this.#moveToRightEnd(fi, fj, ti, tj)
+    } else if (ti === this.#h - 1) {
+      this.#moveToBottomEnd(fi, fj, ti, tj)
     } else {
-      this.moveSimple(f, t)
+      this.#moveSimple(fi, fj, ti, tj)
     }
   }
 
   /**
    * fの位置にあるパネルをtまで移動させる
-   * @param {number} f 現在位置
-   * @param {number} t 目標位置
+   * @param {number} fi 現在縦位置
+   * @param {number} fj 現在横位置
+   * @param {number} ti 目標縦位置
+   * @param {number} tj 目標横位置
    */
-  moveSimple(f: number, t: number): void {
-    // console.log(`moveSimple: ${v}->${t}`)
+  #moveSimple(fi: number, fj: number, ti: number, tj: number): void {
+    // console.log(`moveSimple: [${fi},${fj}]->[${ti},${tj}]`)
 
-    let v = f
-    // 右移動
-    for (; v % this.n < t % this.n; v += 1) {
-      this.moveOne(v, v + 1)
+    let [vi, vj] = [fi, fj]
+    // 右に１マスずつ移動
+    for (; vj < tj; vj += 1) {
+      this.#moveOne(vi, vj, vi, vj + 1)
     }
-    // 左移動
-    for (; v % this.n > t % this.n; v -= 1) {
-      this.moveOne(v, v - 1)
+    // 左に１マスずつ移動
+    for (; vj > tj; vj -= 1) {
+      this.#moveOne(vi, vj, vi, vj - 1)
     }
-    // 下移動
-    for (; v < t; v += this.n) {
-      this.moveOne(v, v + this.n)
+    // 下に１マスずつ移動
+    for (; vi < ti; vi += 1) {
+      this.#moveOne(vi, vj, vi + 1, vj)
     }
-    // 上移動
-    for (; v > t; v -= this.n) {
-      this.moveOne(v, v - this.n)
+    // 上に１マスずつ移動
+    for (; vi > ti; vi -= 1) {
+      this.#moveOne(vi, vj, vi - 1, vj)
     }
   }
 
   /**
    * fの位置にあるパネルをt(右端)まで移動させる
-   * @param {number} f 現在位置
-   * @param {number} t 目標位置
+   * @param {number} fi 現在縦位置
+   * @param {number} fj 現在横位置
+   * @param {number} ti 目標縦位置
+   * @param {number} tj 目標横位置
    */
-  moveToRightEnd(f: number, t: number): void {
-    // console.log(`moveToRightEnd: ${v}->${t}`)
+  #moveToRightEnd(fi: number, fj: number, ti: number, tj: number): void {
+    // console.log(`moveToRightEnd: [${fi},${fj}]->[${ti},${tj}]`)
 
     // 真下にいて上がちょうど空いていたら
     // 今の位置からスライドさせるだけ
-    if (f === t + this.n && this.isVacant(t)) {
-      this.slideAt(f)
+    if (fi === ti + 1 && fj === tj && this.#grid[ti][tj] === this.#s) {
+      this.#slideAt(fi, fj)
       return
     }
 
     // 左隣とくっつけて目標位置に入れる
-    this.moveSimple(f, t + this.n * 2)
-    this.moveOne(t - 1, t)
-    this.moveOne(t + this.n * 2, t + this.n)
-    this.moveOne(t, t - 1)
-    this.moveOne(t + this.n, t)
+    this.#moveSimple(fi, fj, ti + 2, tj)
+    this.#moveOne(ti, tj - 1, ti, tj)
+    this.#moveOne(ti + 2, tj, ti + 1, tj)
+    this.#moveOne(ti, tj, ti, tj - 1)
+    this.#moveOne(ti + 1, tj, ti, tj)
   }
 
   /**
    * fの位置にあるパネルをt(下端)まで移動させる
-   * @param {number} f 現在位置
-   * @param {number} t 目標位置
+   * @param {number} fi 現在縦位置
+   * @param {number} fj 現在横位置
+   * @param {number} ti 目標縦位置
+   * @param {number} tj 目標横位置
    */
-  moveToBottomEnd(f: number, t: number): void {
-    // console.log(`moveToBottomEnd: ${v}->${t}`)
+  #moveToBottomEnd(fi: number, fj: number, ti: number, tj: number): void {
+    // console.log(`moveToBottomEnd: [${fi},${fj}]->[${ti},${tj}]`)
 
     // 真横にいて横がちょうど空いていたら
     // 今の位置からスライドさせるだけ
-    if (f === t + 1 && this.isVacant(t)) {
-      this.slideAt(f)
+    if (fi === ti && fj === tj + 1 && this.#grid[ti][tj] === this.#s) {
+      this.#slideAt(fi, fj)
       return
     }
 
     // 上隣とくっつけて目標位置に入れる
-    this.moveSimple(f, t + 2)
-    this.moveOne(t - this.n, t)
-    this.moveOne(t + 2, t + 1)
-    this.moveOne(t, t - this.n)
-    this.moveOne(t + 1, t)
+    this.#moveSimple(fi, fj, ti, tj + 2)
+    this.#moveOne(ti - 1, tj, ti, tj)
+    this.#moveOne(ti, tj + 2, ti, tj + 1)
+    this.#moveOne(ti, tj, ti - 1, tj)
+    this.#moveOne(ti, tj + 1, ti, tj)
   }
 
   /**
    * fの位置にあるパネルをt(隣)まで移動させる
-   * @param {number} f 現在位置
-   * @param {number} t 目標位置
+   * @param {number} fi 現在縦位置
+   * @param {number} fj 現在横位置
+   * @param {number} ti 目標縦位置
+   * @param {number} tj 目標横位置
    */
-  moveOne(f: number, t: number): void {
-    // console.log(` moveOne: ${v}->${u}`)
+  #moveOne(fi: number, fj: number, ti: number, tj: number): void {
+    // console.log(` moveOne: [${fi},${fj}]->[${ti},${tj}]`)
 
-    this.vacate(t)
-    this.slideAt(f)
+    this.#vacate(ti, tj)
+    this.#slideAt(fi, fj)
   }
 
   /**
    * 目標位置のマスを空ける
-   * @param {number} t 目標位置
+   * @param {number} ti 目標縦位置
+   * @param {number} tj 目標横位置
    */
-  vacate(t: number): void {
+  #vacate(ti: number, tj: number): void {
     // 目標位置を始点とした最短経路探索
-    const q: number[] = []
-    const prev: number[] = fillArray(this.n2, () => -2)
-    q.push(t)
-    prev[t] = -1
+    const q: number[][] = []
+    const prev: number[][][] = fillArray2D(this.#w, this.#h, () => [-2])
+    q.push([ti, tj])
+    prev[ti][tj] = [-1]
     while (q.length) {
-      const v = q.shift() as number
-      const [i, j] = [(v / this.n) | 0, v % this.n]
-      SlidePuzzleSolver.NEIGHBORS.forEach(([di, dj]) => {
+      const [i, j] = q.shift() as number[]
+      SlidePuzzle.NEIGHBORS.forEach(({ di, dj }) => {
         const [i2, j2] = [i + di, j + dj]
-        if (i2 < 0 || i2 >= this.n || j2 < 0 || j2 >= this.n) return // 盤面の外
-        if (this.#locked[this.grid[i2][j2]]) return // 動かせない
-        const u = i2 * this.n + j2
-        if (prev[u] >= -1) return // 探索済
-        q.push(u)
-        prev[u] = v
+        if (i2 < 0 || i2 >= this.#h || j2 < 0 || j2 >= this.#w) return // 盤面の外
+        if (this.#locked[this.#grid[i2][j2]]) return // 動かせない
+        if (prev[i2][j2][0] >= -1) return // 探索済
+        q.push([i2, j2])
+        prev[i2][j2] = [i, j]
       })
     }
     // 現在の空きマスの位置
-    const f = this.currentPos(this.n2)
+    const [fi, fj] = this.#currentPos(this.#s)
     // 目標位置まで空きマスを移動させる
-    let v = prev[f]
-    while (v >= 0) {
-      this.slideAt(v)
-      v = prev[v]
+    let [vi, vj] = prev[fi][fj]
+    while (vi >= 0) {
+      this.#slideAt(vi, vj)
+      ;[vi, vj] = prev[vi][vj]
     }
   }
 
   /**
    * 指定した位置のパネルをスライドさせて履歴を残す
-   * @param {number} v 位置番号
+   * @param {number} i 縦位置
+   * @param {number} j 横位置
    */
-  slideAt(v: number): void {
-    const [i, j] = [(v / this.n) | 0, v % this.n]
+
+  #slideAt(i: number, j: number): void {
     // console.log(`  slideAt: [${i}, ${j}]`)
     this.#path.push([i, j])
-    this.#logic.slideAt(this.grid, i, j)
+    this.#logic.slideAt(this.#grid, i, j)
   }
 }
 

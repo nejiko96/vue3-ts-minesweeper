@@ -1,16 +1,14 @@
 <script lang="ts">
   import { ref, onMounted, computed } from 'vue'
   import SlidePuzzle from '@/models/SlidePuzzle'
+  import SlidePuzzleSolver from '@/models/SlidePuzzleSolver'
   import { fetchCatImage } from '@/models/catApi'
 
   import VueElementLoading from 'vue-element-loading'
-  import SlidePuzzleSolver from '@/models/SlidePuzzleSolver'
 
-  const N = 4
+  const model = new SlidePuzzle(4)
 
-  const N2 = N ** 2
-
-  const model = new SlidePuzzle(N)
+  const solver = new SlidePuzzleSolver()
 </script>
 
 <script setup lang="ts">
@@ -52,8 +50,7 @@
     if (path.value) {
       path.value = null
     } else {
-      const solver = new SlidePuzzleSolver(grid.value)
-      path.value = solver.solve()
+      path.value = solver.solve(grid.value)
       execAutopilot()
     }
   }
@@ -82,11 +79,10 @@
   const bgimg = computed(() => `url('${imgUrl.value}')`)
 
   const bgpos = (v: number): string => {
-    const k = v - 1
-    const [i, j] = [(k / N) | 0, k % N]
+    const [i, j] = model.pos2D(v - 1)
     const [x, y] = [
-      ((bgwidth.value * j) / N) | 0,
-      ((bgheight.value * i) / N) | 0,
+      ((bgwidth.value * j) / model.w) | 0,
+      ((bgheight.value * i) / model.h) | 0,
     ]
     return `-${x + 2}px -${y + 2}px`
   }
@@ -113,13 +109,17 @@
       <Transition name="fade">
         <div
           v-show="!complete"
-          class="absolute top-0 left-0 bottom-0 right-0 grid grid-cols-4 grid-rows-4 bg-gray-500"
+          class="--grid-cols-4 ---grid-rows-4 absolute top-0 left-0 bottom-0 right-0 grid bg-gray-500"
+          :style="{
+            gridTemplateColumns: `repeat(${model.w}, minmax(0, 1fr))`,
+            gridTemplateRows: `repeat(${model.h}, minmax(0, 1fr))`,
+          }"
         >
           <template v-for="(arr, i) in grid" :key="i">
             <template v-for="(v, j) in arr" :key="`${i}_${j}`">
               <Transition :name="transitionName" mode="out-in">
                 <div
-                  v-if="v < N2"
+                  v-if="v < model.s"
                   class="slidepanel inline-flex select-none items-center justify-center border-2 border-amber-200 text-4xl font-bold text-white"
                   :style="`background-position: ${bgpos(v)}`"
                   @click="() => handleClick(i, j)"
@@ -166,20 +166,6 @@
     transition: transform 0.25s ease;
   }
 
-  .slidepanel.slide-up-enter-active,
-  .slidepanel.slide-down-enter-active,
-  .slidepanel.slide-left-enter-active,
-  .slidepanel.slide-right-enter-active {
-    transition: opacity 0.2s step-end;
-  }
-
-  .slidepanel.slide-up-enter-from,
-  .slidepanel.slide-down-enter-from,
-  .slidepanel.slide-left-enter-from,
-  .slidepanel.slide-right-enter-from {
-    opacity: 0;
-  }
-
   .slidepanel.slide-up-leave-to {
     transform: translateY(-100%);
   }
@@ -194,6 +180,20 @@
 
   .slidepanel.slide-left-leave-to {
     transform: translateX(-100%);
+  }
+
+  .slidepanel.slide-up-enter-active,
+  .slidepanel.slide-down-enter-active,
+  .slidepanel.slide-left-enter-active,
+  .slidepanel.slide-right-enter-active {
+    transition: opacity 0.2s step-end;
+  }
+
+  .slidepanel.slide-up-enter-from,
+  .slidepanel.slide-down-enter-from,
+  .slidepanel.slide-left-enter-from,
+  .slidepanel.slide-right-enter-from {
+    opacity: 0;
   }
 
   .fade-leave-active {
