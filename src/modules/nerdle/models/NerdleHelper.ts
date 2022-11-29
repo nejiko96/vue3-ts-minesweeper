@@ -7,7 +7,7 @@ import {
   fillArray,
   permutation,
 } from '@/core/utils'
-import samplesRaw from '../resource/nerdle-samples.txt?raw'
+import samplesRaw from '../assets/nerdle-samples.txt?raw'
 import NerdleParser from './NerdleParser'
 
 export type NerdleHintType = {
