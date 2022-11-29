@@ -1,10 +1,10 @@
 <script lang="ts">
   import { ref, onMounted, computed } from 'vue'
-  import SlidePuzzle from '@/models/SlidePuzzle'
-  import SlidePuzzleSolver from '@/models/SlidePuzzleSolver'
-  import { fetchCatImage } from '@/models/catApi'
-
   import VueElementLoading from 'vue-element-loading'
+
+  import SlidePuzzle from '../models/SlidePuzzle'
+  import SlidePuzzleSolver from '../models/SlidePuzzleSolver'
+  import { fetchCatImage } from '../models/catApi'
 
   const model = new SlidePuzzle(4)
 

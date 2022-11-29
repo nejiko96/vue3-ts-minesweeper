@@ -1,8 +1,8 @@
 <script lang="ts">
   import { ref, computed, watch } from 'vue'
 
-  import { styleIdx } from '@/models/cellModel'
-  import { ThemeSettingType, GridClickType, GridPosType } from '@/types'
+  import { ThemeSettingType, GridClickType, GridPosType } from '../types'
+  import { styleIdx } from '../models/cellModel'
 
   const bgPosCache: Record<number, Record<number, string>> = {}
 </script>

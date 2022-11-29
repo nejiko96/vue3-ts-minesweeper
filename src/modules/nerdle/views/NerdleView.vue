@@ -1,13 +1,13 @@
 <script setup lang="ts">
-  import NerdleHelper, { NerdleHintType } from '@/models/NerdleHelper'
-  import { fillArray } from '@/utils'
+  import { fillArray } from '@/core/utils'
   import { onMounted, ref, watch } from 'vue'
-  import IconBase from '@/icons/IconBase.vue'
-  import IconPlus from '@/icons/IconPlus.vue'
-  import IconMinus from '@/icons/IconMinus.vue'
-  import IconMultiply from '@/icons/IconMultiply.vue'
-  import IconDivide from '@/icons/IconDivide.vue'
-  import IconEquals from '@/icons/IconEquals.vue'
+  import IconBase from '@/core/icons/IconBase.vue'
+  import IconPlus from '../icons/IconPlus.vue'
+  import IconMinus from '../icons/IconMinus.vue'
+  import IconMultiply from '../icons/IconMultiply.vue'
+  import IconDivide from '../icons/IconDivide.vue'
+  import IconEquals from '../icons/IconEquals.vue'
+  import NerdleHelper, { NerdleHintType } from '../models/NerdleHelper'
 
   type StatePropType = {
     state: number

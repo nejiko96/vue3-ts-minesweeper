@@ -1,11 +1,11 @@
 <script lang="ts">
   import { computed, ref } from 'vue'
+  import MsView from '@/modules/minesweeper/views/MsView.vue'
+  import CatView from '@/modules/catapi/views/CatView.vue'
+  import WordleView from '@/modules/wordle/views/WordleView.vue'
+  import NerdleView from '@/modules/nerdle/views/NerdleView.vue'
+  import SlidePuzzleView from '@/modules/catapi/views/SlidePuzzleView.vue'
 
-  import MsView from '@/views/MsView.vue'
-  import CatView from '@/views/CatView.vue'
-  import WordleView from '@/views/WordleView.vue'
-  import NerdleView from '@/views/NerdleView.vue'
-  import SlidePuzzleView from '@/views/SlidePuzzleView.vue'
   import AppLayout from './AppLayout.vue'
 
   const menuItems = [

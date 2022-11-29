@@ -6,9 +6,9 @@ import {
   GridClickType,
   GridPosType,
   GameStatusFlags,
-} from '@/types'
-import * as gameModel from '@/models/gameModel'
-import { makeWrapper } from '@/models/mouseEventModel'
+} from '../types'
+import * as gameModel from '../models/gameModel'
+import { makeWrapper } from '../models/mouseEventModel'
 
 const mouseModel = makeWrapper(gameModel)
 
