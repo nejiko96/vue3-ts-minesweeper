@@ -1,11 +1,11 @@
 <script setup lang="ts">
   import { ref } from 'vue'
 
-  import { SettingsType } from '@/types'
-  import { useSettingsStore } from '@/stores/settings'
+  import { SettingsType } from '../types'
+  import { useSettingsStore } from '../store/settings'
 
-  import MsGame from '@/components/MsGame.vue'
-  import MsSettings from '@/components/MsSettings.vue'
+  import MsGame from '../components/MsGame.vue'
+  import MsSettings from '../components/MsSettings.vue'
 
   const settings: SettingsType = useSettingsStore()
 

@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import { ref, onBeforeMount } from 'vue'
-  import { fetchCatImage } from '@/models/catApi'
   import VueElementLoading from 'vue-element-loading'
+  import { fetchCatImage } from '../models/catApi'
 
   const catImageUrl = ref('')
 

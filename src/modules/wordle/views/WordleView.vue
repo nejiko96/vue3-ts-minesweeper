@@ -1,10 +1,10 @@
 <script setup lang="ts">
+  import { fillArray } from '@/core/utils'
+  import { ref, watch } from 'vue'
   import WordleHelper, {
     WordleHintType,
     WordleSuggestionType,
-  } from '@/models/WordleHelper'
-  import { fillArray } from '@/utils'
-  import { ref, watch } from 'vue'
+  } from '../models/WordleHelper'
 
   type StatePropType = {
     state: number

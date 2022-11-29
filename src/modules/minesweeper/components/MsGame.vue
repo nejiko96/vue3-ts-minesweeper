@@ -9,9 +9,9 @@
     GridPosType,
     TimerModeEnum,
     TimerModeType,
-  } from '@/types'
-  import { initLocale } from '@/utils/locale'
-  import { useGameStore } from '@/stores/game'
+  } from '@/modules/minesweeper/types'
+  import { initLocale } from '../utils/locale'
+  import { useGameStore } from '../store/game'
 
   import MsTimer from './MsTimer.vue'
   import MsBoard from './MsBoard.vue'

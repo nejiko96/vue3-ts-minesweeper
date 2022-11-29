@@ -1,4 +1,4 @@
-import { fillArray, shuffle } from '@/utils'
+import { fillArray, shuffle } from '@/core/utils'
 
 type NeighborType = {
   di: number

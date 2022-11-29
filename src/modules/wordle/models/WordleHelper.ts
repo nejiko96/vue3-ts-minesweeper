@@ -1,5 +1,5 @@
-import { deleteChars, selectChars, uniq, permutation } from '@/utils'
-import wordsRaw from '@/resource/words.txt?raw'
+import { deleteChars, selectChars, uniq, permutation } from '@/core/utils'
+import wordsRaw from '../resource/words.txt?raw'
 
 export type WordleHintType = {
   position: number

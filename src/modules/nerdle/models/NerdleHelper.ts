@@ -6,8 +6,8 @@ import {
   repeatedPermutation,
   fillArray,
   permutation,
-} from '@/utils'
-import samplesRaw from '@/resource/nerdle-samples.txt?raw'
+} from '@/core/utils'
+import samplesRaw from '../resource/nerdle-samples.txt?raw'
 import NerdleParser from './NerdleParser'
 
 export type NerdleHintType = {

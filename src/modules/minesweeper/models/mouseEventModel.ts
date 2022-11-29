@@ -1,5 +1,5 @@
-import { MouseStateType } from '@/types'
-import { noop } from '@/utils'
+import { noop } from '@/core/utils'
+import { MouseStateType } from '../types'
 
 type TgtHandlerType<S, P extends unknown[]> = (state: S, ...args: P) => void
 

@@ -1,4 +1,4 @@
-import { fillArray2D } from '@/utils'
+import { fillArray2D } from '@/core/utils'
 import SlidePuzzle from './SlidePuzzle'
 
 /**
