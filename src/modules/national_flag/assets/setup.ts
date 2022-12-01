@@ -11,7 +11,7 @@
  * yarn add --dev @types/jsdom
  * yarn add --dev ts-node
  * - 実行方法
- * yarn node --loader ts-node/esm src/modules/flagquiz/assets/setup.ts
+ * yarn node --loader ts-node/esm src/modules/national_flag/assets/setup.ts
  */
 
 import got from 'got'
