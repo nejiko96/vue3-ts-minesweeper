@@ -1,9 +1,18 @@
 <script lang="ts">
+  import { onMounted, ref } from 'vue'
+  import draggable, { MoveEvent } from 'vuedraggable'
+  import { shuffle } from '@/core/utils'
   import flagsRaw from '../assets/flag_list.txt?raw'
+  import FlagLabel from '../components/FlagLabel.vue'
 
   type FlagType = {
     id: string
     name: string
+  }
+
+  type FlagExtType = FlagType & {
+    url: string
+    choice: FlagType[]
   }
 
   const FLAG_TBL = flagsRaw.split('\n').map((row) => {
@@ -16,56 +25,94 @@
     return h
   }, {})
 
-  // const ids = [
-  //   'SG', // シンガポール
-  //   'ID', // インドネシア
-  //   'MC', // モナコ
-  //   'PL', // ポーランド
-  //   'NP', // ネパール
-  // ]
-
   const ids = [
-    'SH', // セントヘレナ・アセンションおよびトリスタンダクーニャ
-    'SH_S', // セントヘレナ
-    'SH_A', // アセンション
-    'SH_T', // トリスタンダクーニャ
+    'AT', // オーストリア
+    'ID', // インドネシア
+    'LV', // ラトビア
+    'MC', // モナコ
+    'PL', // ポーランド
+    'SG', // シンガポール
   ]
 </script>
 <script setup lang="ts">
-  const flags = ids.map((id) => ({
-    ...FLAG_DIC[id],
-    url: new URL(`../assets/images/${id}.svg`, import.meta.url).href,
-  }))
+  const org = ref<FlagType[]>([])
+
+  const shuffled = ref<FlagExtType[]>([])
+
+  const checkMove = (evt: MoveEvent<FlagType>): boolean => {
+    if (evt.relatedContext.list === org.value) return true
+    return evt.relatedContext.list.length === 0
+  }
+
+  const handleRestart = () => {
+    org.value = ids.map((id) => ({
+      ...FLAG_DIC[id],
+    }))
+
+    shuffled.value = shuffle(org.value).map((o) => ({
+      ...o,
+      url: new URL(`../assets/images/${o.id}.svg`, import.meta.url).href,
+      choice: [],
+    }))
+  }
+
+  onMounted(handleRestart)
 </script>
 <template>
   <div class="p-4 text-center">
     <h1 class="mb-10 text-3xl font-semibold">Flag Study</h1>
+
     <div class="flex flex-col items-center justify-center">
       <div class="mb-10 grid grid-cols-3 gap-x-6 gap-y-6">
-        <template v-for="flag in flags" :key="flag.id">
+        <template v-for="flag in shuffled" :key="flag.id">
           <div>
             <div class="mb-2 flex h-[200px] w-[240px] items-center">
               <img class="h-full w-full object-contain" :src="flag.url" />
             </div>
-
-            <div class="mx-auto w-[200px] rounded bg-gray-300 py-2 text-black">
-              {{ flag.name }}
+            <div
+              class="mx-auto h-auto w-[240px] border-2 border-yellow-400 bg-yellow-100 p-2"
+            >
+              <draggable
+                :list="flag.choice"
+                group="flags"
+                item-key="id"
+                ghost-class="ghost"
+                :move="checkMove"
+              >
+                <template #item="{ element }">
+                  <FlagLabel
+                    >{{ element.id === flag.id ? '⭕️' : '❌' }}
+                    {{ element.name }}</FlagLabel
+                  >
+                </template>
+              </draggable>
             </div>
           </div>
         </template>
       </div>
 
       <div
-        class="h-[200px] w-[650px] border-2 border-yellow-400 bg-yellow-100 p-2"
+        class="h-[150px] w-[700px] border-2 border-yellow-400 bg-yellow-100 p-2"
       >
-        <div class="flex flex-row flex-wrap gap-x-2 gap-y-2">
-          <template v-for="flag in flags" :key="flag.id">
-            <div class="h-min w-[200px] rounded bg-gray-300 py-2 text-black">
-              {{ flag.name }}
-            </div>
+        <draggable
+          :list="org"
+          group="flags"
+          item-key="id"
+          class="flex flex-row flex-wrap gap-x-2 gap-y-2"
+          ghost-class="ghost"
+          :move="checkMove"
+        >
+          <template #item="{ element }">
+            <FlagLabel>{{ element.name }}</FlagLabel>
           </template>
-        </div>
+        </draggable>
       </div>
     </div>
   </div>
 </template>
+
+<style scoped>
+  .ghost {
+    opacity: 0.5;
+  }
+</style>
