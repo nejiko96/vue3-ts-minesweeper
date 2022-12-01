@@ -1,0 +1,253 @@
+IS	アイスランド	Iceland	北ヨーロッパ	A	109
+IE	アイルランド	Ireland	西ヨーロッパ	A	27
+AZ	アゼルバイジャン	Azerbaijan	東ヨーロッパ	A	88
+AF	アフガニスタン	Afghanistan	中東	A	999
+US	アメリカ合衆国	United States of America	北アメリカ	A	1
+VI	アメリカ領ヴァージン諸島	Virgin Islands (U.S.)	中央アメリカ	C	999
+AS	アメリカ領サモア	American Samoa	オセアニア	C	999
+AE	アラブ首長国連邦	United Arab Emirates	中東	A	34
+DZ	アルジェリア	Algeria	北アフリカ	A	58
+AR	アルゼンチン	Argentina	南アメリカ	A	29
+AW	アルバ	Aruba	中央アメリカ	C	999
+AL	アルバニア	Albania	東ヨーロッパ	A	120
+AM	アルメニア	Armenia	東ヨーロッパ	A	133
+AI	アンギラ	Anguilla	中央アメリカ	C	999
+AO	アンゴラ	Angola	南アフリカ	A	72
+AG	アンティグア・バーブーダ	Antigua and Barbuda	中央アメリカ	A	175
+AD	アンドラ	Andorra	西ヨーロッパ	A	161
+YE	イエメン	Yemen	中東	A	115
+GB	イギリス	United Kingdom of Great Britain and Northern Ireland	西ヨーロッパ	A	5
+IO	イギリス領インド洋地域	British Indian Ocean Territory	インド洋地域	C	999
+VG	イギリス領ヴァージン諸島	Virgin Islands (British)	中央アメリカ	C	999
+IL	イスラエル	Israel	中東	A	28
+IT	イタリア	Italy	西ヨーロッパ	A	8
+IQ	イラク	Iraq	中東	A	53
+IR	イラン・イスラム共和国	Iran (Islamic Republic of)	中東	A	14
+IN	インド	India	南アジア	A	6
+ID	インドネシア	Indonesia	東南アジア	A	17
+WF	ウォリス・フツナ	Wallis and Futuna	オセアニア	C	999
+UG	ウガンダ	Uganda	中央アフリカ	A	92
+UA	ウクライナ	Ukraine	東ヨーロッパ	A	54
+UZ	ウズベキスタン	Uzbekistan	中央アジア	A	75
+UY	ウルグアイ	Uruguay	南アメリカ	A	86
+EC	エクアドル	Ecuador	南アメリカ	A	63
+EG	エジプト	Egypt	北アフリカ	A	33
+EE	エストニア	Estonia	東ヨーロッパ	A	98
+SZ	エスワティニ	Eswatini	南アフリカ	A	155
+ET	エチオピア	Ethiopia	東アフリカ	A	64
+ER	エリトリア	Eritrea	東アフリカ	A	168
+SV	エルサルバドル	El Salvador	中央アメリカ	A	103
+AU	オーストラリア	Australia	オセアニア	A	12
+AT	オーストリア	Austria	東ヨーロッパ	A	31
+AX	オーランド諸島	Åland Islands	北ヨーロッパ	C	999
+OM	オマーン	Oman	中東	A	69
+NL	オランダ	Netherlands	西ヨーロッパ	A	18
+GH	ガーナ	Ghana	西アフリカ	A	71
+CV	カーボベルデ	Cabo Verde	西アフリカ	A	169
+GG	ガーンジー	Guernsey	西ヨーロッパ	C	999
+GY	ガイアナ	Guyana	南アメリカ	A	149
+KZ	カザフスタン	Kazakhstan	中央アジア	A	55
+QA	カタール	Qatar	中東	A	57
+UM	合衆国領有小離島	United States Minor Outlying Islands	オセアニア	D	999
+CA	カナダ	Canada	北アメリカ	A	9
+GA	ガボン	Gabon	中央アフリカ	A	114
+CM	カメルーン	Cameroon	中央アフリカ	A	90
+GM	ガンビア	Gambia	西アフリカ	A	170
+KH	カンボジア	Cambodia	東南アジア	A	108
+MK	北マケドニア	North Macedonia	東ヨーロッパ	A	134
+MP	北マリアナ諸島	Northern Mariana Islands	オセアニア	C	999
+GN	ギニア	Guinea	西アフリカ	A	125
+GW	ギニアビサウ	Guinea-Bissau	西アフリカ	A	171
+CY	キプロス	Cyprus	地中海地域	A	105
+CU	キューバ	Cuba	中央アメリカ	A	999
+CW	キュラソー	Curaçao	中央アメリカ	C	999
+GR	ギリシャ	Greece	西ヨーロッパ	A	52
+KI	キリバス	Kiribati	オセアニア	A	189
+KG	キルギス	Kyrgyzstan	中央アジア	A	147
+GT	グアテマラ	Guatemala	中央アメリカ	A	68
+GP	グアドループ	Guadeloupe	中央アメリカ	C	999
+GU	グアム	Guam	オセアニア	C	999
+KW	クウェート	Kuwait	中東	A	60
+CK	クック諸島	Cook Islands	オセアニア	C	999
+GL	グリーンランド	Greenland	北ヨーロッパ	C	999
+CX	クリスマス島	Christmas Island	オセアニア	C	999
+GD	グレナダ	Grenada	中央アメリカ	A	178
+HR	クロアチア	Croatia	東ヨーロッパ	A	77
+KY	ケイマン諸島	Cayman Islands	中央アメリカ	C	999
+KE	ケニア	Kenya	東アフリカ	A	62
+CI	コートジボワール	Côte d'Ivoire	西アフリカ	A	74
+CC	ココス（キーリング）諸島	Cocos (Keeling) Islands	インド洋地域	C	999
+CR	コスタリカ	Costa Rica	中央アメリカ	A	80
+KM	コモロ	Comoros	インド洋地域	A	177
+CO	コロンビア	Colombia	南アメリカ	A	45
+CG	コンゴ共和国	Congo	中央アフリカ	A	136
+CD	コンゴ民主共和国	Congo, Democratic Republic of the	中央アフリカ	A	87
+SA	サウジアラビア	Saudi Arabia	中東	A	19
+GS	サウスジョージア・サウスサンドウィッチ諸島	South Georgia and the South Sandwich Islands	南アメリカ	C	999
+WS	サモア	Samoa	オセアニア	A	182
+ST	サントメ・プリンシペ	Sao Tome and Principe	中央アフリカ	A	184
+BL	サン・バルテルミー	Saint Barthélemy	中央アメリカ	C	999
+ZM	ザンビア	Zambia	南アフリカ	A	112
+PM	サンピエール島・ミクロン島	Saint Pierre and Miquelon	北アメリカ	C	999
+SM	サンマリノ	San Marino	西ヨーロッパ	A	171
+MF	サン・マルタン（フランス領）	Saint Martin (French part)	中央アメリカ	C	999
+SL	シエラレオネ	Sierra Leone	西アフリカ	A	157
+DJ	ジブチ	Djibouti	東アフリカ	A	159
+GI	ジブラルタル	Gibraltar	西ヨーロッパ	C	999
+JE	ジャージー	Jersey	西ヨーロッパ	C	999
+JM	ジャマイカ	Jamaica	中央アメリカ	A	127
+GE	ジョージア	Georgia	東ヨーロッパ	A	118
+SY	シリア・アラブ共和国	Syrian Arab Republic	中東	A	999
+SG	シンガポール	Singapore	東南アジア	A	38
+SX	シント・マールテン（オランダ領）	Sint Maarten (Dutch part)	中央アメリカ	C	999
+ZW	ジンバブエ	Zimbabwe	南アフリカ	A	101
+CH	スイス	Switzerland	西ヨーロッパ	A	21
+SE	スウェーデン	Sweden	北ヨーロッパ	A	24
+SD	スーダン	Sudan	東アフリカ	A	100
+SJ	スヴァールバル諸島およびヤンマイエン島	Svalbard and Jan Mayen	北ヨーロッパ	C	999
+ES	スペイン	Spain	西ヨーロッパ	A	15
+SR	スリナム	Suriname	南アメリカ	A	999
+LK	スリランカ	Sri Lanka	南アジア	A	66
+SK	スロバキア	Slovakia	東ヨーロッパ	A	61
+SI	スロベニア	Slovenia	東ヨーロッパ	A	84
+SC	セーシェル	Seychelles	インド洋地域	A	176
+GQ	赤道ギニア	Equatorial Guinea	中央アフリカ	A	138
+SN	セネガル	Senegal	西アフリカ	A	106
+RS	セルビア	Serbia	東ヨーロッパ	A	82
+KN	セントクリストファー・ネイビス	Saint Kitts and Nevis	中央アメリカ	A	179
+VC	セントビンセントおよびグレナディーン諸島	Saint Vincent and the Grenadines	中央アメリカ	A	181
+SH	セントヘレナ・アセンションおよびトリスタンダクーニャ	Saint Helena, Ascension and Tristan da Cunha	西アフリカ	D	999
+LC	セントルシア	Saint Lucia	中央アメリカ	A	173
+SO	ソマリア	Somalia	東アフリカ	A	150
+SB	ソロモン諸島	Solomon Islands	オセアニア	A	174
+TC	タークス・カイコス諸島	Turks and Caicos Islands	中央アメリカ	C	999
+TH	タイ	Thailand	東南アジア	A	26
+KR	大韓民国	Korea, Republic of	東アジア	A	10
+TW	台湾（中華民国）	Taiwan, Province of China	東アジア	B	22
+TJ	タジキスタン	Tajikistan	中央アジア	A	146
+TZ	タンザニア	Tanzania, United Republic of	東アフリカ	A	73
+CZ	チェコ	Czechia	東ヨーロッパ	A	48
+TD	チャド	Chad	中央アフリカ	A	140
+CF	中央アフリカ共和国	Central African Republic	中央アフリカ	A	999
+CN	中華人民共和国	China	東アジア	A	2
+TN	チュニジア	Tunisia	北アフリカ	A	89
+KP	朝鮮民主主義人民共和国	Korea, Democratic People's Republic of	東アジア	A	999
+CL	チリ	Chile	南アメリカ	A	44
+TV	ツバル	Tuvalu	オセアニア	A	191
+DK	デンマーク	Denmark	北ヨーロッパ	A	37
+DE	ドイツ	Germany	西ヨーロッパ	A	4
+TG	トーゴ	Togo	西アフリカ	A	148
+TK	トケラウ	Tokelau	オセアニア	C	999
+DO	ドミニカ共和国	Dominican Republic	中央アメリカ	A	65
+DM	ドミニカ国	Dominica	中央アメリカ	A	183
+TT	トリニダード・トバゴ	Trinidad and Tobago	中央アメリカ	A	110
+TM	トルクメニスタン	Turkmenistan	中央アジア	A	83
+TR	トルコ	Turkey	中東	A	20
+TO	トンガ	Tonga	オセアニア	A	185
+NG	ナイジェリア	Nigeria	中央アフリカ	A	32
+NR	ナウル	Nauru	オセアニア	A	190
+NA	ナミビア	Namibia	南アフリカ	A	137
+AQ	南極	Antarctica	南極	C	999
+NU	ニウエ	Niue	オセアニア	C	999
+NI	ニカラグア	Nicaragua	中央アメリカ	A	132
+NE	ニジェール	Niger	中央アフリカ	A	129
+JP	日本	Japan	東アジア	A	3
+EH	西サハラ	Western Sahara	西アフリカ	C	999
+NC	ニューカレドニア	New Caledonia	オセアニア	C	999
+NZ	ニュージーランド	New Zealand	オセアニア	A	50
+NP	ネパール	Nepal	南アジア	A	99
+NF	ノーフォーク島	Norfolk Island	オセアニア	C	999
+NO	ノルウェー	Norway	北ヨーロッパ	A	30
+HM	ハード島とマクドナルド諸島	Heard Island and McDonald Islands	インド洋地域	D	999
+BH	バーレーン	Bahrain	中東	A	96
+HT	ハイチ	Haiti	中央アメリカ	A	113
+PK	パキスタン	Pakistan	南アジア	A	43
+VA	バチカン市国	Holy See	西ヨーロッパ	B	999
+PA	パナマ	Panama	中央アメリカ	A	81
+VU	バヌアツ	Vanuatu	オセアニア	A	180
+BS	バハマ	Bahamas	中央アメリカ	A	141
+PG	パプアニューギニア	Papua New Guinea	オセアニア	A	107
+BM	バミューダ	Bermuda	中央アメリカ	C	999
+PW	パラオ	Palau	オセアニア	A	188
+PY	パラグアイ	Paraguay	南アメリカ	A	97
+BB	バルバドス	Barbados	中央アメリカ	A	154
+PS	パレスチナ	Palestine, State of	中東	C	121
+HU	ハンガリー	Hungary	東ヨーロッパ	A	56
+BD	バングラデシュ	Bangladesh	南アジア	A	36
+TL	東ティモール	Timor-Leste	東南アジア	A	167
+PN	ピトケアン	Pitcairn	オセアニア	C	999
+FJ	フィジー	Fiji	オセアニア	A	156
+PH	フィリピン	Philippines	東南アジア	A	39
+FI	フィンランド	Finland	北ヨーロッパ	A	46
+BT	ブータン	Bhutan	南アジア	A	165
+BV	ブーベ島	Bouvet Island	南極	D	999
+PR	プエルトリコ	Puerto Rico	中央アメリカ	C	999
+FO	フェロー諸島	Faroe Islands	北ヨーロッパ	D	999
+FK	フォークランド（マルビナス）諸島	Falkland Islands (Malvinas)	南アメリカ	C	999
+BR	ブラジル	Brazil	南アメリカ	A	13
+FR	フランス	France	西ヨーロッパ	A	7
+GF	フランス領ギアナ	French Guiana	南アメリカ	C	999
+PF	フランス領ポリネシア	French Polynesia	オセアニア	C	999
+TF	フランス領南方・南極地域	French Southern Territories	インド洋地域	C	999
+BG	ブルガリア	Bulgaria	東ヨーロッパ	A	70
+BF	ブルキナファソ	Burkina Faso	西アフリカ	A	117
+BN	ブルネイ・ダルサラーム	Brunei Darussalam	東南アジア	A	131
+BI	ブルンジ	Burundi	中央アフリカ	A	160
+VN	ベトナム	Viet Nam	東南アジア	A	42
+BJ	ベナン	Benin	西アフリカ	A	122
+VE	ベネズエラ・ボリバル共和国	Venezuela (Bolivarian Republic of)	南アメリカ	A	85
+BY	ベラルーシ	Belarus	東ヨーロッパ	A	76
+BZ	ベリーズ	Belize	中央アメリカ	A	166
+PE	ペルー	Peru	南アメリカ	A	51
+BE	ベルギー	Belgium	西ヨーロッパ	A	25
+PL	ポーランド	Poland	東ヨーロッパ	A	23
+BA	ボスニア・ヘルツェゴビナ	Bosnia and Herzegovina	東ヨーロッパ	A	111
+BW	ボツワナ	Botswana	南アフリカ	A	123
+BQ	ボネール、シント・ユースタティウスおよびサバ	Bonaire, Sint Eustatius and Saba	中央アメリカ	D	999
+BO	ボリビア多民族国	Bolivia (Plurinational State of)	南アメリカ	A	93
+PT	ポルトガル	Portugal	西ヨーロッパ	A	49
+HK	香港	Hong Kong	東アジア	C	41
+HN	ホンジュラス	Honduras	中央アメリカ	A	104
+MH	マーシャル諸島	Marshall Islands	オセアニア	A	187
+MO	マカオ	Macau	東アジア	C	102
+MG	マダガスカル	Madagascar	インド洋地域	A	130
+YT	マヨット	Mayotte	インド洋地域	D	999
+MW	マラウイ	Malawi	南アフリカ	A	139
+ML	マリ	Mali	西アフリカ	A	116
+MT	マルタ	Malta	地中海地域	A	124
+MQ	マルティニーク	Martinique	中央アメリカ	D	999
+MY	マレーシア	Malaysia	東南アジア	A	40
+IM	マン島	Isle of Man	西ヨーロッパ	C	999
+FM	ミクロネシア連邦	Micronesia (Federated States of)	オセアニア	A	186
+ZA	南アフリカ	South Africa	南アフリカ	A	35
+SS	南スーダン	South Sudan	東アフリカ	A	153
+MM	ミャンマー	Myanmar	東南アジア	A	79
+MX	メキシコ	Mexico	中央アメリカ	A	16
+MU	モーリシャス	Mauritius	南アフリカ	A	142
+MR	モーリタニア	Mauritania	西アフリカ	A	999
+MZ	モザンビーク	Mozambique	南アフリカ	A	126
+MC	モナコ	Monaco	西ヨーロッパ	A	999
+MV	モルディブ	Maldives	インド洋地域	A	152
+MD	モルドバ共和国	Moldova, Republic of	東ヨーロッパ	A	135
+MA	モロッコ	Morocco	北アフリカ	A	59
+MN	モンゴル	Mongolia	東アジア	A	128
+ME	モンテネグロ	Montenegro	東ヨーロッパ	A	151
+MS	モントセラト	Montserrat	中央アメリカ	C	999
+JO	ヨルダン	Jordan	中東	A	91
+LA	ラオス人民民主共和国	Lao People's Democratic Republic	東南アジア	A	119
+LV	ラトビア	Latvia	東ヨーロッパ	A	95
+LT	リトアニア	Lithuania	東ヨーロッパ	A	78
+LY	リビア	Libya	北アフリカ	A	94
+LI	リヒテンシュタイン	Liechtenstein	西ヨーロッパ	A	999
+LR	リベリア	Liberia	西アフリカ	A	158
+RO	ルーマニア	Romania	東ヨーロッパ	A	47
+LU	ルクセンブルク	Luxembourg	西ヨーロッパ	A	67
+RW	ルワンダ	Rwanda	中央アフリカ	A	143
+LS	レソト	Lesotho	南アフリカ	A	164
+LB	レバノン	Lebanon	中東	A	999
+RE	レユニオン	Réunion	インド洋地域	C	999
+RU	ロシア連邦	Russian Federation	ロシア	A	11
+XK	コソボ共和国	Republic of Kosovo	東ヨーロッパ	C	145
+SH_S	セントヘレナ	Saint Helena	西アフリカ	C	999
+SH_A	アセンション	Ascension	西アフリカ	C	999
+SH_T	トリスタンダクーニャ	Tristan da Cunha	西アフリカ	C	999
