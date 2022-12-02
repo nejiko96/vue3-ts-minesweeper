@@ -53,11 +53,11 @@ const records = Array.from(nodeList)
   .map((node) => {
     const tds = node.querySelectorAll('td')
     const img = node.querySelector('img')
-    const [nm_ja, nm_en, , , id, area] = Array.from(tds).map((td) =>
+    const [nm_ja, nm_en, , , id] = Array.from(tds).map((td) =>
       td.textContent?.trim()
     )
     const file = img?.src?.match(IMG_FILE_PAT)?.[0]
-    const record = [nm_ja, nm_en, id, area, file]
+    const record = [nm_ja, nm_en, id, file]
     return record
   })
 const data = records
