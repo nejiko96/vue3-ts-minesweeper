@@ -59,8 +59,8 @@
   onMounted(handleRestart)
 </script>
 <template>
-  <div class="p-4 text-center">
-    <h1 class="mb-10 text-3xl font-semibold">Flag Study</h1>
+  <div class="bg-gray-200 p-4 text-center dark:bg-gray-800">
+    <h1 class="mb-10 text-3xl font-semibold">National Flag Gachi Training</h1>
 
     <div class="flex flex-col items-center justify-center">
       <div class="mb-10 grid grid-cols-3 gap-x-6 gap-y-6">

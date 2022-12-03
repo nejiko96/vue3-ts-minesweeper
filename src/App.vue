@@ -5,7 +5,7 @@
   import WordleView from '@/modules/wordle/views/WordleView.vue'
   import NerdleView from '@/modules/nerdle/views/NerdleView.vue'
   import SlidePuzzleView from '@/modules/catapi/views/SlidePuzzleView.vue'
-  import FlagStudyView from '@/modules/national_flag/views/FlagStudyView.vue'
+  import FlagTrainingView from '@/modules/national_flag/views/FlagTrainingView.vue'
 
   import AppLayout from './AppLayout.vue'
 
@@ -37,8 +37,8 @@
     },
     {
       id: 'FLST',
-      title: 'Flag Study',
-      view: FlagStudyView,
+      title: 'Flag Training',
+      view: FlagTrainingView,
     },
   ]
 </script>
