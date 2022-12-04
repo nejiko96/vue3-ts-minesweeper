@@ -2,42 +2,18 @@
   import { onMounted, ref } from 'vue'
   import draggable, { MoveEvent } from 'vuedraggable'
   import { shuffle } from '@/core/utils'
-  import flagsRaw from '../assets/flag_list.txt?raw'
+
   import FlagLabel from '../components/FlagLabel.vue'
+  import { getFlagList, FlagType } from '../models/flagsModel'
 
-  type FlagType = {
-    id: string
-    name: string
-  }
-
-  type FlagExtType = FlagType & {
-    url: string
+  type FlagChoiceType = FlagType & {
     choice: FlagType[]
   }
-
-  const FLAG_TBL = flagsRaw.split('\n').map((row) => {
-    const [id, , name] = row.split(`\t`)
-    return { id, name }
-  })
-
-  const FLAG_DIC = FLAG_TBL.reduce<Record<string, FlagType>>((h, o) => {
-    h[o.id] = o
-    return h
-  }, {})
-
-  const ids = [
-    'AT', // オーストリア
-    'ID', // インドネシア
-    'LV', // ラトビア
-    'MC', // モナコ
-    'PL', // ポーランド
-    'SG', // シンガポール
-  ]
 </script>
 <script setup lang="ts">
   const org = ref<FlagType[]>([])
 
-  const shuffled = ref<FlagExtType[]>([])
+  const shuffled = ref<FlagChoiceType[]>([])
 
   const checkMove = (evt: MoveEvent<FlagType>): boolean => {
     if (evt.relatedContext.list === org.value) return true
@@ -45,13 +21,19 @@
   }
 
   const handleRestart = () => {
-    org.value = ids.map((id) => ({
-      ...FLAG_DIC[id],
-    }))
+    org.value = getFlagList('area:Middle_Africa')
+    // org.value = getFlagList('area:Melanesia')
+    // org.value = getFlagList('area:Dependent_Territories_in_Europe')
+    // org.value = getFlagList('area:Other')
+    // org.value = getFlagList('mainLand:GB')
+    // org.value = getFlagList('mainLand:FR')
+    // org.value = getFlagList('mainLand:US')
+    // org.value = getFlagList('mainLand:NL')
+    // org.value = getFlagList('mainLand:Other')
+    // org.value = getFlagList('pattern:Red_And_White_Stripe')
 
     shuffled.value = shuffle(org.value).map((o) => ({
       ...o,
-      url: new URL(`../assets/images/${o.id}.svg`, import.meta.url).href,
       choice: [],
     }))
   }
@@ -82,7 +64,7 @@
                 <template #item="{ element }">
                   <FlagLabel
                     >{{ element.id === flag.id ? '⭕️' : '❌' }}
-                    {{ element.name }}</FlagLabel
+                    {{ element.nameJa }}</FlagLabel
                   >
                 </template>
               </draggable>
@@ -103,7 +85,7 @@
           :move="checkMove"
         >
           <template #item="{ element }">
-            <FlagLabel>{{ element.name }}</FlagLabel>
+            <FlagLabel>{{ element.nameJa }}</FlagLabel>
           </template>
         </draggable>
       </div>
