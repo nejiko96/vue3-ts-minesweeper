@@ -21,7 +21,7 @@ type FlagAreaType = {
 
 type FlagFilterFuncType = (o: FlagType) => boolean
 
-type FlagFilterType = {
+export type FlagFilterType = {
   id: string
   titleJa: string
   titleEn: string
@@ -200,8 +200,8 @@ const otherAreas = AREA_TBL.filter((area) => area.type === 3).map(
 
 const otherAreaFilter = {
   id: 'area:Other',
-  titleJa: 'その他の地域',
-  titleEn: 'Other Areas',
+  titleJa: '北アメリカ・その他',
+  titleEn: 'North America and Other',
   func: areaFilterFunc(otherAreas),
 }
 
@@ -236,7 +236,7 @@ const mainLandFilters = [
   },
   {
     id: 'mainLand:Other',
-    titleJa: 'その他海外領土',
+    titleJa: 'その他の海外領土',
     titleEn: 'Other OverSeas Territories',
     func: mainLandFilterFunc(otherMainLands),
   },
@@ -266,15 +266,18 @@ const FLAG_FILTER_TBL: FlagFilterType[] = [
   ...patternFilters,
 ]
 
-const FLAG_FILTER_DIC: Record<string, FlagFilterFuncType> =
-  FLAG_FILTER_TBL.reduce<Record<string, FlagFilterFuncType>>((h, o) => {
-    h[o.id] = o.func
-    return h
-  }, {})
+const FLAG_FILTER_DIC: Record<string, FlagFilterType> = FLAG_FILTER_TBL.reduce<
+  Record<string, FlagFilterType>
+>((h, o) => {
+  h[o.id] = o
+  return h
+}, {})
 
 const getFilterList = (): FlagFilterType[] => FLAG_FILTER_TBL
 
-const getFlagList = (id: string): FlagType[] =>
-  FLAG_TBL.filter(FLAG_FILTER_DIC[id])
+const getFilter = (id: string): FlagFilterType => FLAG_FILTER_DIC[id]
 
-export { getFilterList, getFlagList }
+const getFlagList = (id: string): FlagType[] =>
+  FLAG_TBL.filter(getFilter(id).func)
+
+export { getFilterList, getFilter, getFlagList }
