@@ -8,7 +8,7 @@
     }
   )
 
-  const emit = defineEmits(['close'])
+  const emit = defineEmits(['click'])
 </script>
 <template>
   <div
@@ -20,7 +20,7 @@
   <div
     v-else
     class="w-[220px] rounded-lg bg-gray-300 py-2 text-black"
-    @click="emit('close')"
+    @click="emit('click')"
   >
     <slot></slot>
   </div>
