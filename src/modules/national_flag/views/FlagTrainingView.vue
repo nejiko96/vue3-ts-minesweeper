@@ -7,7 +7,7 @@
     DialogPanel,
   } from '@headlessui/vue'
 
-  import { sample } from '@/core/utils'
+  import { fillArray, sample, shuffle } from '@/core/utils'
   import {
     FlagType,
     FlagFilterType,
@@ -23,10 +23,16 @@
 <script setup lang="ts">
   const trainingObj = ref<FlagFilterType>(sample(trainingList))
 
-  const org = ref<FlagType[]>([])
+  const flagGroups = ref<FlagType[][]>([])
 
   const handleRestart = () => {
-    org.value = getFlagList(trainingObj.value.id)
+    const flags = shuffle(getFlagList(trainingObj.value.id))
+    const sz = flags.length
+    const sg = Math.ceil(sz / 6)
+    const [q, r] = [(sz / sg) | 0, sz % sg]
+    flagGroups.value = fillArray<FlagType[]>(sg, (i) =>
+      flags.slice(q * i + Math.min(i, r), q * (i + 1) + Math.min(i + 1, r))
+    )
   }
 
   const isDialogOpen = ref(false)
@@ -51,7 +57,11 @@
         {{ trainingObj.titleJa }}
       </button>
     </h1>
-    <FlagTrainingPanel :flags="org"></FlagTrainingPanel>
+    <FlagTrainingPanel
+      v-for="(flags, i) in flagGroups"
+      :key="i"
+      :flags="flags"
+    ></FlagTrainingPanel>
   </div>
   <TransitionRoot :show="isDialogOpen" as="template">
     <Dialog as="div" class="relative z-10" @close="isDialogOpen = false">

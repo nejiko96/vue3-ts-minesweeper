@@ -77,7 +77,7 @@
     </div>
 
     <div
-      class="min-h-[150px] w-[770px] border-2 border-orange-300 bg-orange-100 p-2"
+      class="min-h-[100px] w-[770px] border-2 border-orange-300 bg-orange-100 p-2"
     >
       <draggable
         :list="org"
