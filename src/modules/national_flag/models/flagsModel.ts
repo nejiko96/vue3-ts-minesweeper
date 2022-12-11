@@ -161,10 +161,10 @@ const areaFilterFunc = (area: string | string[]): FlagFilterFuncType => {
     values.includes(o.area) && ['-', '*'].includes(o.mainLand[0])
 }
 
-const dependentFilterFunc = (area: string | string[]): FlagFilterFuncType => {
-  const values = Array.isArray(area) ? area : [area]
-  return (o: FlagType) => values.includes(o.area)
-}
+// const dependentFilterFunc = (area: string | string[]): FlagFilterFuncType => {
+//   const values = Array.isArray(area) ? area : [area]
+//   return (o: FlagType) => values.includes(o.area)
+// }
 
 const mainLandFilterFunc = (
   mainLand: string | string[]
@@ -185,14 +185,14 @@ const areaFilters = AREA_TBL.filter((area) => area.type === 1).map((area) => ({
   func: areaFilterFunc(area.id),
 }))
 
-const dependentFilters = AREA_TBL.filter((area) => area.type === 2).map(
-  (area) => ({
-    id: `area:${area.id}`,
-    titleJa: area.nameJa,
-    titleEn: area.nameEn,
-    func: dependentFilterFunc(area.id),
-  })
-)
+// const dependentFilters = AREA_TBL.filter((area) => area.type === 2).map(
+//   (area) => ({
+//     id: `area:${area.id}`,
+//     titleJa: area.nameJa,
+//     titleEn: area.nameEn,
+//     func: dependentFilterFunc(area.id),
+//   })
+// )
 
 const otherAreas = AREA_TBL.filter((area) => area.type === 3).map(
   (area) => area.id
@@ -205,9 +205,9 @@ const otherAreaFilter = {
   func: areaFilterFunc(otherAreas),
 }
 
-const otherMainLands = uniq(FLAG_TBL.map((o) => o.mainLand))
-  .filter((ml) => !['-', '*'].includes(ml[0]))
-  .filter((ml) => !['GB', 'FR', 'US', 'NL'].includes(ml))
+// const otherMainLands = uniq(FLAG_TBL.map((o) => o.mainLand))
+//   .filter((ml) => !['-', '*'].includes(ml[0]))
+//   .filter((ml) => !['GB', 'FR', 'US', 'NL'].includes(ml))
 
 const mainLandFilters = [
   {
@@ -223,22 +223,29 @@ const mainLandFilters = [
     func: mainLandFilterFunc('FR'),
   },
   {
-    id: 'mainLand:US',
-    titleJa: 'アメリカの海外領土',
-    titleEn: 'Territories of the United States',
-    func: mainLandFilterFunc('US'),
-  },
-  {
     id: 'mainLand:NL',
     titleJa: 'オランダの構成国',
     titleEn: 'Constituent countries of the Kingdom of the Netherlands',
     func: mainLandFilterFunc('NL'),
   },
   {
-    id: 'mainLand:Other',
-    titleJa: 'その他の海外領土',
-    titleEn: 'Other OverSeas Territories',
-    func: mainLandFilterFunc(otherMainLands),
+    id: 'mainLand:US',
+    titleJa: 'アメリカの海外領土',
+    titleEn: 'Territories of the United States',
+    func: mainLandFilterFunc('US'),
+  },
+
+  {
+    id: 'mainLand:Other1',
+    titleJa: 'その他海外領土（１）',
+    titleEn: 'Other OverSeas Territories(1)',
+    func: mainLandFilterFunc(['DK', 'ES', 'FI', 'PT']),
+  },
+  {
+    id: 'mainLand:Other2',
+    titleJa: 'その他海外領土（２）',
+    titleEn: 'Other OverSeas Territories(2)',
+    func: mainLandFilterFunc(['AU', 'CN', 'NZ']),
   },
 ]
 
@@ -260,7 +267,7 @@ const patternFilters = [
 
 const FLAG_FILTER_TBL: FlagFilterType[] = [
   ...areaFilters,
-  ...dependentFilters,
+  // ...dependentFilters,
   otherAreaFilter,
   ...mainLandFilters,
   ...patternFilters,
