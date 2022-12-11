@@ -77,14 +77,12 @@ class SlidePuzzle {
    */
   constructor(w: number, h: number)
   constructor(w: number, h?: number) {
-    if (w < 2) throw new Error('w must be >= 2.')
-    this.w = w
+    this.w = Math.max(w, 2)
 
     if (h === undefined) {
-      this.h = w
+      this.h = this.w
     } else {
-      if (h < 2) throw new Error('h must be >= 2.')
-      this.h = h
+      this.h = Math.max(h, 2)
     }
 
     this.s = this.w * this.h
