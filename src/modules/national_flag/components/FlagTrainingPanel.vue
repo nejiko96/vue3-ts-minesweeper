@@ -47,14 +47,14 @@
 
 <template>
   <div class="flex flex-col items-center justify-center">
-    <div class="mb-10 grid grid-cols-3 gap-x-6 gap-y-6">
+    <div class="mb-4 grid grid-cols-3 gap-x-4 gap-y-4">
       <template v-for="flag in shuffled" :key="flag.id">
         <div>
-          <div class="mb-2 flex h-[200px] w-[240px] items-center">
+          <div class="mb-2 flex h-[150px] w-[225px] items-center">
             <img class="h-full w-full object-contain" :src="flag.url" />
           </div>
           <div
-            class="mx-auto h-auto w-[240px] border-2 border-orange-300 bg-orange-100 p-2"
+            class="mx-auto h-auto w-[225px] border-2 border-orange-300 bg-orange-100 p-2"
           >
             <draggable
               :list="flag.answer"
@@ -77,7 +77,7 @@
     </div>
 
     <div
-      class="min-h-[100px] w-[770px] border-2 border-orange-300 bg-orange-100 p-2"
+      class="mb-4 min-h-[100px] w-[705px] border-2 border-orange-300 bg-orange-100 p-2"
     >
       <draggable
         :list="org"
