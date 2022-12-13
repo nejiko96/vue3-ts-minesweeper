@@ -62,6 +62,7 @@
               item-key="id"
               ghost-class="ghost"
               :move="checkMove"
+              class="answer"
             >
               <template #item="{ element }">
                 <FlagLabel @click="() => handleAnswerClick(flag)"
@@ -70,7 +71,6 @@
                 >
               </template>
             </draggable>
-            <FlagLabel v-if="flag.answer.length === 0" dummy>&nbsp;</FlagLabel>
           </div>
         </div>
       </template>
@@ -94,3 +94,19 @@
     </div>
   </div>
 </template>
+
+<style scoped>
+  .answer:empty::before {
+    display: block;
+    content: 'drop answer here';
+    width: 205px;
+    border-radius: 0.5rem;
+    border-width: 2px;
+    border-style: dashed;
+    border-color: rgb(156 163 175 / var(--tw-border-opacity));
+    background-color: transparent;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    color: rgb(156 163 175 / var(--tw-border-opacity));
+  }
+</style>
