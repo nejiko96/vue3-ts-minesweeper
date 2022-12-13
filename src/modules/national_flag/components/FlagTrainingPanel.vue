@@ -3,8 +3,8 @@
   import draggable, { MoveEvent } from 'vuedraggable'
 
   import { shuffle } from '@/core/utils'
-  import FlagLabel from './FlagLabel.vue'
   import { FlagType } from '../models/flagsModel'
+  import FlagLabel from './FlagLabel.vue'
 
   type FlagAnswerType = FlagType & {
     answer: FlagType[]
@@ -14,6 +14,7 @@
 <script setup lang="ts">
   const props = defineProps<{
     flags: FlagType[]
+    lang: string
   }>()
 
   const org = ref<FlagType[]>([])
@@ -67,7 +68,7 @@
               <template #item="{ element }">
                 <FlagLabel @click="() => handleAnswerClick(flag)"
                   >{{ element.id === flag.id ? '⭕️' : '❌' }}
-                  {{ element.nameJa }}</FlagLabel
+                  {{ element.name[lang] }}</FlagLabel
                 >
               </template>
             </draggable>
@@ -88,7 +89,7 @@
         :move="checkMove"
       >
         <template #item="{ element }">
-          <FlagLabel>{{ element.nameJa }}</FlagLabel>
+          <FlagLabel>{{ element.name[lang] }}</FlagLabel>
         </template>
       </draggable>
     </div>
@@ -105,8 +106,12 @@
     border-style: dashed;
     border-color: rgb(156 163 175 / var(--tw-border-opacity));
     background-color: transparent;
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
+    padding-top: 0.4rem;
+    padding-bottom: 0.4rem;
     color: rgb(156 163 175 / var(--tw-border-opacity));
+  }
+
+  .ghost {
+    opacity: 0.5;
   }
 </style>

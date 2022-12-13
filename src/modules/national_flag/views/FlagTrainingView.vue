@@ -1,10 +1,11 @@
 <script lang="ts">
-  import { onMounted, ref } from 'vue'
+  import { computed, onMounted, ref } from 'vue'
   import {
-    TransitionRoot,
     Dialog,
-    TransitionChild,
     DialogPanel,
+    Switch,
+    TransitionRoot,
+    TransitionChild,
   } from '@headlessui/vue'
 
   import { fillArray, sample, shuffle } from '@/core/utils'
@@ -21,6 +22,10 @@
 </script>
 
 <script setup lang="ts">
+  const english = ref(false)
+
+  const lang = computed(() => (english.value ? 'en' : 'ja'))
+
   const trainingObj = ref<FlagFilterType>(sample(trainingList))
 
   const flagGroups = ref<FlagType[][]>([])
@@ -47,22 +52,48 @@
 </script>
 
 <template>
-  <div class="bg-gray-200 p-4 text-center dark:bg-gray-800">
+  <div class="relative bg-gray-200 p-4 text-center dark:bg-gray-800">
     <h1 class="mb-4 text-3xl font-semibold">
       National Flag Training :
       <button
         class="rounded-lg border-2 border-transparent bg-orange-500 px-4 py-2 text-white transition duration-300 hover:border-orange-300 hover:bg-orange-600"
         @click="isDialogOpen = true"
       >
-        {{ trainingObj.titleJa }}
+        {{ trainingObj.title[lang] }}
       </button>
     </h1>
     <FlagTrainingPanel
       v-for="(flags, i) in flagGroups"
       :key="i"
       :flags="flags"
+      :lang="lang"
     ></FlagTrainingPanel>
+    <div class="absolute top-2.5 right-2.5">
+      <span
+        class="cursor-pointer rounded-lg px-1.5 text-3xl hover:bg-gray-300 dark:hover:bg-gray-600"
+        @click="english = false"
+        >🇯🇵</span
+      >
+      <Switch
+        v-model="english"
+        :class="english ? 'bg-orange-500' : 'bg-orange-300'"
+        class="relative inline-flex h-[24px] w-[52px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+      >
+        <span class="sr-only">Language</span>
+        <span
+          aria-hidden="true"
+          :class="english ? 'translate-x-7' : 'translate-x-0'"
+          class="pointer-events-none inline-block h-[20px] w-[20px] transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out"
+        ></span>
+      </Switch>
+      <span
+        class="cursor-pointer rounded-lg px-1.5 text-3xl hover:bg-gray-300 dark:hover:bg-gray-600"
+        @click="english = true"
+        >🇬🇧</span
+      >
+    </div>
   </div>
+
   <TransitionRoot :show="isDialogOpen" as="template">
     <Dialog as="div" class="relative z-10" @close="isDialogOpen = false">
       <TransitionChild
@@ -100,10 +131,10 @@
                       :key="tr.id"
                     >
                       <li
-                        class="mb-2 rounded bg-orange-500 px-4 py-1 text-white"
+                        class="mb-2 max-w-[200px] rounded bg-orange-500 px-4 py-1 text-white"
                         @click="() => handleTrainingSelect(tr.id)"
                       >
-                        {{ tr.titleJa }}
+                        {{ tr.title[lang] }}
                       </li>
                     </template>
                   </ul>
@@ -116,9 +147,3 @@
     ></TransitionRoot
   >
 </template>
-
-<style scoped>
-  .ghost {
-    opacity: 0.5;
-  }
-</style>

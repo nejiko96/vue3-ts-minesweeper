@@ -19,7 +19,7 @@
   </div>
   <div
     v-else
-    class="w-[205px] rounded-lg bg-gray-300 py-2 text-black"
+    class="w-[205px] cursor-move rounded-lg bg-gray-300 py-2 text-black"
     @click="emit('click')"
   >
     <slot></slot>

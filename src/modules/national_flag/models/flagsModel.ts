@@ -1,11 +1,9 @@
-import { uniq } from '@/core/utils'
 import flagsRaw from '../assets/flag_list.txt?raw'
 
 export type FlagType = {
   id: string
   emoji: string
-  nameJa: string
-  nameEn: string
+  name: Record<string, string>
   div: string
   area: string
   mainLand: string
@@ -14,8 +12,7 @@ export type FlagType = {
 
 type FlagAreaType = {
   id: string
-  nameJa: string
-  nameEn: string
+  name: Record<string, string>
   type: number
 }
 
@@ -23,8 +20,7 @@ type FlagFilterFuncType = (o: FlagType) => boolean
 
 export type FlagFilterType = {
   id: string
-  titleJa: string
-  titleEn: string
+  title: Record<string, string>
   func: FlagFilterFuncType
 }
 
@@ -36,8 +32,7 @@ const FLAG_TBL: FlagType[] = flagsRaw
     return {
       id,
       emoji,
-      nameJa,
-      nameEn,
+      name: { ja: nameJa, en: nameEn },
       div,
       area,
       mainLand,
@@ -47,110 +42,97 @@ const FLAG_TBL: FlagType[] = flagsRaw
   .filter((o) => o.div !== '-')
 
 const AREA_TBL: FlagAreaType[] = [
-  { id: 'Central_Asia', nameJa: '中央アジア', nameEn: 'Central Asia', type: 1 },
-  { id: 'Eastern_Asia', nameJa: '東アジア', nameEn: 'Eastern Asia', type: 1 },
   {
-    id: 'South-Eastern_Asia',
-    nameJa: '東南アジア',
-    nameEn: 'South-Eastern Asia',
+    id: 'Central_Asia',
+    name: { ja: '中央アジア', en: 'Central Asia' },
     type: 1,
   },
-  { id: 'Southern_Asia', nameJa: '南アジア', nameEn: 'Southern Asia', type: 1 },
-  { id: 'Western_Asia', nameJa: '西アジア', nameEn: 'Western Asia', type: 1 },
+  { id: 'Eastern_Asia', name: { ja: '東アジア', en: 'Eastern Asia' }, type: 1 },
+  {
+    id: 'South-Eastern_Asia',
+    name: { ja: '東南アジア', en: 'South-Eastern Asia' },
+    type: 1,
+  },
+  {
+    id: 'Southern_Asia',
+    name: { ja: '南アジア', en: 'Southern Asia' },
+    type: 1,
+  },
+  { id: 'Western_Asia', name: { ja: '西アジア', en: 'Western Asia' }, type: 1 },
   {
     id: 'Western_Europe',
-    nameJa: '西ヨーロッパ',
-    nameEn: 'Western Europe',
+    name: { ja: '西ヨーロッパ', en: 'Western Europe' },
     type: 1,
   },
   {
     id: 'Eastern_Europe',
-    nameJa: '東ヨーロッパ',
-    nameEn: 'Eastern Europe',
+    name: { ja: '東ヨーロッパ', en: 'Eastern Europe' },
     type: 1,
   },
   {
     id: 'Southern_Europe',
-    nameJa: '南ヨーロッパ',
-    nameEn: 'Southern Europe',
+    name: { ja: '南ヨーロッパ', en: 'Southern Europe' },
     type: 1,
   },
   {
     id: 'Northern_Europe',
-    nameJa: '北ヨーロッパ',
-    nameEn: 'Northern Europe',
+    name: { ja: '北ヨーロッパ', en: 'Northern Europe' },
     type: 1,
   },
   {
     id: 'Extended_Europe',
-    nameJa: '広域ヨーロッパ',
-    nameEn: 'Extended Europe',
+    name: { ja: '広域ヨーロッパ', en: 'Extended Europe' },
     type: 1,
   },
   {
-    id: 'Dependent_Territories_in_Europe',
-    nameJa: 'ヨーロッパ自治領',
-    nameEn: 'Dependent Territories in Europe',
-    type: 2,
-  },
-  {
     id: 'Eastern_Africa',
-    nameJa: '東アフリカ',
-    nameEn: 'Eastern Africa',
+    name: { ja: '東アフリカ', en: 'Eastern Africa' },
     type: 1,
   },
   {
     id: 'Middle_Africa',
-    nameJa: '中部アフリカ',
-    nameEn: 'Middle Africa',
+    name: { ja: '中部アフリカ', en: 'Middle Africa' },
     type: 1,
   },
   {
     id: 'Northern_Africa',
-    nameJa: '北アフリカ',
-    nameEn: 'Northern Africa',
+    name: { ja: '北アフリカ', en: 'Northern Africa' },
     type: 1,
   },
   {
     id: 'Southern_Africa',
-    nameJa: '南部アフリカ',
-    nameEn: 'Southern Africa',
+    name: { ja: '南部アフリカ', en: 'Southern Africa' },
     type: 1,
   },
   {
     id: 'Western_Africa',
-    nameJa: '西アフリカ',
-    nameEn: 'Western Africa',
+    name: { ja: '西アフリカ', en: 'Western Africa' },
     type: 1,
   },
   {
     id: 'North_America',
-    nameJa: '北アメリカ',
-    nameEn: 'North America',
+    name: { ja: '北アメリカ', en: 'North America' },
     type: 3,
   },
-  { id: 'Caribbean', nameJa: 'カリブ海地域', nameEn: 'Caribbean', type: 1 },
+  { id: 'Caribbean', name: { ja: 'カリブ海地域', en: 'Caribbean' }, type: 1 },
   {
     id: 'Central_America',
-    nameJa: '中央アメリカ',
-    nameEn: 'Central America',
+    name: { ja: '中央アメリカ', en: 'Central America' },
     type: 1,
   },
   {
     id: 'South_America',
-    nameJa: '南アメリカ',
-    nameEn: 'South America',
+    name: { ja: '南アメリカ', en: 'South America' },
     type: 1,
   },
-  { id: 'Australia', nameJa: 'オーストラリア', nameEn: 'Australia', type: 3 },
-  { id: 'Melanesia', nameJa: 'メラネシア', nameEn: 'Melanesia', type: 1 },
-  { id: 'Micronesia', nameJa: 'ミクロネシア', nameEn: 'Micronesia', type: 1 },
-  { id: 'Polynesia', nameJa: 'ポリネシア', nameEn: 'Polynesia', type: 1 },
-  { id: 'Antarctic', nameJa: '南極', nameEn: 'Antarctic', type: 3 },
+  { id: 'Australia', name: { ja: 'オーストラリア', en: 'Australia' }, type: 3 },
+  { id: 'Melanesia', name: { ja: 'メラネシア', en: 'Melanesia' }, type: 1 },
+  { id: 'Micronesia', name: { ja: 'ミクロネシア', en: 'Micronesia' }, type: 1 },
+  { id: 'Polynesia', name: { ja: 'ポリネシア', en: 'Polynesia' }, type: 1 },
+  { id: 'Antarctic', name: { ja: '南極', en: 'Antarctic' }, type: 3 },
   {
     id: 'International_Organization',
-    nameJa: '国際機関',
-    nameEn: 'International Organization',
+    name: { ja: '国際機関', en: 'International Organization' },
     type: 3,
   },
 ]
@@ -160,11 +142,6 @@ const areaFilterFunc = (area: string | string[]): FlagFilterFuncType => {
   return (o: FlagType) =>
     values.includes(o.area) && ['-', '*'].includes(o.mainLand[0])
 }
-
-// const dependentFilterFunc = (area: string | string[]): FlagFilterFuncType => {
-//   const values = Array.isArray(area) ? area : [area]
-//   return (o: FlagType) => values.includes(o.area)
-// }
 
 const mainLandFilterFunc = (
   mainLand: string | string[]
@@ -180,19 +157,9 @@ const idFilterFunc = (id: string | string[]): FlagFilterFuncType => {
 
 const areaFilters = AREA_TBL.filter((area) => area.type === 1).map((area) => ({
   id: `area:${area.id}`,
-  titleJa: area.nameJa,
-  titleEn: area.nameEn,
+  title: area.name,
   func: areaFilterFunc(area.id),
 }))
-
-// const dependentFilters = AREA_TBL.filter((area) => area.type === 2).map(
-//   (area) => ({
-//     id: `area:${area.id}`,
-//     titleJa: area.nameJa,
-//     titleEn: area.nameEn,
-//     func: dependentFilterFunc(area.id),
-//   })
-// )
 
 const otherAreas = AREA_TBL.filter((area) => area.type === 3).map(
   (area) => area.id
@@ -200,51 +167,49 @@ const otherAreas = AREA_TBL.filter((area) => area.type === 3).map(
 
 const otherAreaFilter = {
   id: 'area:Other',
-  titleJa: '北アメリカ・その他',
-  titleEn: 'North America and Other',
+  title: { ja: '北アメリカ・その他', en: 'North America and Other' },
   func: areaFilterFunc(otherAreas),
 }
-
-// const otherMainLands = uniq(FLAG_TBL.map((o) => o.mainLand))
-//   .filter((ml) => !['-', '*'].includes(ml[0]))
-//   .filter((ml) => !['GB', 'FR', 'US', 'NL'].includes(ml))
 
 const mainLandFilters = [
   {
     id: 'mainLand:GB',
-    titleJa: 'イギリスの構成国・海外領土',
-    titleEn: 'British Countries / Overseas Territories',
+    title: {
+      ja: 'イギリスの構成国・海外領土',
+      en: 'British Countries / Overseas Territories',
+    },
     func: mainLandFilterFunc('GB'),
   },
   {
     id: 'mainLand:FR',
-    titleJa: 'フランスの海外領土',
-    titleEn: 'Overseas France',
+    title: { ja: 'フランスの海外領土', en: 'Overseas France' },
     func: mainLandFilterFunc('FR'),
   },
   {
     id: 'mainLand:NL',
-    titleJa: 'オランダの構成国',
-    titleEn: 'Constituent countries of the Kingdom of the Netherlands',
+    title: {
+      ja: 'オランダの構成国',
+      en: 'Constituent countries of the Kingdom of the Netherlands',
+    },
     func: mainLandFilterFunc('NL'),
   },
   {
     id: 'mainLand:US',
-    titleJa: 'アメリカの海外領土',
-    titleEn: 'Territories of the United States',
+    title: { ja: 'アメリカの海外領土', en: 'Territories of the United States' },
     func: mainLandFilterFunc('US'),
   },
 
   {
     id: 'mainLand:Other1',
-    titleJa: 'その他海外領土（１）',
-    titleEn: 'Other OverSeas Territories(1)',
+    title: {
+      ja: 'その他海外領土（１）',
+      en: 'Other OverSeas Territories(1)',
+    },
     func: mainLandFilterFunc(['DK', 'ES', 'FI', 'PT']),
   },
   {
     id: 'mainLand:Other2',
-    titleJa: 'その他海外領土（２）',
-    titleEn: 'Other OverSeas Territories(2)',
+    title: { ja: 'その他海外領土（２）', en: 'Other OverSeas Territories(2)' },
     func: mainLandFilterFunc(['AU', 'CN', 'NZ']),
   },
 ]
@@ -252,8 +217,7 @@ const mainLandFilters = [
 const patternFilters = [
   {
     id: 'pattern:Red_And_White_Stripe',
-    titleJa: '赤と白の縞模様',
-    titleEn: 'Red And White Stripe',
+    title: { ja: '赤と白の縞模様', en: 'Red And White Stripe' },
     func: idFilterFunc([
       'AT', // オーストリア
       'ID', // インドネシア
@@ -267,7 +231,6 @@ const patternFilters = [
 
 const FLAG_FILTER_TBL: FlagFilterType[] = [
   ...areaFilters,
-  // ...dependentFilters,
   otherAreaFilter,
   ...mainLandFilters,
   ...patternFilters,
