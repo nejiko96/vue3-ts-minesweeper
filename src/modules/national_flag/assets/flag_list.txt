@@ -2,8 +2,8 @@ IS	🇮🇸	アイスランド	Iceland	A	Northern_Europe	-	109
 IE	🇮🇪	アイルランド	Ireland	A	Northern_Europe	-	27
 AZ	🇦🇿	アゼルバイジャン	Azerbaijan	A	Extended_Europe	-	88
 AF	🇦🇫	アフガニスタン	Afghanistan	A	Southern_Asia	-	999
-US	🇺🇸	アメリカ合衆国	United States of America	A	North_America	-	1
-VI	🇻🇮	アメリカ領ヴァージン諸島	Virgin Islands (U.S.)	C	Caribbean	US	999
+US	🇺🇸	アメリカ合衆国	United States	A	North_America	-	1
+VI	🇻🇮	アメリカ領ヴァージン諸島	U.S. Virgin Islands	C	Caribbean	US	999
 AS	🇦🇸	アメリカ領サモア	American Samoa	C	Polynesia	US	999
 AE	🇦🇪	アラブ首長国連邦	United Arab Emirates	A	Western_Asia	-	34
 DZ	🇩🇿	アルジェリア	Algeria	A	Northern_Africa	-	58
@@ -16,13 +16,13 @@ AO	🇦🇴	アンゴラ	Angola	A	Southern_Africa	-	72
 AG	🇦🇬	アンティグア・バーブーダ	Antigua and Barbuda	A	Caribbean	-	175
 AD	🇦🇩	アンドラ	Andorra	A	Southern_Europe	-	161
 YE	🇾🇪	イエメン	Yemen	A	Western_Asia	-	115
-GB	🇬🇧	イギリス	United Kingdom of Great Britain and Northern Ireland	A	Northern_Europe	-	5
+GB	🇬🇧	イギリス	United Kingdom	A	Northern_Europe	-	5
 IO	🇮🇴	イギリス領インド洋地域	British Indian Ocean Territory	C	Eastern_Africa	GB	999
-VG	🇻🇬	イギリス領ヴァージン諸島	Virgin Islands (British)	C	Caribbean	GB	999
+VG	🇻🇬	イギリス領ヴァージン諸島	British Virgin Islands	C	Caribbean	GB	999
 IL	🇮🇱	イスラエル	Israel	A	Western_Asia	-	28
 IT	🇮🇹	イタリア	Italy	A	Southern_Europe	-	8
 IQ	🇮🇶	イラク	Iraq	A	Western_Asia	-	53
-IR	🇮🇷	イラン・イスラム共和国	Iran (Islamic Republic of)	A	Southern_Asia	-	14
+IR	🇮🇷	イラン	Iran	A	Southern_Asia	-	14
 IN	🇮🇳	インド	India	A	Southern_Asia	-	6
 ID	🇮🇩	インドネシア	Indonesia	A	South-Eastern_Asia	-	17
 WF	🇼🇫	ウォリス・フツナ	Wallis and Futuna	C	Polynesia	FR	999
@@ -39,12 +39,12 @@ ER	🇪🇷	エリトリア	Eritrea	A	Eastern_Africa	-	168
 SV	🇸🇻	エルサルバドル	El Salvador	A	Central_America	-	103
 AU	🇦🇺	オーストラリア	Australia	A	Australia	-	12
 AT	🇦🇹	オーストリア	Austria	A	Western_Europe	-	31
-AX	🇦🇽	オーランド諸島	Åland Islands	C	Dependent_Territories_in_Europe	FI	999
+AX	🇦🇽	オーランド諸島	Åland	C	Northern_Europe	FI	999
 OM	🇴🇲	オマーン	Oman	A	Western_Asia	-	69
 NL	🇳🇱	オランダ	Netherlands	A	Western_Europe	-	18
 GH	🇬🇭	ガーナ	Ghana	A	Western_Africa	-	71
-CV	🇨🇻	カーボベルデ	Cabo Verde	A	Western_Africa	-	169
-GG	🇬🇬	ガーンジー	Guernsey	C	Dependent_Territories_in_Europe	GB	999
+CV	🇨🇻	カーボベルデ	Cape Verde	A	Western_Africa	-	169
+GG	🇬🇬	ガーンジー	Guernsey	C	Northern_Europe	GB	999
 GY	🇬🇾	ガイアナ	Guyana	A	South_America	-	149
 KZ	🇰🇿	カザフスタン	Kazakhstan	A	Central_Asia	-	55
 QA	🇶🇦	カタール	Qatar	A	Western_Asia	-	57
@@ -52,7 +52,7 @@ UM	🇺🇲	合衆国領有小離島	United States Minor Outlying Islands	-	Poly
 CA	🇨🇦	カナダ	Canada	A	North_America	-	9
 GA	🇬🇦	ガボン	Gabon	A	Middle_Africa	-	114
 CM	🇨🇲	カメルーン	Cameroon	A	Middle_Africa	-	90
-GM	🇬🇲	ガンビア	Gambia	A	Western_Africa	-	170
+GM	🇬🇲	ガンビア	Gambia, The	A	Western_Africa	-	170
 KH	🇰🇭	カンボジア	Cambodia	A	South-Eastern_Asia	-	108
 MK	🇲🇰	北マケドニア	North Macedonia	A	Southern_Europe	-	134
 MP	🇲🇵	北マリアナ諸島	Northern Mariana Islands	C	Micronesia	US	999
@@ -75,31 +75,31 @@ GD	🇬🇩	グレナダ	Grenada	A	Caribbean	-	178
 HR	🇭🇷	クロアチア	Croatia	A	Southern_Europe	-	77
 KY	🇰🇾	ケイマン諸島	Cayman Islands	C	Caribbean	GB	999
 KE	🇰🇪	ケニア	Kenya	A	Eastern_Africa	-	62
-CI	🇨🇮	コートジボワール	Côte d'Ivoire	A	Western_Africa	-	74
-CC	🇨🇨	ココス（キーリング）諸島	Cocos (Keeling) Islands	C	Australia	AU	999
+CI	🇨🇮	コートジボワール	Ivory Coast	A	Western_Africa	-	74
+CC	🇨🇨	ココス諸島	Cocos (Keeling) Islands	C	Australia	AU	999
 CR	🇨🇷	コスタリカ	Costa Rica	A	Central_America	-	80
 KM	🇰🇲	コモロ	Comoros	A	Southern_Africa	-	177
 CO	🇨🇴	コロンビア	Colombia	A	South_America	-	45
-CG	🇨🇬	コンゴ共和国	Congo	A	Middle_Africa	-	136
+CG	🇨🇬	コンゴ共和国	Congo, Republic of the	A	Middle_Africa	-	136
 CD	🇨🇩	コンゴ民主共和国	Congo, Democratic Republic of the	A	Middle_Africa	-	87
 SA	🇸🇦	サウジアラビア	Saudi Arabia	A	Western_Asia	-	19
 GS	🇬🇸	サウスジョージア・サウスサンドウィッチ諸島	South Georgia and the South Sandwich Islands	C	South_America	GB	999
 WS	🇼🇸	サモア	Samoa	A	Polynesia	-	182
-ST	🇸🇹	サントメ・プリンシペ	Sao Tome and Principe	A	Middle_Africa	-	184
-BL	🇧🇱	サン・バルテルミー	Saint Barthélemy	C	Caribbean	FR	999
+ST	🇸🇹	サントメ・プリンシペ	São Tomé and Príncipe	A	Middle_Africa	-	184
+BL	🇧🇱	サン・バルテルミー島	Saint Barthélemy	C	Caribbean	FR	999
 ZM	🇿🇲	ザンビア	Zambia	A	Southern_Africa	-	112
 PM	🇵🇲	サンピエール島・ミクロン島	Saint Pierre and Miquelon	C	North_America	FR	999
 SM	🇸🇲	サンマリノ	San Marino	A	Southern_Europe	-	171
-MF	🇲🇫	サン・マルタン（フランス領）	Saint Martin (French part)	-	Caribbean	FR	999
+MF	🇲🇫	サン・マルタン	Saint Martin	-	Caribbean	FR	999
 SL	🇸🇱	シエラレオネ	Sierra Leone	A	Western_Africa	-	157
 DJ	🇩🇯	ジブチ	Djibouti	A	Eastern_Africa	-	159
-GI	🇬🇮	ジブラルタル	Gibraltar	C	Dependent_Territories_in_Europe	GB	999
-JE	🇯🇪	ジャージー	Jersey	C	Dependent_Territories_in_Europe	GB	999
+GI	🇬🇮	ジブラルタル	Gibraltar	C	Southern_Europe	GB	999
+JE	🇯🇪	ジャージー	Jersey	C	Northern_Europe	GB	999
 JM	🇯🇲	ジャマイカ	Jamaica	A	Caribbean	-	127
 GE	🇬🇪	ジョージア	Georgia	A	Extended_Europe	-	118
-SY	🇸🇾	シリア・アラブ共和国	Syrian Arab Republic	A	Western_Asia	-	999
+SY	🇸🇾	シリア	Syria	A	Western_Asia	-	999
 SG	🇸🇬	シンガポール	Singapore	A	South-Eastern_Asia	-	38
-SX	🇸🇽	シント・マールテン（オランダ領）	Sint Maarten (Dutch part)	C	Caribbean	NL	999
+SX	🇸🇽	シント・マールテン	Sint Maarten	C	Caribbean	NL	999
 ZW	🇿🇼	ジンバブエ	Zimbabwe	A	Southern_Africa	-	101
 CH	🇨🇭	スイス	Switzerland	A	Western_Europe	-	21
 SE	🇸🇪	スウェーデン	Sweden	A	Northern_Europe	-	24
@@ -115,23 +115,23 @@ GQ	🇬🇶	赤道ギニア	Equatorial Guinea	A	Middle_Africa	-	138
 SN	🇸🇳	セネガル	Senegal	A	Western_Africa	-	106
 RS	🇷🇸	セルビア	Serbia	A	Southern_Europe	-	82
 KN	🇰🇳	セントクリストファー・ネイビス	Saint Kitts and Nevis	A	Caribbean	-	179
-VC	🇻🇨	セントビンセントおよびグレナディーン諸島	Saint Vincent and the Grenadines	A	Caribbean	-	181
+VC	🇻🇨	セントビンセント・グレナディーン	Saint Vincent and the Grenadines	A	Caribbean	-	181
 SH	-	セントヘレナ・アセンションおよびトリスタンダクーニャ	Saint Helena, Ascension and Tristan da Cunha	-	Western_Africa	GB	999
 LC	🇱🇨	セントルシア	Saint Lucia	A	Caribbean	-	173
 SO	🇸🇴	ソマリア	Somalia	A	Eastern_Africa	-	150
 SB	🇸🇧	ソロモン諸島	Solomon Islands	A	Melanesia	-	174
 TC	🇹🇨	タークス・カイコス諸島	Turks and Caicos Islands	C	Caribbean	GB	999
 TH	🇹🇭	タイ	Thailand	A	South-Eastern_Asia	-	26
-KR	🇰🇷	大韓民国	Korea, Republic of	A	Eastern_Asia	-	10
-TW	🇹🇼	台湾（中華民国）	Taiwan, Province of China	B	Eastern_Asia	*CN	22
+KR	🇰🇷	韓国	Korea, South	A	Eastern_Asia	-	10
+TW	🇹🇼	台湾	Taiwan	B	Eastern_Asia	*CN	22
 TJ	🇹🇯	タジキスタン	Tajikistan	A	Central_Asia	-	146
-TZ	🇹🇿	タンザニア	Tanzania, United Republic of	A	Eastern_Africa	-	73
-CZ	🇨🇿	チェコ	Czechia	A	Eastern_Europe	-	48
+TZ	🇹🇿	タンザニア	Tanzania	A	Eastern_Africa	-	73
+CZ	🇨🇿	チェコ	Czech Republic	A	Eastern_Europe	-	48
 TD	🇹🇩	チャド	Chad	A	Middle_Africa	-	140
 CF	🇨🇫	中央アフリカ共和国	Central African Republic	A	Middle_Africa	-	999
-CN	🇨🇳	中華人民共和国	China	A	Eastern_Asia	-	2
+CN	🇨🇳	中国	China	A	Eastern_Asia	-	2
 TN	🇹🇳	チュニジア	Tunisia	A	Northern_Africa	-	89
-KP	🇰🇵	朝鮮民主主義人民共和国	Korea, Democratic People's Republic of	A	Eastern_Asia	-	999
+KP	🇰🇵	北朝鮮	Korea, North	A	Eastern_Asia	-	999
 CL	🇨🇱	チリ	Chile	A	South_America	-	44
 TV	🇹🇻	ツバル	Tuvalu	A	Polynesia	-	191
 DK	🇩🇰	デンマーク	Denmark	A	Northern_Europe	-	37
@@ -162,7 +162,7 @@ HM	🇭🇲	ハード島とマクドナルド諸島	Heard Island and McDonald Is
 BH	🇧🇭	バーレーン	Bahrain	A	Western_Asia	-	96
 HT	🇭🇹	ハイチ	Haiti	A	Caribbean	-	113
 PK	🇵🇰	パキスタン	Pakistan	A	Southern_Asia	-	43
-VA	🇻🇦	バチカン市国	Vatican City	B	Southern_Europe	*IT	999
+VA	🇻🇦	バチカン	Vatican City	B	Southern_Europe	*IT	999
 PA	🇵🇦	パナマ	Panama	A	Central_America	-	81
 VU	🇻🇺	バヌアツ	Vanuatu	A	Melanesia	-	180
 BS	🇧🇸	バハマ	Bahamas	A	Caribbean	-	141
@@ -171,31 +171,31 @@ BM	🇧🇲	バミューダ	Bermuda	C	North_America	GB	999
 PW	🇵🇼	パラオ	Palau	A	Micronesia	-	188
 PY	🇵🇾	パラグアイ	Paraguay	A	South_America	-	97
 BB	🇧🇧	バルバドス	Barbados	A	Caribbean	-	154
-PS	🇵🇸	パレスチナ	Palestine, State of	C	Western_Asia	*IL	121
+PS	🇵🇸	パレスチナ	Palestine	C	Western_Asia	*IL	121
 HU	🇭🇺	ハンガリー	Hungary	A	Eastern_Europe	-	56
 BD	🇧🇩	バングラデシュ	Bangladesh	A	Southern_Asia	-	36
-TL	🇹🇱	東ティモール	Timor-Leste	A	South-Eastern_Asia	-	167
-PN	🇵🇳	ピトケアン	Pitcairn	C	Polynesia	GB	999
+TL	🇹🇱	東ティモール	East Timor	A	South-Eastern_Asia	-	167
+PN	🇵🇳	ピトケアン諸島	Pitcairn	C	Polynesia	GB	999
 FJ	🇫🇯	フィジー	Fiji	A	Melanesia	-	156
 PH	🇵🇭	フィリピン	Philippines	A	South-Eastern_Asia	-	39
 FI	🇫🇮	フィンランド	Finland	A	Northern_Europe	-	46
 BT	🇧🇹	ブータン	Bhutan	A	Southern_Asia	-	165
 BV	🇧🇻	ブーベ島	Bouvet Island	-	Antarctic	NO	999
 PR	🇵🇷	プエルトリコ	Puerto Rico	C	Caribbean	US	999
-FO	🇫🇴	フェロー諸島	Faroe Islands	C	Dependent_Territories_in_Europe	DK	999
-FK	🇫🇰	フォークランド（マルビナス）諸島	Falkland Islands (Malvinas)	C	South_America	GB	999
+FO	🇫🇴	フェロー諸島	Faroe Islands	C	Northern_Europe	DK	999
+FK	🇫🇰	フォークランド諸島	Falkland Islands	C	South_America	GB	999
 BR	🇧🇷	ブラジル	Brazil	A	South_America	-	13
 FR	🇫🇷	フランス	France	A	Western_Europe	-	7
 GF	🇬🇫	フランス領ギアナ	French Guiana	C	South_America	FR	999
 PF	🇵🇫	フランス領ポリネシア	French Polynesia	C	Polynesia	FR	999
-TF	🇹🇫	フランス領南方・南極地域	French Southern Territories	C	Antarctic	FR	999
+TF	🇹🇫	フランス領南方・南極地域	French Southern and Antarctic Lands	C	Antarctic	FR	999
 BG	🇧🇬	ブルガリア	Bulgaria	A	Eastern_Europe	-	70
 BF	🇧🇫	ブルキナファソ	Burkina Faso	A	Western_Africa	-	117
-BN	🇧🇳	ブルネイ・ダルサラーム	Brunei Darussalam	A	South-Eastern_Asia	-	131
+BN	🇧🇳	ブルネイ	Brunei	A	South-Eastern_Asia	-	131
 BI	🇧🇮	ブルンジ	Burundi	A	Middle_Africa	-	160
-VN	🇻🇳	ベトナム	Viet Nam	A	South-Eastern_Asia	-	42
+VN	🇻🇳	ベトナム	Vietnam	A	South-Eastern_Asia	-	42
 BJ	🇧🇯	ベナン	Benin	A	Western_Africa	-	122
-VE	🇻🇪	ベネズエラ・ボリバル共和国	Venezuela (Bolivarian Republic of)	A	South_America	-	85
+VE	🇻🇪	ベネズエラ	Venezuela	A	South_America	-	85
 BY	🇧🇾	ベラルーシ	Belarus	A	Eastern_Europe	-	76
 BZ	🇧🇿	ベリーズ	Belize	A	Central_America	-	166
 PE	🇵🇪	ペルー	Peru	A	South_America	-	51
@@ -204,7 +204,7 @@ PL	🇵🇱	ポーランド	Poland	A	Eastern_Europe	-	23
 BA	🇧🇦	ボスニア・ヘルツェゴビナ	Bosnia and Herzegovina	A	Southern_Europe	-	111
 BW	🇧🇼	ボツワナ	Botswana	A	Southern_Africa	-	123
 BQ	🇧🇶	ボネール、シント・ユースタティウスおよびサバ	Bonaire, Sint Eustatius and Saba	-	Caribbean	NL	999
-BO	🇧🇴	ボリビア多民族国	Bolivia (Plurinational State of)	A	South_America	-	93
+BO	🇧🇴	ボリビア	Bolivia	A	South_America	-	93
 PT	🇵🇹	ポルトガル	Portugal	A	Southern_Europe	-	49
 HK	🇭🇰	香港	Hong Kong	C	Eastern_Asia	CN	41
 HN	🇭🇳	ホンジュラス	Honduras	A	Central_America	-	104
@@ -217,9 +217,9 @@ ML	🇲🇱	マリ	Mali	A	Western_Africa	-	116
 MT	🇲🇹	マルタ	Malta	A	Southern_Europe	-	124
 MQ	🇲🇶	マルティニーク	Martinique	C	Caribbean	FR	999
 MY	🇲🇾	マレーシア	Malaysia	A	South-Eastern_Asia	-	40
-IM	🇮🇲	マン島	Isle of Man	C	Dependent_Territories_in_Europe	GB	999
-FM	🇫🇲	ミクロネシア連邦	Micronesia (Federated States of)	A	Micronesia	-	186
-ZA	🇿🇦	南アフリカ	South Africa	A	Southern_Africa	-	35
+IM	🇮🇲	マン島	Isle of Man	C	Northern_Europe	GB	999
+FM	🇫🇲	ミクロネシア連邦	Micronesia	A	Micronesia	-	186
+ZA	🇿🇦	南アフリカ共和国	South Africa	A	Southern_Africa	-	35
 SS	🇸🇸	南スーダン	South Sudan	A	Northern_Africa	-	153
 MM	🇲🇲	ミャンマー	Myanmar	A	South-Eastern_Asia	-	79
 MX	🇲🇽	メキシコ	Mexico	A	North_America	-	16
@@ -228,13 +228,13 @@ MR	🇲🇷	モーリタニア	Mauritania	A	Western_Africa	-	999
 MZ	🇲🇿	モザンビーク	Mozambique	A	Southern_Africa	-	126
 MC	🇲🇨	モナコ	Monaco	A	Western_Europe	-	999
 MV	🇲🇻	モルディブ	Maldives	A	Southern_Asia	-	152
-MD	🇲🇩	モルドバ共和国	Moldova, Republic of	A	Eastern_Europe	-	135
+MD	🇲🇩	モルドバ	Moldova	A	Eastern_Europe	-	135
 MA	🇲🇦	モロッコ	Morocco	A	Northern_Africa	-	59
 MN	🇲🇳	モンゴル	Mongolia	A	Eastern_Asia	-	128
 ME	🇲🇪	モンテネグロ	Montenegro	A	Southern_Europe	-	151
 MS	🇲🇸	モントセラト	Montserrat	C	Caribbean	GB	999
 JO	🇯🇴	ヨルダン	Jordan	A	Western_Asia	-	91
-LA	🇱🇦	ラオス人民民主共和国	Lao People's Democratic Republic	A	South-Eastern_Asia	-	119
+LA	🇱🇦	ラオス	Laos	A	South-Eastern_Asia	-	119
 LV	🇱🇻	ラトビア	Latvia	A	Northern_Europe	-	95
 LT	🇱🇹	リトアニア	Lithuania	A	Northern_Europe	-	78
 LY	🇱🇾	リビア	Libya	A	Northern_Africa	-	94
@@ -244,11 +244,11 @@ RO	🇷🇴	ルーマニア	Romania	A	Eastern_Europe	-	47
 LU	🇱🇺	ルクセンブルク	Luxembourg	A	Western_Europe	-	67
 RW	🇷🇼	ルワンダ	Rwanda	A	Middle_Africa	-	143
 LS	🇱🇸	レソト	Lesotho	A	Southern_Africa	-	164
-LB	🇱🇧	レバノン	Lebanon	A	Western_AsiaEurope	-	999
+LB	🇱🇧	レバノン	Lebanon	A	Western_Asia	-	999
 RE	🇷🇪	レユニオン	Réunion	C	Eastern_Africa	FR	999
-RU	🇷🇺	ロシア連邦	Russian Federation	A	Eastern_Europe	-	11
+RU	🇷🇺	ロシア	Russia	A	Eastern_Europe	-	11
 SH-HL	🇸🇭	セントヘレナ	Saint Helena	C	Western_Africa	GB	999
-SH-AC	🇦🇨	アセンション島	Ascension	C	Western_Africa	GB	999
+SH-AC	🇦🇨	アセンション島	Ascension Island	C	Western_Africa	GB	999
 SH-TA	🇹🇦	トリスタンダクーニャ	Tristan da Cunha	C	Western_Africa	GB	999
 BQ-BO	-	ボネール島	Bonaire	C	Caribbean	NL	999
 BQ-SE	-	シント・ユースタティウス島	Sint Eustatius	C	Caribbean	NL	999
@@ -263,12 +263,12 @@ FR-CP	🇨🇵	クリッパートン島	Clipperton Island	-	Polynesia	FR	999
 PT-20	-	アゾレス諸島	Azores	D	Southern_Europe	PT	999
 PT-30	-	マデイラ諸島	Madeira	D	Southern_Europe	PT	999
 X-AK	-	アブハジア	Abkhazia	E	Extended_Europe	*GE	999
-X-AR	-	アルツァフ共和国	Republic of Artsakh	E	Extended_Europe	*AZ	999
+X-AR	-	アルツァフ	Artsakh	E	Extended_Europe	*AZ	999
 X-TN	-	沿ドニエストル	Transnistria	E	Eastern_Europe	*MD	999
-X-NC	-	北キプロス	Turkish Republic of Northern Cyprus	E	Extended_Europe	*CY	999
-X-XK	🇽🇰	コソボ共和国	Republic of Kosovo	E	Southern_Europe	*RS	145
-X-SL	-	ソマリランド	Republic of Somaliland	E	Eastern_Africa	*SO	999
+X-NC	-	北キプロス	Northern Cyprus	E	Extended_Europe	*CY	999
+X-XK	🇽🇰	コソボ	Kosovo	E	Southern_Europe	*RS	145
+X-SL	-	ソマリランド	Somaliland	E	Eastern_Africa	*SO	999
 X-SO	-	南オセチア	South Ossetia	E	Extended_Europe	*GE	999
-X-LB	-	リベルランド	Free Republic of Liberland	E	Southern_Europe	-	999
+X-LB	-	リベルランド	Liberland	E	Southern_Europe	-	999
 O-EU	🇪🇺	欧州連合	European Union	F	International_Organization	-	999
 O-UN	🇺🇳	国際連合	United Nations	F	International_Organization	-	999
