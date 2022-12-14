@@ -15,7 +15,7 @@
 
   const emits = defineEmits<{
     (e: 'close'): void
-    (e: 'select', id: string): void
+    (e: 'select', tr: FlagFilterType): void
   }>()
 </script>
 
@@ -58,7 +58,7 @@
                     >
                       <li
                         class="mb-2 max-w-[200px] rounded bg-orange-500 px-4 py-1 text-white"
-                        @click="() => emits('select', tr.id)"
+                        @click="() => emits('select', tr)"
                       >
                         {{ tr.title[lang] }}
                       </li>

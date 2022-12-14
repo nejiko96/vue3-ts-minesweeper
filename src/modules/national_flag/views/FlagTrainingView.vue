@@ -6,7 +6,6 @@
     FlagFilterType,
     FlagType,
     getFilterList,
-    getFilter,
     getFlagList,
   } from '../models/flagsModel'
   import LanguageToggle from '../components/LanguageToggle.vue'
@@ -35,8 +34,8 @@
     )
   }
 
-  const handleTrainingSelect = (id: string) => {
-    trainingObj.value = getFilter(id)
+  const handleTrainingSelect = (tr: FlagFilterType) => {
+    trainingObj.value = tr
     handleRestart()
     isDialogOpen.value = false
   }
@@ -70,6 +69,6 @@
     :is-open="isDialogOpen"
     :lang="lang"
     @close="isDialogOpen = false"
-    @select="(id: string) => handleTrainingSelect(id)"
+    @select="(tr: FlagFilterType) => handleTrainingSelect(tr)"
   ></TrainingSelectDialog>
 </template>
