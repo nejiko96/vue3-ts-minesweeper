@@ -25,7 +25,7 @@
   const isDialogOpen = ref(false)
 
   const handleRestart = () => {
-    const flags = shuffle(getFlagList(trainingObj.value.id))
+    const flags = shuffle(getFlagList(trainingObj.value))
     const sz = flags.length
     const sg = Math.ceil(sz / 6)
     const [q, r] = [(sz / sg) | 0, sz % sg]

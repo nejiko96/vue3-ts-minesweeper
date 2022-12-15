@@ -47,10 +47,10 @@
             leave-to="opacity-0 scale-95"
           >
             <DialogPanel
-              class="w-full max-w-2xl transform overflow-hidden rounded-2xl bg-white p-6 align-middle shadow-xl transition-all"
+              class="w-full max-w-3xl transform overflow-hidden rounded-2xl bg-white p-6 align-middle shadow-xl transition-all"
             >
               <div class="mt-2 flex justify-evenly">
-                <div v-for="i in 3" :key="i">
+                <div v-for="i in 4" :key="i">
                   <ul>
                     <template
                       v-for="tr in trainings.slice((i - 1) * 12, i * 12)"
