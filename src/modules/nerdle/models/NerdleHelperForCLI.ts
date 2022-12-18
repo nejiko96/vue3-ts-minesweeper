@@ -6,8 +6,8 @@ import {
   repeatedPermutation,
   fillArray,
   permutation,
-} from '@/core/utils'
-import samplesRaw from '../assets/nerdle-samples.txt?raw'
+} from '../../../core/utils'
+// import samplesRaw from '../assets/nerdle-samples.txt?raw'
 import NerdleParser from './NerdleParser'
 
 export type NerdleHintType = {
@@ -45,7 +45,7 @@ class NerdleHelper {
 
   static ALL_CHARS = `${NerdleHelper.ALL_DIGITS}=${NerdleHelper.ALL_OPS}`
 
-  static #SAMPLES: string[] = samplesRaw.split('\n')
+  static #SAMPLES: string[] = [] // samplesRaw.split('\n')
 
   static generateSamples(): string[] {
     const ret: string[] = []
@@ -100,7 +100,7 @@ class NerdleHelper {
   constructor(hs: NerdleHintType[])
   constructor(obj: any) {
     if (typeof obj === 'string') {
-      this.hs = obj.split(' ').flatMap((row) => {
+      this.hs = obj.split(' ').flatMap<NerdleHintType>((row) => {
         const ms = row.match(/[^!?](!|\?)?/g) || []
         return ms.map<NerdleHintType>((h, i) => ({
           position: i,

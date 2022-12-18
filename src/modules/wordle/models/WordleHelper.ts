@@ -45,12 +45,17 @@ class WordleHelper {
   constructor(hs: WordleHintType[])
   constructor(obj: any) {
     if (typeof obj === 'string') {
-      const ms = obj.toUpperCase().match(/[A-Z](!|\?)?/g) || []
-      this.hs = ms.map<WordleHintType>((h, i) => ({
-        position: i % 5,
-        letter: h.charAt(0),
-        state: ['', '?', '!'].indexOf(h.charAt(1)),
-      }))
+      this.hs = obj
+        .toUpperCase()
+        .split(' ')
+        .flatMap((row) => {
+          const ms = row.match(/[A-Z](!|\?)?/g) || []
+          return ms.map<WordleHintType>((h, i) => ({
+            position: i,
+            letter: h.charAt(0),
+            state: ['', '?', '!'].indexOf(h.charAt(1)),
+          }))
+        })
     } else {
       this.hs = obj
     }
