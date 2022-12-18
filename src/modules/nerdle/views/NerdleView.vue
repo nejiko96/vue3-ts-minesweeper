@@ -90,7 +90,7 @@
 
   onMounted(reset)
 
-  watch(() => grid, lazyUpdate, { immediate: true, deep: true })
+  watch(() => grid, update, { immediate: true, deep: true })
 </script>
 
 <template>

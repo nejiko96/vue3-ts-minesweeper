@@ -57,22 +57,30 @@ class WordleHelper {
   }
 
   get tried(): string {
-    this.#tried ||= this.#letters(() => true)
+    if (this.#tried === null) {
+      this.#tried = this.#letters(() => true)
+    }
     return this.#tried
   }
 
   get got(): string {
-    this.#got ||= this.#letters((h) => h.state > 0)
+    if (this.#got === null) {
+      this.#got = this.#letters((h) => h.state > 0)
+    }
     return this.#got
   }
 
   get others(): string {
-    this.#others ||= deleteChars(this.tried, this.got)
+    if (this.#others === null) {
+      this.#others = deleteChars(this.tried, this.got)
+    }
     return this.#others
   }
 
   get remain(): string {
-    this.#remain ||= deleteChars(WordleHelper.ALL_CHARS, this.tried)
+    if (this.#remain === null) {
+      this.#remain = deleteChars(WordleHelper.ALL_CHARS, this.tried)
+    }
     return this.#remain
   }
 
@@ -86,9 +94,9 @@ class WordleHelper {
       const containsRe = [...this.got].map((c) => `(?=.*${c})`).join('')
       const allowedRe = Array.from(Array(5))
         .map((_, i) => {
-          const cs2 = this.#letters((h) => h.position === i && h.state === 2)
+          const c2 = this.#letters((h) => h.position === i && h.state === 2)[0]
           const cs1 = this.#letters((h) => h.position === i && h.state === 1)
-          return (cs2.length && cs2[0]) || (cs1.length && `[^${cs1}]`) || '.'
+          return c2 || (cs1.length && `[^${cs1}]`) || '.'
         })
         .join('')
       this.#includePat = new RegExp(`^${containsRe}${allowedRe}$`)

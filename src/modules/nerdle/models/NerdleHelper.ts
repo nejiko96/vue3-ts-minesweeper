@@ -72,7 +72,13 @@ class NerdleHelper {
 
   hs: NerdleHintType[]
 
+  size = 0
+
+  #tried: string | null = null
+
   #got: string | null = null
+
+  #remain: string | null = null
 
   #digits: string | null = null
 
@@ -86,40 +92,68 @@ class NerdleHelper {
 
   #includePat: RegExp | null = null
 
+  #allowedPat: RegExp | null = null
+
   #search: string[] | null = null
 
   constructor(str: string)
   constructor(hs: NerdleHintType[])
   constructor(obj: any) {
     if (typeof obj === 'string') {
-      const ms = obj.match(/[0-9+*/=-](!|\?)?/g) || []
-      this.hs = ms.map<NerdleHintType>((h, i) => ({
-        position: i % 8,
-        letter: h.charAt(0),
-        state: ['', '?', '!'].indexOf(h.charAt(1)),
-      }))
+      this.hs = obj.split(' ').flatMap((row) => {
+        const ms = row.match(/[^!?](!|\?)?/g) || []
+        return ms.map<NerdleHintType>((h, i) => ({
+          position: i,
+          letter: h.charAt(0),
+          state: ['', '?', '!'].indexOf(h.charAt(1)),
+        }))
+      })
     } else {
       this.hs = obj
     }
+    this.size = this.hs.reduce((memo, h) => Math.max(memo, h.position), -1) + 1
+  }
+
+  get tried(): string {
+    if (this.#tried === null) {
+      this.#tried = this.#letters(() => true)
+    }
+    return this.#tried
   }
 
   get got(): string {
-    this.#got ||= this.#letters((h) => h.state > 0)
+    if (this.#got === null) {
+      this.#got = this.#letters((h) => h.state > 0)
+    }
     return this.#got
   }
 
+  get remain(): string {
+    if (this.#remain === null) {
+      this.#remain = deleteChars(NerdleHelper.ALL_CHARS, this.tried)
+    }
+    return this.#remain
+  }
+
   get digits(): string {
-    this.#digits ||= selectChars(this.got, NerdleHelper.ALL_DIGITS)
+    if (this.#digits === null) {
+      this.#digits = selectChars(
+        this.got + this.remain,
+        NerdleHelper.ALL_DIGITS
+      )
+    }
     return this.#digits
   }
 
   get otherDigits(): string {
-    this.#otherDigits ||= deleteChars(NerdleHelper.ALL_DIGITS, this.digits)
+    if (this.#otherDigits === null) {
+      this.#otherDigits = deleteChars(NerdleHelper.ALL_DIGITS, this.digits)
+    }
     return this.#otherDigits
   }
 
   get ops(): string[] {
-    this.#ops ||= [...selectChars(this.got, NerdleHelper.ALL_OPS)]
+    this.#ops ||= [...selectChars(this.got + this.remain, NerdleHelper.ALL_OPS)]
     return this.#ops
   }
 
@@ -129,7 +163,7 @@ class NerdleHelper {
       const d0 = new Set(['0'])
       const zero = [...intersection(ds, d0)]
       const top = [...difference(ds, d0)]
-      const succ = [1, 2, 3, 4].flatMap((k) =>
+      const succ = [1, 2 /* , 3 */].flatMap((k) =>
         repeatedPermutation(this.digits, k - 1)
       )
       const nonzero = top.flatMap((t) => succ.map((s) => t + s))
@@ -148,12 +182,12 @@ class NerdleHelper {
       const containsRe = [...this.got]
         .map((c) => `(?=.*${escapeOps(c)})`)
         .join('')
-      const allowedRe = Array.from(Array(8))
+      const allowedRe = Array.from(Array(this.size))
         .map((_, i) => {
-          const cs2 = this.#letters((h) => h.position === i && h.state === 2)
+          const c2 = this.#letters((h) => h.position === i && h.state === 2)[0]
           const cs1 = this.#letters((h) => h.position === i && h.state === 1)
           return (
-            (cs2.length && escapeOps(cs2[0])) ||
+            (c2 && escapeOps(c2)) ||
             (cs1.length && `[^${escapeMinus(cs1)}]`) ||
             '.'
           )
@@ -164,10 +198,34 @@ class NerdleHelper {
     return this.#includePat
   }
 
+  get allowedPat(): RegExp {
+    if (this.#allowedPat === null) {
+      const allowedRe = Array.from(Array(this.size))
+        .map((_, i) => {
+          const c2 = this.#letters((h) => h.position === i && h.state === 2)[0]
+          const cs1 = this.#letters((h) => h.position === i && h.state === 1)
+          return (
+            (c2 && `(${escapeOps(c2)}|_)`) ||
+            (cs1.length && `[^${escapeMinus(cs1)}]`) ||
+            '.'
+          )
+        })
+        .join('')
+      this.#allowedPat = new RegExp(`^${allowedRe}$`)
+    }
+    return this.#allowedPat
+  }
+
   get search(): string[] {
     if (this.#search === null) {
+      if (!this.got.includes('=')) {
+        return []
+      }
+      // const startTime = performance.now()
       this.#search = []
       this.#dfs([])
+      // const endTime = performance.now()
+      // console.log(endTime - startTime)
     }
     return this.#search
   }
@@ -190,7 +248,14 @@ class NerdleHelper {
   }
 
   #dfs(tokens: string[]): void {
-    if (tokens.join('').length > 6) return
+    const s1 = tokens.join('')
+    const rest = Math.max(2, deleteChars(this.got, s1).length)
+    if (s1.length + rest > this.size) {
+      return
+    }
+
+    const s2 = s1 + '_'.repeat(this.size - s1.length)
+    if (!s2.match(this.allowedPat)) return
 
     if (tokens.length % 2) {
       this.#chk(tokens)
