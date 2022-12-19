@@ -1,0 +1,86 @@
+[
+  {
+    "name": { "ja": "中央アジア", "en": "Central Asia" },
+    "area": "Central_Asia"
+  },
+  {
+    "name": { "ja": "東アジア", "en": "Eastern Asia" },
+    "area": "Eastern_Asia"
+  },
+  {
+    "name": { "ja": "東南アジア", "en": "South-Eastern Asia" },
+    "area": "South-Eastern_Asia"
+  },
+  {
+    "name": { "ja": "南アジア", "en": "Southern Asia" },
+    "area": "Southern_Asia"
+  },
+  {
+    "name": { "ja": "西アジア", "en": "Western Asia" },
+    "area": "Western_Asia"
+  },
+  {
+    "name": { "ja": "西ヨーロッパ", "en": "Western Europe" },
+    "area": "Western_Europe"
+  },
+  {
+    "name": { "ja": "東ヨーロッパ", "en": "Eastern Europe" },
+    "area": "Eastern_Europe"
+  },
+  {
+    "name": { "ja": "南ヨーロッパ", "en": "Southern Europe" },
+    "area": "Southern_Europe"
+  },
+  {
+    "name": { "ja": "北ヨーロッパ", "en": "Northern Europe" },
+    "area": "Northern_Europe"
+  },
+  {
+    "name": { "ja": "広域ヨーロッパ", "en": "Extended Europe" },
+    "area": "Extended_Europe"
+  },
+  {
+    "name": { "ja": "東アフリカ", "en": "Eastern Africa" },
+    "area": "Eastern_Africa"
+  },
+  {
+    "name": { "ja": "中部アフリカ", "en": "Middle Africa" },
+    "area": "Middle_Africa"
+  },
+  {
+    "name": { "ja": "北アフリカ", "en": "Northern Africa" },
+    "area": "Northern_Africa"
+  },
+  {
+    "name": { "ja": "南部アフリカ", "en": "Southern Africa" },
+    "area": "Southern_Africa"
+  },
+  {
+    "name": { "ja": "西アフリカ", "en": "Western Africa" },
+    "area": "Western_Africa"
+  },
+  { "name": { "ja": "カリブ海地域", "en": "Caribbean" }, "area": "Caribbean" },
+  {
+    "name": { "ja": "中央アメリカ", "en": "Central America" },
+    "area": "Central_America"
+  },
+  {
+    "name": { "ja": "南アメリカ", "en": "South America" },
+    "area": "South_America"
+  },
+  { "name": { "ja": "メラネシア", "en": "Melanesia" }, "area": "Melanesia" },
+  {
+    "name": { "ja": "ミクロネシア", "en": "Micronesia" },
+    "area": "Micronesia"
+  },
+  { "name": { "ja": "ポリネシア", "en": "Polynesia" }, "area": "Polynesia" },
+  {
+    "name": { "ja": "北アメリカ・その他", "en": "North America / Other" },
+    "area": [
+      "North_America",
+      "Australia",
+      "Antarctic",
+      "International_Organization"
+    ]
+  }
+]

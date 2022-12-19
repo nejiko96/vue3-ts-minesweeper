@@ -1,0 +1,35 @@
+[
+  {
+    "name": {
+      "ja": "イギリス領",
+      "en": "British Territtory"
+    },
+    "mainland": "GB"
+  },
+  {
+    "name": { "ja": "フランス領", "en": "French Territory" },
+    "mainland": "FR"
+  },
+  {
+    "name": {
+      "ja": "オランダ領",
+      "en": "Dutch Territory"
+    },
+    "mainland": "NL"
+  },
+  {
+    "name": { "ja": "アメリカ領", "en": "American Territory" },
+    "mainland": "US"
+  },
+  {
+    "name": {
+      "ja": "その他領土１",
+      "en": "Other Territory 1"
+    },
+    "mainland": ["DK", "ES", "FI", "PT"]
+  },
+  {
+    "name": { "ja": "その他領土２", "en": "Other Territory 2" },
+    "mainland": ["AU", "CN", "NZ"]
+  }
+]

@@ -1,4 +1,5 @@
 /* eslint-disable no-await-in-loop */
+/* eslint-disable no-console */
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable @typescript-eslint/naming-convention */

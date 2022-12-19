@@ -53,7 +53,7 @@
                 <div v-for="i in 4" :key="i">
                   <ul>
                     <template
-                      v-for="tr in trainings.slice((i - 1) * 12, i * 12)"
+                      v-for="tr in trainings.slice((i - 1) * 14, i * 14)"
                       :key="tr.id"
                     >
                       <li
