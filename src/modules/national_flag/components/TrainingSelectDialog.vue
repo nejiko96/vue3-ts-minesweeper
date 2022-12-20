@@ -57,7 +57,18 @@
                       :key="tr.id"
                     >
                       <li
-                        class="mb-2 max-w-[200px] rounded bg-orange-500 px-4 py-1 text-white"
+                        class="mb-2 max-w-[200px] cursor-pointer rounded border-2 border-transparent px-2 py-1 text-white transition duration-300"
+                        :class="[
+                          tr.type === 'area'
+                            ? 'bg-orange-500 hover:border-orange-300 hover:bg-orange-600'
+                            : '',
+                          tr.type === 'mainland'
+                            ? 'bg-amber-500 hover:border-amber-300 hover:bg-amber-600'
+                            : '',
+                          tr.type === 'design'
+                            ? 'bg-yellow-500 hover:border-yellow-300 hover:bg-yellow-600'
+                            : '',
+                        ]"
                         @click="() => emits('select', tr)"
                       >
                         {{ tr.title[lang] }}

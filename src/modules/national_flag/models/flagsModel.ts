@@ -16,6 +16,7 @@ export type FlagType = {
 type FlagFilterFuncType = (o: FlagType) => boolean
 
 export type FlagFilterType = {
+  type: string
   title: Record<string, string>
   func: FlagFilterFuncType
 }
@@ -56,23 +57,26 @@ const idFilterFunc = (id: string | string[]): FlagFilterFuncType => {
 }
 
 const areaFilters = areaList.map(({ name, area }) => ({
+  type: 'area',
   title: name,
   func: areaFilterFunc(area),
 }))
 
-const mainLandFilters = mainlandList.map(({ name, mainland }) => ({
+const mainlandFilters = mainlandList.map(({ name, mainland }) => ({
+  type: 'mainland',
   title: name,
   func: mainLandFilterFunc(mainland),
 }))
 
 const designFilters = designList.map(({ name, ids }) => ({
+  type: 'design',
   title: name,
   func: idFilterFunc(ids.map((id) => id.split(':')[0])),
 }))
 
 const flagFilterTbl: FlagFilterType[] = [
   ...areaFilters,
-  ...mainLandFilters,
+  ...mainlandFilters,
   ...designFilters,
 ]
 

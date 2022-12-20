@@ -48,7 +48,18 @@
     <h1 class="mb-4 text-3xl font-semibold">
       National Flag Training :
       <button
-        class="rounded-lg border-2 border-transparent bg-orange-500 px-4 py-2 text-white transition duration-300 hover:border-orange-300 hover:bg-orange-600"
+        class="rounded-lg border-2 border-transparent px-4 py-2 text-white transition duration-300"
+        :class="[
+          trainingObj.type === 'area'
+            ? 'bg-orange-500 hover:border-orange-300 hover:bg-orange-600'
+            : '',
+          trainingObj.type === 'mainland'
+            ? 'bg-amber-500 hover:border-amber-300 hover:bg-amber-600'
+            : '',
+          trainingObj.type === 'design'
+            ? 'bg-yellow-500 hover:border-yellow-300 hover:bg-yellow-600'
+            : '',
+        ]"
         @click="isDialogOpen = true"
       >
         {{ trainingObj.title[lang] }}
