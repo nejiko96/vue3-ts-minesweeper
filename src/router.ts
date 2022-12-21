@@ -10,7 +10,7 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 //   import(`@/modules/${module}/views/${view}.vue`)
 
 // const routes = [
-//   { path: '/', component: loadView('minesweeper', 'MsView') },
+//   { path: '/', redirect: '/ms' },
 //   { path: '/ms', component: loadView('minesweeper', 'MsView') },
 //   { path: '/cat', component: loadView('catapi', 'CatView') },
 //   { path: '/wordle', component: loadView('wordle', 'WordleView') },
@@ -30,7 +30,7 @@ import SlidePuzzleView from '@/modules/catapi/views/SlidePuzzleView.vue'
 import FlagTrainingView from '@/modules/national_flag/views/FlagTrainingView.vue'
 
 const routes = [
-  { path: '/', component: MsView },
+  { path: '/', redirect: '/ms' },
   { path: '/ms', component: MsView },
   { path: '/cat', component: CatView },
   { path: '/wordle', component: WordleView },
