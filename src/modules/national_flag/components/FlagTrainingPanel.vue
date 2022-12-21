@@ -61,7 +61,7 @@
               :list="flag.answer"
               group="flags"
               item-key="id"
-              ghost-class="ghost"
+              ghost-class="opacity-50"
               :move="checkMove"
               class="answer"
             >
@@ -85,7 +85,7 @@
         group="flags"
         item-key="id"
         class="pool flex flex-row flex-wrap gap-x-2 gap-y-2"
-        ghost-class="ghost"
+        ghost-class="opacity-50"
         :move="checkMove"
       >
         <template #item="{ element }">
@@ -109,9 +109,5 @@
     padding-top: 0.4rem;
     padding-bottom: 0.4rem;
     color: rgb(156 163 175 / var(--tw-border-opacity));
-  }
-
-  .ghost {
-    opacity: 0.5;
   }
 </style>
