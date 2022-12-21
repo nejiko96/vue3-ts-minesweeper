@@ -3,8 +3,8 @@
  * Nerdle CLI(experimental)
  * - ヒントの例
  *   * シングルクォートで囲まないと!1などがコマンド履歴に展開されてしまう
- *   '6!1N6!3?RBR3AD' '8/?2?*?4?-7+?0?=?9'
- *   '3?5/?7+4=!9?' '2?*8-6?=?1?0'
+ *   '6!1N6!3?RBR3AD 8/?2?*?4?-7+?0?=?9'
+ *   'f1!r3!w0?rk$ 7?*8?/?4-?9=!5'
  */
 import NerdleHelper from '../models/NerdleHelperForCLI'
 
@@ -20,7 +20,7 @@ if (args.length < 1) {
   showUsageAndExit()
 }
 
-const nerdle = new NerdleHelper(args.join(' '))
+const nerdle = new NerdleHelper(args.flatMap((arg) => arg.split(' ')))
 const result = nerdle.search
 console.log(`total ${result.length} results:`)
 result.slice(0, 10).forEach((ex) => console.log(`  ${ex}`))

@@ -118,14 +118,14 @@
             Wordle</a
           >
           <li
-            class="w-40 rounded-lg bg-slate-500 p-2 text-xl text-white hover:bg-slate-300"
+            class="w-40 cursor-pointer rounded-lg bg-slate-500 p-2 text-xl text-white hover:bg-slate-300"
             @click="pop"
           >
             <fa icon="fa-rotate-left" size="sm" />
             Undo
           </li>
           <li
-            class="w-40 rounded-lg bg-slate-500 p-2 text-xl text-white hover:bg-slate-300"
+            class="w-40 cursor-pointer rounded-lg bg-slate-500 p-2 text-xl text-white hover:bg-slate-300"
             @click="reset"
           >
             <fa icon="fa-trash-can" size="sm" />
@@ -138,7 +138,7 @@
           <li
             v-for="sg in suggestion"
             :key="sg.w"
-            class="w-40 rounded-lg bg-pink-500 p-2 text-xl text-white hover:bg-pink-300"
+            class="w-40 cursor-pointer rounded-lg bg-pink-500 p-2 text-xl text-white hover:bg-pink-300"
             :tooltip="`${sg.r1}-${sg.r2}-${sg.r3}`"
             flow="down"
             @click="push(sg.w)"
@@ -154,7 +154,7 @@
           <li
             v-for="w in searchList"
             :key="w"
-            class="w-40 rounded-lg bg-sky-500 p-2 text-xl text-white hover:bg-sky-300"
+            class="w-40 cursor-pointer rounded-lg bg-sky-500 p-2 text-xl text-white hover:bg-sky-300"
             @click="push(w)"
           >
             {{ w }}

@@ -96,11 +96,12 @@ class NerdleHelper {
 
   #search: string[] | null = null
 
-  constructor(str: string)
+  constructor(ss: string[])
   constructor(hs: NerdleHintType[])
-  constructor(obj: any) {
-    if (typeof obj === 'string') {
-      this.hs = obj.split(' ').flatMap<NerdleHintType>((row) => {
+  constructor(obj: string[] | NerdleHintType[]) {
+    if (typeof obj[0] === 'string') {
+      const ss = obj as string[]
+      this.hs = ss.flatMap<NerdleHintType>((row) => {
         const ms = row.match(/[^!?](!|\?)?/g) || []
         return ms.map<NerdleHintType>((h, i) => ({
           position: i,
@@ -109,7 +110,7 @@ class NerdleHelper {
         }))
       })
     } else {
-      this.hs = obj
+      this.hs = obj as NerdleHintType[]
     }
     this.size = this.hs.reduce((memo, h) => Math.max(memo, h.position), -1) + 1
   }

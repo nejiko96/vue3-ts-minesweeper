@@ -41,23 +41,21 @@ class WordleHelper {
 
   #suggest: WordleSuggestionType[] | null = null
 
-  constructor(str: string)
+  constructor(ss: string[])
   constructor(hs: WordleHintType[])
-  constructor(obj: any) {
-    if (typeof obj === 'string') {
-      this.hs = obj
-        .toUpperCase()
-        .split(' ')
-        .flatMap((row) => {
-          const ms = row.match(/[A-Z](!|\?)?/g) || []
-          return ms.map<WordleHintType>((h, i) => ({
-            position: i,
-            letter: h.charAt(0),
-            state: ['', '?', '!'].indexOf(h.charAt(1)),
-          }))
-        })
+  constructor(obj: string[] | WordleHintType[]) {
+    if (typeof obj[0] === 'string') {
+      const ss = obj as string[]
+      this.hs = ss.flatMap((row) => {
+        const ms = row.toUpperCase().match(/[A-Z](!|\?)?/g) || []
+        return ms.map<WordleHintType>((h, i) => ({
+          position: i,
+          letter: h.charAt(0),
+          state: ['', '?', '!'].indexOf(h.charAt(1)),
+        }))
+      })
     } else {
-      this.hs = obj
+      this.hs = obj as WordleHintType[]
     }
   }
 
