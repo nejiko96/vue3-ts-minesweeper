@@ -1,27 +1,16 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
-
-import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import {
-  faAngleDown,
-  faArrowUpRightFromSquare,
-  faGear,
-  faRotateLeft,
-  faTrashCan,
-  faXmark,
-} from '@fortawesome/free-solid-svg-icons'
-import { faGithub } from '@fortawesome/free-brands-svg-icons'
 
 import './index.css'
+import { init as initFa } from './fa'
 import App from './App.vue'
+import { router } from './router'
 
-library.add(faAngleDown)
-library.add(faArrowUpRightFromSquare)
-library.add(faGear)
-library.add(faGithub)
-library.add(faRotateLeft)
-library.add(faTrashCan)
-library.add(faXmark)
+initFa()
 
-createApp(App).component('fa', FontAwesomeIcon).use(createPinia()).mount('#app')
+createApp(App)
+  .component('fa', FontAwesomeIcon)
+  .use(createPinia())
+  .use(router)
+  .mount('#app')

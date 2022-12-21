@@ -1,19 +1,20 @@
 <script setup lang="ts">
+  import { computed } from 'vue'
   import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
+  import { useRouter } from 'vue-router'
 
   type MenuItemType = {
-    id: string
     title: string
+    path: string
   }
 
   const props = defineProps<{
     menuItems: MenuItemType[]
-    selected: string
   }>()
 
-  const emits = defineEmits<{
-    (e: 'menuselect', id: string): void
-  }>()
+  const router = useRouter()
+
+  const currentPath = computed(() => router.currentRoute.value.path)
 </script>
 
 <template>
@@ -49,23 +50,23 @@
               >
                 <div
                   v-for="item in props.menuItems"
-                  :key="item.id"
+                  :key="item.path"
                   class="px-1 py-1"
                 >
                   <MenuItem
                     v-slot="{ active }"
-                    :disabled="item.id === props.selected"
+                    :disabled="item.path === currentPath"
                   >
                     <button
                       :class="[
                         active
                           ? 'bg-teal-500 text-white'
-                          : item.id === props.selected
+                          : item.path === currentPath
                           ? 'text-gray-400'
                           : 'text-gray-900',
                         'group flex w-full items-center rounded-md px-2 py-2 text-sm',
                       ]"
-                      @click="() => emits('menuselect', item.id)"
+                      @click="() => router.push(item.path)"
                     >
                       {{ item.title }}
                     </button>
