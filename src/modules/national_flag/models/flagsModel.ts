@@ -10,22 +10,31 @@ export type FlagType = {
   div: string
   area: string
   mainland: string
+  rank: number
   url: string
 }
 
-type FlagFilterFuncType = (o: FlagType) => boolean
+type FlagFilterType = (o: FlagType) => boolean
 
-export type FlagFilterType = {
+export type FlagGroupType = {
   type: string
   title: Record<string, string>
-  func: FlagFilterFuncType
+  filter: FlagFilterType
+}
+
+export type FlagQuizSettingType = {
+  title: Record<string, string>
+  range: FlagFilterType
+  tcnt: number
+  qcnt: number
 }
 
 const flagTbl: FlagType[] = flagTblRaw
   .trim()
   .split('\n')
   .map((row) => {
-    const [id, emoji, nameJa, nameEn, div, area, mainland] = row.split(`\t`)
+    const [id, emoji, nameJa, nameEn, div, area, mainland, rankStr] =
+      row.split(`\t`)
     return {
       id,
       emoji,
@@ -33,51 +42,77 @@ const flagTbl: FlagType[] = flagTblRaw
       div,
       area,
       mainland,
+      rank: Number(rankStr),
       url: new URL(`../assets/images/${id}.svg`, import.meta.url).href,
     }
   })
   .filter((o) => o.div !== '-')
 
-const areaFilterFunc = (area: string | string[]): FlagFilterFuncType => {
+const areaFilter = (area: string | string[]): FlagFilterType => {
   const values = Array.isArray(area) ? area : [area]
   return (o: FlagType) =>
     values.includes(o.area) && ['-', '*'].includes(o.mainland[0])
 }
 
-const mainLandFilterFunc = (
-  mainland: string | string[]
-): FlagFilterFuncType => {
+const mainLandFilter = (mainland: string | string[]): FlagFilterType => {
   const values = Array.isArray(mainland) ? mainland : [mainland]
   return (o: FlagType) => values.includes(o.mainland)
 }
 
-const idFilterFunc = (id: string | string[]): FlagFilterFuncType => {
+const idFilter = (id: string | string[]): FlagFilterType => {
   const values = Array.isArray(id) ? id : [id]
   return (o: FlagType) => values.includes(o.id)
 }
 
-const areaFilters = areaList.map(({ name, area }) => ({
+const areaGroups = areaList.map(({ name, area }) => ({
   type: 'area',
   title: name,
-  func: areaFilterFunc(area),
+  filter: areaFilter(area),
 }))
 
-const mainlandFilters = mainlandList.map(({ name, mainland }) => ({
+const mainlandGroups = mainlandList.map(({ name, mainland }) => ({
   type: 'mainland',
   title: name,
-  func: mainLandFilterFunc(mainland),
+  filter: mainLandFilter(mainland),
 }))
 
-const designFilters = designList.map(({ name, ids }) => ({
+const designGroups = designList.map(({ name, ids }) => ({
   type: 'design',
   title: name,
-  func: idFilterFunc(ids.map((id) => id.split(':')[0])),
+  filter: idFilter(ids.map((id) => id.split(':')[0])),
 }))
 
-const flagFilterTbl: FlagFilterType[] = [
-  ...areaFilters,
-  ...mainlandFilters,
-  ...designFilters,
+const groupTbl: FlagGroupType[] = [
+  ...areaGroups,
+  ...mainlandGroups,
+  ...designGroups,
+]
+
+const quizSettingTbl = [
+  {
+    title: { ja: '2021年GDPトップ50', en: '2021 GDP top 50' },
+    range: (o: FlagType) => o.rank <= 50,
+    tcnt: 50,
+    qcnt: 10,
+  },
+  {
+    title: { ja: '国連加盟国＋２', en: 'UN member + 2' },
+    range: (o: FlagType) => o.div <= 'B',
+    tcnt: 195,
+    qcnt: 20,
+  },
+  {
+    title: { ja: 'ISO 3166-1', en: 'ISO 3166-1' },
+    range: (o: FlagType) => o.div <= 'C',
+    tcnt: 248,
+    qcnt: 30,
+  },
+  {
+    title: { ja: '絞り込みなし', en: 'No filter' },
+    range: () => true,
+    tcnt: 266,
+    qcnt: 30,
+  },
 ]
 
 // const FLAG_FILTER_DIC: Record<string, FlagFilterType> = FLAG_FILTER_TBL.reduce<
@@ -87,11 +122,12 @@ const flagFilterTbl: FlagFilterType[] = [
 //   return h
 // }, {})
 
-const getFilterList = (): FlagFilterType[] => flagFilterTbl
-
 // const getFilter = (id: string): FlagFilterType => FLAG_FILTER_DIC[id]
 
-const getFlagList = (filter: FlagFilterType): FlagType[] =>
-  flagTbl.filter(filter.func)
+const getGroupList = (): FlagGroupType[] => groupTbl
 
-export { getFilterList, getFlagList }
+const getQuizSettingList = (): FlagQuizSettingType[] => quizSettingTbl
+
+const getFlagList = (f: FlagFilterType): FlagType[] => flagTbl.filter(f)
+
+export { getGroupList, getQuizSettingList, getFlagList }

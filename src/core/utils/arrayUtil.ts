@@ -1,4 +1,19 @@
-const sample = <T>(arr: T[]): T => arr[Math.floor(Math.random() * arr.length)]
+type Sample = {
+  <T>(arr: T[]): T
+  <T>(arr: T[], n: number): T[]
+}
+const sample: Sample = <T>(arr: T[], n?: number): any => {
+  if (n === undefined) {
+    return arr[Math.floor(Math.random() * arr.length)]
+  }
+  const m = Math.min(Math.max(n, 0), arr.length)
+  const ret = [...arr]
+  for (let i = ret.length - 1; i >= ret.length - m; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[ret[i], ret[j]] = [ret[j], ret[i]]
+  }
+  return ret.slice(ret.length - m)
+}
 
 const shuffle = <T>(arr: T[]): T[] => {
   const ret = [...arr]

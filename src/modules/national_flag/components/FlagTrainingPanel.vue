@@ -49,32 +49,30 @@
 <template>
   <div class="flex flex-col items-center justify-center">
     <div class="mb-4 grid grid-cols-3 gap-x-4 gap-y-4">
-      <template v-for="flag in shuffled" :key="flag.id">
-        <div>
-          <div class="mb-2 flex h-[150px] w-[225px] items-center">
-            <img class="h-full w-full object-contain" :src="flag.url" />
-          </div>
-          <div
-            class="mx-auto h-auto w-[225px] border-2 border-orange-300 bg-orange-100 p-2"
-          >
-            <draggable
-              :list="flag.answer"
-              group="flags"
-              item-key="id"
-              ghost-class="opacity-50"
-              :move="checkMove"
-              class="answer"
-            >
-              <template #item="{ element }">
-                <FlagLabel @click="() => handleAnswerClick(flag)"
-                  >{{ element.id === flag.id ? '⭕️' : '❌' }}
-                  {{ element.name[lang] }}</FlagLabel
-                >
-              </template>
-            </draggable>
-          </div>
+      <div v-for="flag in shuffled" :key="flag.id">
+        <div class="mb-2 flex h-[150px] w-[225px] items-center">
+          <img class="h-full w-full object-contain" :src="flag.url" />
         </div>
-      </template>
+        <div
+          class="mx-auto h-auto w-[225px] border-2 border-orange-300 bg-orange-100 p-2"
+        >
+          <draggable
+            :list="flag.answer"
+            group="flags"
+            item-key="id"
+            ghost-class="opacity-50"
+            :move="checkMove"
+            class="answer"
+          >
+            <template #item="{ element }">
+              <FlagLabel @click="() => handleAnswerClick(flag)"
+                >{{ element.id === flag.id ? '⭕️' : '❌' }}
+                {{ element.name[lang] }}</FlagLabel
+              >
+            </template>
+          </draggable>
+        </div>
+      </div>
     </div>
 
     <div
