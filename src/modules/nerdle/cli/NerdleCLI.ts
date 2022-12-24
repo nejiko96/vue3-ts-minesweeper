@@ -1,12 +1,14 @@
 /* eslint-disable no-console */
 /**
- * Nerdle CLI(experimental)
+ * Nerdle CLI
+ * - 依存パッケージ
+ *   yarn add --dev ts-node
  * - ヒントの例
  *   * シングルクォートで囲まないと!1などがコマンド履歴に展開されてしまう
  *   '6!1N6!3?RBR3AD 8/?2?*?4?-7+?0?=?9'
  *   'f1!r3!w0?rk$ 7?*8?/?4-?9=!5'
  */
-import NerdleHelper from '../models/NerdleHelperForCLI'
+import NerdleHelper from '../models/NerdleHelper'
 
 const showUsageAndExit = () => {
   console.error(

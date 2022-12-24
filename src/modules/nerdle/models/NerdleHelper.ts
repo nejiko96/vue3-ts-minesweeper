@@ -6,8 +6,8 @@ import {
   repeatedPermutation,
   fillArray,
   permutation,
-} from '@/core/utils'
-import samplesRaw from '../assets/nerdle-samples.txt?raw'
+} from '../../../core/utils' // ts-node/esm が path alias 未対応
+import samples from '../assets/nerdleSamples.json' assert { type: 'json' }
 import NerdleParser from './NerdleParser'
 
 export type NerdleHintType = {
@@ -45,8 +45,6 @@ class NerdleHelper {
 
   static ALL_CHARS = `${NerdleHelper.ALL_DIGITS}=${NerdleHelper.ALL_OPS}`
 
-  static #SAMPLES: string[] = samplesRaw.split('\n')
-
   static generateSamples(): string[] {
     const ret: string[] = []
     const ds = fillArray(10, (k) => k)
@@ -67,7 +65,7 @@ class NerdleHelper {
   }
 
   static get suggest(): string[] {
-    return sample(NerdleHelper.#SAMPLES).split(' ')
+    return sample(samples)
   }
 
   hs: NerdleHintType[]
