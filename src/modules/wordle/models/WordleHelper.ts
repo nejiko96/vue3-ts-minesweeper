@@ -1,5 +1,10 @@
-import { deleteChars, selectChars, uniq, permutation } from '@/core/utils'
-import wordsRaw from '../assets/words.txt?raw'
+import {
+  deleteChars,
+  selectChars,
+  uniq,
+  permutation,
+} from '../../../core/utils' // ts-node/esm が path alias 未対応
+import words from '../assets/words.json' assert { type: 'json' }
 
 export type WordleHintType = {
   position: number
@@ -17,7 +22,7 @@ export type WordleSuggestionType = {
 class WordleHelper {
   static ALL_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
-  static WORDS: string[] = wordsRaw.split('\n')
+  static WORDS: string[] = words
 
   hs: WordleHintType[]
 

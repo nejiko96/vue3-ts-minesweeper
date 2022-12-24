@@ -10,6 +10,7 @@
     "lint": "eslint --ext .ts,.tsx,.vue --ignore-path .gitignore .",
     "lint:style": "stylelint src/**/*.{css,vue}",
     "deploy": "echo > dist/.nojekyll && gh-pages -d dist -t true",
+    "wordle": "yarn node --experimental-specifier-resolution=node --loader ts-node/esm src/modules/wordle/cli/WordleCLI.ts",
     "nerdle": "yarn node --experimental-specifier-resolution=node --loader ts-node/esm src/modules/nerdle/cli/NerdleCLI.ts"
   },
   "dependencies": {

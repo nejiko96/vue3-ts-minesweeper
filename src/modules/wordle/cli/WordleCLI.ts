@@ -1,12 +1,11 @@
 /* eslint-disable no-console */
 /**
- * Wordle CLI(experimental)
+ * Wordle CLI
+ * - 依存パッケージ
+ *   yarn add --dev ts-node
  * - ヒントの例
  *   * シングルクォートで囲まないと!1などがコマンド履歴に展開されてしまう
  *   'A?ER?OS U?N?L?IT'
- * - コマンドライン環境だとwords.txtのインポートができないため動かない
- *   - そのうちインポートできるようになる？
- *   - どうしても動かしたくなったらJSON形式に変えればインポートできるようになるのでは
  */
 import WordleHelper from '../models/WordleHelper'
 
