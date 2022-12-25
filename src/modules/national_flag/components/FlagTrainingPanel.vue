@@ -4,6 +4,7 @@
 
   import { shuffle } from '@/core/utils'
   import { FlagType } from '../models/flagsModel'
+  import FlagImage from './FlagImage.vue'
   import FlagLabel from './FlagLabel.vue'
 
   type FlagAnswerType = FlagType & {
@@ -50,9 +51,7 @@
   <div class="flex flex-col items-center justify-center">
     <div class="mb-4 grid grid-cols-3 gap-x-4 gap-y-4">
       <div v-for="flag in shuffled" :key="flag.id">
-        <div class="mb-2 flex h-[150px] w-[225px] items-center">
-          <img class="h-full w-full object-contain" :src="flag.url" />
-        </div>
+        <FlagImage :id="flag.id" class="mb-2 h-[150px] w-[225px]"></FlagImage>
         <div
           class="mx-auto h-auto w-[225px] border-2 border-orange-300 bg-orange-100 p-2"
         >

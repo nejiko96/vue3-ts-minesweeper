@@ -1,6 +1,7 @@
 <script setup lang="ts">
   import { ref } from 'vue'
   import { FlagType } from '../models/flagsModel'
+  import FlagImage from './FlagImage.vue'
 
   export type FlagQuizType = {
     answer: FlagType
@@ -9,6 +10,7 @@
 
   const props = defineProps<{
     q: FlagQuizType
+    lang: string
   }>()
 
   const emits = defineEmits<{
@@ -28,11 +30,9 @@
 
 <template>
   <div
-    class="mb-10 flex flex-col items-center justify-center gap-y-6 md:flex-row md:gap-x-6"
+    class="flex flex-col items-center justify-center gap-y-6 md:flex-row md:gap-x-6"
   >
-    <div class="flex h-[280px] w-[420px] items-center">
-      <img class="h-full w-full object-contain" :src="q.answer.url" />
-    </div>
+    <FlagImage :id="q.answer.id" class="h-[280px] w-[420px]"></FlagImage>
 
     <div class="flex flex-col gap-y-2">
       <button
@@ -49,7 +49,7 @@
         @click="() => handleClick(opt)"
       >
         {{ opt === selected ? (correct(opt) ? '⭕️' : '❌') : '' }}
-        {{ opt.name['ja'] }}
+        {{ opt.name[lang] }}
       </button>
     </div>
   </div>

@@ -99,7 +99,7 @@
     <div
       class="flex flex-col items-center justify-center md:flex-row md:items-start md:justify-evenly"
     >
-      <div class="mb-10 p-4 dark:bg-gray-800">
+      <div class="mb-10 p-4">
         <div class="pb-2">
           <template v-for="(_n, i) in 6" :key="i">
             <div class="mb-1 flex justify-center">

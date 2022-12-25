@@ -8,7 +8,7 @@
     getGroupList,
     getFlagList,
   } from '../models/flagsModel'
-  import LanguageToggle from '../components/LanguageToggle.vue'
+  import LanguageToggle, { LangType } from '../components/LanguageToggle.vue'
   import TrainingSelectDialog from '../components/TrainingSelectDialog.vue'
   import FlagTrainingPanel from '../components/FlagTrainingPanel.vue'
 
@@ -16,11 +16,13 @@
 </script>
 
 <script setup lang="ts">
+  const title = { ja: '国旗暗記ツール', en: 'National Flag Training' }
+
   const trainingObj = ref<FlagGroupType>(sample(trainingList))
 
   const flagGroups = ref<FlagType[][]>([])
 
-  const lang = ref('ja')
+  const lang = ref<LangType>('ja')
 
   const isDialogOpen = ref(false)
 
@@ -44,9 +46,9 @@
 </script>
 
 <template>
-  <div class="relative bg-gray-100 p-4 text-center dark:bg-gray-800">
+  <div class="relative p-4 text-center">
     <h1 class="mb-4 text-3xl font-semibold">
-      National Flag Training :
+      {{ title[lang] }} :
       <button
         class="rounded-lg border-2 border-transparent px-4 py-2 text-white transition duration-300"
         :class="{

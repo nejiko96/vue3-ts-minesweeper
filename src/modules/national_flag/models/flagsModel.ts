@@ -11,10 +11,9 @@ export type FlagType = {
   area: string
   mainland: string
   rank: number
-  url: string
 }
 
-type FlagFilterType = (o: FlagType) => boolean
+export type FlagFilterType = (o: FlagType) => boolean
 
 export type FlagGroupType = {
   type: string
@@ -43,7 +42,6 @@ const flagTbl: FlagType[] = flagTblRaw
       area,
       mainland,
       rank: Number(rankStr),
-      url: new URL(`../assets/images/${id}.svg`, import.meta.url).href,
     }
   })
   .filter((o) => o.div !== '-')
@@ -90,7 +88,7 @@ const groupTbl: FlagGroupType[] = [
 
 const quizSettingTbl = [
   {
-    title: { ja: '2021年GDPトップ50', en: '2021 GDP top 50' },
+    title: { ja: '2021 GDPトップ50', en: '2021 GDP top 50' },
     range: (o: FlagType) => o.rank <= 50,
     tcnt: 50,
     qcnt: 10,
@@ -108,21 +106,12 @@ const quizSettingTbl = [
     qcnt: 30,
   },
   {
-    title: { ja: '絞り込みなし', en: 'No filter' },
+    title: { ja: 'コンプ勢', en: 'Collector' },
     range: () => true,
     tcnt: 266,
-    qcnt: 30,
+    qcnt: 266,
   },
 ]
-
-// const FLAG_FILTER_DIC: Record<string, FlagFilterType> = FLAG_FILTER_TBL.reduce<
-//   Record<string, FlagFilterType>
-// >((h, o) => {
-//   h[o.id] = o
-//   return h
-// }, {})
-
-// const getFilter = (id: string): FlagFilterType => FLAG_FILTER_DIC[id]
 
 const getGroupList = (): FlagGroupType[] => groupTbl
 
