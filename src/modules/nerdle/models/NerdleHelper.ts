@@ -92,6 +92,8 @@ class NerdleHelper {
 
   #allowedPat: RegExp | null = null
 
+  #eqPos: number | null = null
+
   #search: string[] | null = null
 
   constructor(ss: string[])
@@ -215,9 +217,34 @@ class NerdleHelper {
     return this.#allowedPat
   }
 
+  get eqPos(): number {
+    if (this.#eqPos === null) {
+      const [ep0, ep1, ep2] = [0, 1, 2].map((s) =>
+        this.hs
+          .filter((h) => h.letter === '=' && h.state === s)
+          .map((h) => h.position)
+      )
+
+      if (ep0.length) {
+        this.#eqPos = 0
+      } else if (ep2.length) {
+        this.#eqPos = ep2.reduce((memo, eq) => memo | (1 << eq), 0)
+      } else if (ep1.length) {
+        this.#eqPos = ep1.reduce(
+          (memo, eq) => memo & ~(1 << eq),
+          (1 << this.size) - 1
+        )
+      } else {
+        this.#eqPos = 0
+      }
+    }
+    return this.#eqPos
+  }
+
   get search(): string[] {
     if (this.#search === null) {
-      if (!this.got.includes('=')) {
+      // = の位置が入力されてから探索
+      if (!this.eqPos) {
         return []
       }
       // const startTime = performance.now()
@@ -248,16 +275,21 @@ class NerdleHelper {
 
   #dfs(tokens: string[]): void {
     const s1 = tokens.join('')
+
+    // 枝刈り１：未使用の文字を使うと長さがオーバーするならはじく
     const rest = Math.max(2, deleteChars(this.got, s1).length)
     if (s1.length + rest > this.size) {
       return
     }
 
+    // 枝刈り２：この時点でパターン不一致なら弾く
     const s2 = s1 + '_'.repeat(this.size - s1.length)
     if (!s2.match(this.allowedPat)) return
 
     if (tokens.length % 2) {
-      this.#chk(tokens)
+      if ((this.eqPos >> s1.length) & 1) {
+        this.#chk(tokens)
+      }
       this.ops.forEach((op) => this.#dfs(tokens.concat(op)))
     } else {
       this.nums.forEach((num) => this.#dfs(tokens.concat(num)))
