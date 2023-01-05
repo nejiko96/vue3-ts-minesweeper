@@ -3,29 +3,31 @@
 
   import { fillArray, sample, shuffle } from '@/core/utils'
   import {
-    FlagFilterType,
+    FlagGroupType,
     FlagType,
-    getFilterList,
+    getGroupList,
     getFlagList,
   } from '../models/flagsModel'
-  import LanguageToggle from '../components/LanguageToggle.vue'
+  import LanguageToggle, { LangType } from '../components/LanguageToggle.vue'
   import TrainingSelectDialog from '../components/TrainingSelectDialog.vue'
   import FlagTrainingPanel from '../components/FlagTrainingPanel.vue'
 
-  const trainingList = getFilterList()
+  const trainingList = getGroupList()
 </script>
 
 <script setup lang="ts">
-  const trainingObj = ref<FlagFilterType>(sample(trainingList))
+  const title = { ja: '国旗暗記ツール', en: 'National Flag Training' }
+
+  const trainingObj = ref<FlagGroupType>(sample(trainingList))
 
   const flagGroups = ref<FlagType[][]>([])
 
-  const lang = ref('ja')
+  const lang = ref<LangType>('ja')
 
   const isDialogOpen = ref(false)
 
   const handleRestart = () => {
-    const flags = shuffle(getFlagList(trainingObj.value))
+    const flags = shuffle(getFlagList(trainingObj.value.filter))
     const sz = flags.length
     const sg = Math.ceil(sz / 6)
     const [q, r] = [(sz / sg) | 0, sz % sg]
@@ -34,7 +36,7 @@
     )
   }
 
-  const handleTrainingSelect = (tr: FlagFilterType) => {
+  const handleTrainingSelect = (tr: FlagGroupType) => {
     trainingObj.value = tr
     handleRestart()
     isDialogOpen.value = false
@@ -44,22 +46,19 @@
 </script>
 
 <template>
-  <div class="relative bg-gray-200 p-4 text-center dark:bg-gray-800">
+  <div class="relative p-4 text-center">
     <h1 class="mb-4 text-3xl font-semibold">
-      National Flag Training :
+      {{ title[lang] }} :
       <button
         class="rounded-lg border-2 border-transparent px-4 py-2 text-white transition duration-300"
-        :class="[
-          trainingObj.type === 'area'
-            ? 'bg-orange-500 hover:border-orange-300 hover:bg-orange-600'
-            : '',
-          trainingObj.type === 'mainland'
-            ? 'bg-amber-500 hover:border-amber-300 hover:bg-amber-600'
-            : '',
-          trainingObj.type === 'design'
-            ? 'bg-yellow-500 hover:border-yellow-300 hover:bg-yellow-600'
-            : '',
-        ]"
+        :class="{
+          'bg-orange-500 hover:border-orange-300 hover:bg-orange-600':
+            trainingObj.type === 'area',
+          'bg-amber-500 hover:border-amber-300 hover:bg-amber-600':
+            trainingObj.type === 'mainland',
+          'bg-yellow-500 hover:border-yellow-300 hover:bg-yellow-600':
+            trainingObj.type === 'design',
+        }"
         @click="isDialogOpen = true"
       >
         {{ trainingObj.title[lang] }}
@@ -80,6 +79,6 @@
     :is-open="isDialogOpen"
     :lang="lang"
     @close="isDialogOpen = false"
-    @select="(tr: FlagFilterType) => handleTrainingSelect(tr)"
+    @select="(tr: FlagGroupType) => handleTrainingSelect(tr)"
   ></TrainingSelectDialog>
 </template>

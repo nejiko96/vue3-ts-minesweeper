@@ -65,7 +65,7 @@
 <template>
   <div
     id="drawer-right"
-    class="--fixed --h-screen absolute right-0 top-0 h-[calc(100vh_-_5rem)] w-80 transform-none overflow-y-auto bg-white p-4 transition-transform dark:bg-gray-800"
+    class="--fixed --h-screen --transform-none --transition-transform absolute right-0 top-0 h-[calc(100vh_-_5rem)] w-80 overflow-y-auto overflow-x-hidden bg-white p-4 dark:bg-black"
     tabindex="-1"
     aria-labelledby="drawer-right-label"
     aria-modal="true"
@@ -109,7 +109,14 @@
         :options="levelOptions"
       />
 
-      <transition name="slide-x">
+      <Transition
+        enter-active-class="transition-transform duration-500 ease"
+        enter-from-class="translate-x-full"
+        enter-to-class="translate-x-0"
+        leave-active-class="transition-transform duration-500 ease"
+        leave-from-class="translate-x-0"
+        leave-to-class="translate-x-full"
+      >
         <div v-if="level === 'custom'">
           <MsNumberInput
             id="width"
@@ -139,19 +146,7 @@
             placeholder="10 - 999"
           />
         </div>
-      </transition>
+      </Transition>
     </form>
   </div>
 </template>
-
-<style scoped>
-  .slide-x-enter-active,
-  .slide-x-leave-active {
-    transition: transform 0.5s ease;
-  }
-
-  .slide-x-enter-from,
-  .slide-x-leave-to {
-    transform: translateX(100%);
-  }
-</style>

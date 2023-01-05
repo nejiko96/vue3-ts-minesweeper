@@ -27,6 +27,10 @@
       title: 'Flag Training',
       path: '/flag_training',
     },
+    {
+      title: 'Flag Quiz',
+      path: '/flag_quiz',
+    },
   ]
 </script>
 

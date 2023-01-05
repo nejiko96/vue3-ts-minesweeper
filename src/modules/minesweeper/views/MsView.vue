@@ -27,20 +27,15 @@
       <fa icon="fa-gear" />
       Settings
     </button>
-    <transition name="slide-x">
-      <MsSettings v-if="settingsOpen" @close="settingsOpen = false" />
-    </transition>
+    <Transition
+      enter-active-class="transition-transform duration-500 ease"
+      enter-from-class="translate-x-full"
+      enter-to-class="translate-x-0"
+      leave-active-class="transition-transform duration-500 ease"
+      leave-from-class="translate-x-0"
+      leave-to-class="translate-x-full"
+    >
+      <MsSettings v-show="settingsOpen" @close="settingsOpen = false" />
+    </Transition>
   </div>
 </template>
-
-<style scoped>
-  .slide-x-enter-active,
-  .slide-x-leave-active {
-    transition: transform 0.5s ease;
-  }
-
-  .slide-x-enter-from,
-  .slide-x-leave-to {
-    transform: translateX(100%);
-  }
-</style>
