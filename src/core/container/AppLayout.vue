@@ -1,0 +1,37 @@
+<script setup lang="ts">
+  import AppMenu from '@/core/components/AppMenu.vue'
+  import UserMenu from '@/core/components/UserMenu.vue'
+</script>
+
+<template>
+  <header>
+    <nav class="bg-teal-500 text-white">
+      <div
+        class="container mx-auto flex h-16 items-center justify-between px-2 py-4"
+      >
+        <h1>
+          <span class="mr-2 text-xl font-semibold">
+            Vue3 + TypeScript demo page
+          </span>
+          <a
+            href="https://github.com/nejiko96/vue3-ts-minesweeper"
+            target="_blank"
+            title="View source on GitHub"
+            aria-label="View source on GitHub"
+            class="rounded-md bg-black bg-opacity-0 px-2 py-4 hover:bg-opacity-30"
+          >
+            <fa icon="fa-brands fa-github" size="2xl" />
+          </a>
+        </h1>
+
+        <div class="flex items-center">
+          <AppMenu class="mr-4" />
+          <UserMenu />
+        </div>
+      </div>
+    </nav>
+  </header>
+  <main>
+    <slot></slot>
+  </main>
+</template>

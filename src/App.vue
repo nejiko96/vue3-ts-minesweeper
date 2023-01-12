@@ -1,41 +1,13 @@
 <script setup lang="ts">
   import { RouterView } from 'vue-router'
-  import AppLayout from './AppLayout.vue'
-
-  const menuItems = [
-    {
-      title: 'Minesweeper',
-      path: '/ms',
-    },
-    {
-      title: 'Cat API',
-      path: '/cat',
-    },
-    {
-      title: 'Wordle Helper',
-      path: '/wordle',
-    },
-    {
-      title: 'Nerdle Helper',
-      path: '/nerdle',
-    },
-    {
-      title: 'Slide Puzzle',
-      path: '/slide',
-    },
-    {
-      title: 'Flag Training',
-      path: '/flag_training',
-    },
-    {
-      title: 'Flag Quiz',
-      path: '/flag_quiz',
-    },
-  ]
+  import AppContext from './core/container/AppContext.vue'
+  import AppLayout from './core/container/AppLayout.vue'
 </script>
 
 <template>
-  <AppLayout :menu-items="menuItems">
-    <RouterView />
-  </AppLayout>
+  <AppContext>
+    <AppLayout>
+      <RouterView />
+    </AppLayout>
+  </AppContext>
 </template>

@@ -9,7 +9,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { faGithub } from '@fortawesome/free-brands-svg-icons'
 
-const init = () => {
+const initializeFA = () => {
   library.add(faAngleDown)
   library.add(faArrowUpRightFromSquare)
   library.add(faGear)
@@ -19,4 +19,4 @@ const init = () => {
   library.add(faXmark)
 }
 
-export { init }
+export { initializeFA }
