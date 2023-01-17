@@ -14,12 +14,15 @@
     "nerdle": "yarn node --experimental-specifier-resolution=node --loader ts-node/esm src/modules/nerdle/cli/NerdleCLI.ts"
   },
   "dependencies": {
+    "@firebase/auth": "^0.21.0",
+    "@firebase/firestore": "^3.8.0",
     "@fortawesome/fontawesome-svg-core": "^6.1.2",
     "@fortawesome/free-brands-svg-icons": "^6.1.2",
     "@fortawesome/free-regular-svg-icons": "^6.1.2",
     "@fortawesome/free-solid-svg-icons": "^6.1.2",
     "@fortawesome/vue-fontawesome": "^3.0.1",
     "@headlessui/vue": "^1.7.2",
+    "firebase": "^9.15.0",
     "pinia": "^2.0.17",
     "vue": "^3.2.37",
     "vue-element-loading": "^3.0.1",

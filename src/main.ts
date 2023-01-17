@@ -3,11 +3,11 @@ import { createPinia } from 'pinia'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 import './index.css'
-import { init as initFa } from './fa'
 import App from './App.vue'
-import { router } from './router'
+import { initializeFA } from './core/fa'
+import { router } from './core/router'
 
-initFa()
+initializeFA()
 
 createApp(App)
   .component('fa', FontAwesomeIcon)
