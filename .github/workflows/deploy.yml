@@ -39,7 +39,8 @@ jobs:
         run: yarn install
       - name: 'Create env file'
         run: |
-          echo "${{ secrets.ENV_FILE }}" > .env
+          echo '${{ secrets.ENV_FILE }}' > .env
+          cat .env
       - name: Build
         run: yarn build
       - name: Setup Pages
