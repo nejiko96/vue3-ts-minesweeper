@@ -37,6 +37,9 @@ jobs:
           cache: "npm"
       - name: Install dependency
         run: yarn install
+      - name: 'Create env file'
+        run: |
+          echo "${{ secrets.ENV_FILE }}" > .env
       - name: Build
         run: yarn build
       - name: Setup Pages
