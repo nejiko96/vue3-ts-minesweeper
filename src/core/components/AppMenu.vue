@@ -32,6 +32,10 @@
       title: 'Flag Quiz',
       path: '/flag_quiz',
     },
+    {
+      title: 'Counter',
+      path: '/counter',
+    },
   ]
 
   const router = useRouter()
