@@ -77,7 +77,7 @@
     suggestion.value = wordle.suggestN(6)
   }
 
-  watch(() => grid, update, { immediate: true, deep: true })
+  watch(grid, update, { immediate: true, deep: true })
 </script>
 
 <template>
