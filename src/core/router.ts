@@ -32,7 +32,6 @@ const routes = [
     path: '/flag_quiz',
     component: loadView('national_flag', 'FlagQuizView'),
   },
-  { path: '/counter', component: loadView('counter', 'CounterView') },
 ]
 
 const router = createRouter({
