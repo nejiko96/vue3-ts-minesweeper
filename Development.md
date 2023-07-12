@@ -17,7 +17,7 @@
    yarn --version
    ```
 
-## プロジェクト作成
+## 新規プロジェクト作成
 
 1. ソース生成
 
@@ -27,10 +27,25 @@
    ```
 
 1. Git リポジトリも作っておく
+
    ```
    git init
    git add .
    git commit -m "initial import"
+   ```
+
+## 既存プロジェクトの開発環境初期化
+
+1. リポジトリをクローン
+
+   ```
+   git clone https://github.com/nejiko96/vue3-ts-minesweeper.git
+   ```
+
+1. 依存パッケージの初期化
+   ```
+   cd vue3-ts-minesweeper
+   yarn install
    ```
 
 ## 開発の流れ
@@ -163,7 +178,7 @@
    - `dist` フォルダなどをチェック対象から除外
 
 1. `yarn lint` でコードチェック、  
-   　　`yarn lint --fix` でコード修正が行われるようになる
+   `yarn lint --fix` でコード修正が行われるようになる
 
 1. VSCode の拡張機能で「ESLint」をインストール
 
@@ -407,12 +422,21 @@ yarn add @fortawesome/vue-fontawesome@latest-3
      - Branch: gh-pages を選んで Save
    - 一度抜けて戻ってくると公開先の URL が表示されている
 
-1. プロジェクトの設定
+1. GitHub Actions の設定
+   - リポジトリの 「Settings > Pages」
+   - 「Build and deployment」の「Source」で
+     「GitHub Actions」を選択
+   - サジェストされたワークフローから「Static HTML」を選択
+   - ワークフローの編集画面に雛型が表示されるので  
+     アプリのビルド手順を入れ込んで保存
+   - コミットすると自動でワークフローが実行され、動作確認ができる
+
+<!-- 1. プロジェクトの設定
    - `gh-pages` パッケージを追加
      ```
      yarn add --dev gh-pages
      ```
-   - `vite.config.ts` の修正  
+   - `vite.config.ts` の修正
      アセットへのリンクを相対パスにする
      ```
      export default defineConfig({
@@ -431,4 +455,4 @@ yarn add @fortawesome/vue-fontawesome@latest-3
    ```
    yarn build
    yarn deploy
-   ```
+   ``` -->
