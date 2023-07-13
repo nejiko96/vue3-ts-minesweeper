@@ -73,10 +73,10 @@
 
    `dist`フォルダにビルド結果の index.html などが生成される
 
-1. Github Pages にデプロイ
+<!-- 1. Github Pages にデプロイ
    ```
    yarn deploy
-   ```
+   ``` -->
 
 ## VSCode の設定
 

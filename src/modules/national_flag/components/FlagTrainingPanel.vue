@@ -23,9 +23,10 @@
   const shuffled = ref<FlagAnswerType[]>([])
 
   const checkMove = (evt: MoveEvent<FlagType>): boolean => {
-    const el = evt.relatedContext.component.$el
-    if (el.classList.contains('pool')) return true
-    if (evt.relatedContext.list.length === 0) return true
+    const toClass = evt.to.classList
+    const { list } = evt.relatedContext
+    if (toClass.contains('pool')) return true
+    if (list.length === 0) return true
     return false
   }
 
@@ -84,6 +85,7 @@
         class="pool flex flex-row flex-wrap gap-x-2 gap-y-2"
         ghost-class="opacity-50"
         :move="checkMove"
+        :sort="false"
       >
         <template #item="{ element }">
           <FlagLabel>{{ element.name[lang] }}</FlagLabel>
