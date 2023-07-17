@@ -1,32 +1,32 @@
-import flagTblRaw from '../assets/flagList.txt?raw'
 import areaList from '../assets/areaList.json'
-import mainlandList from '../assets/mainlandList.json'
 import designList from '../assets/designList.json'
+import flagTblRaw from '../assets/flagList.txt?raw'
+import mainlandList from '../assets/mainlandList.json'
 
-export type FlagType = {
+export type FlagType = Readonly<{
   id: string
   emoji: string
-  name: Record<string, string>
+  name: Readonly<Record<string, string>>
   div: string
   area: string
   mainland: string
   rank: number
-}
+}>
 
 export type FlagFilterType = (o: FlagType) => boolean
 
-export type FlagGroupType = {
+export type FlagGroupType = Readonly<{
   type: string
-  title: Record<string, string>
+  title: Readonly<Record<string, string>>
   filter: FlagFilterType
-}
+}>
 
-export type FlagQuizSettingType = {
-  title: Record<string, string>
+export type FlagQuizSettingType = Readonly<{
+  title: Readonly<Record<string, string>>
   range: FlagFilterType
   tcnt: number
   qcnt: number
-}
+}>
 
 const flagTbl: FlagType[] = flagTblRaw
   .trim()
@@ -64,31 +64,37 @@ const idFilter: (id: string | string[]) => FlagFilterType = (id) => {
   return (o: FlagType) => values.includes(o.id)
 }
 
-const areaGroups = areaList.map(({ name, area }) => ({
-  type: 'area',
-  title: name,
-  filter: areaFilter(area),
-}))
+const areaGroups: ReadonlyArray<FlagGroupType> = areaList.map(
+  ({ name, area }) => ({
+    type: 'area',
+    title: name,
+    filter: areaFilter(area),
+  })
+)
 
-const mainlandGroups = mainlandList.map(({ name, mainland }) => ({
-  type: 'mainland',
-  title: name,
-  filter: mainLandFilter(mainland),
-}))
+const mainlandGroups: ReadonlyArray<FlagGroupType> = mainlandList.map(
+  ({ name, mainland }) => ({
+    type: 'mainland',
+    title: name,
+    filter: mainLandFilter(mainland),
+  })
+)
 
-const designGroups = designList.map(({ name, ids }) => ({
-  type: 'design',
-  title: name,
-  filter: idFilter(ids.map((id) => id.split(':')[0])),
-}))
+const designGroups: ReadonlyArray<FlagGroupType> = designList.map(
+  ({ name, ids }) => ({
+    type: 'design',
+    title: name,
+    filter: idFilter(ids.map((id) => id.split(':')[0])),
+  })
+)
 
-const groupTbl: FlagGroupType[] = [
+const groupTbl: ReadonlyArray<FlagGroupType> = [
   ...areaGroups,
   ...mainlandGroups,
   ...designGroups,
 ]
 
-const quizSettingTbl: FlagQuizSettingType[] = [
+const quizSettingTbl: ReadonlyArray<FlagQuizSettingType> = [
   {
     title: { ja: '2021 GDPトップ50', en: '2021 GDP top 50' },
     range: (o: FlagType) => o.rank <= 50,
@@ -115,10 +121,12 @@ const quizSettingTbl: FlagQuizSettingType[] = [
   },
 ]
 
-const getGroupList: () => FlagGroupType[] = () => groupTbl
+const getGroupList: () => ReadonlyArray<FlagGroupType> = () => groupTbl
 
-const getQuizSettingList: () => FlagQuizSettingType[] = () => quizSettingTbl
+const getQuizSettingList: () => ReadonlyArray<FlagQuizSettingType> = () =>
+  quizSettingTbl
 
-const getFlagList: (f: FlagFilterType) => FlagType[] = (f) => flagTbl.filter(f)
+const getFlagList: (f: FlagFilterType) => ReadonlyArray<FlagType> = (f) =>
+  flagTbl.filter(f)
 
-export { getGroupList, getQuizSettingList, getFlagList }
+export { getFlagList, getGroupList, getQuizSettingList }

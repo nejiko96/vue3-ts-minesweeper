@@ -1,7 +1,7 @@
 <script setup lang="ts">
+  import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
   import { computed } from 'vue'
   import { useRouter } from 'vue-router'
-  import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
 
   const menuItems = [
     {

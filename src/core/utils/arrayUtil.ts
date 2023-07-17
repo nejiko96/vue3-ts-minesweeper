@@ -1,8 +1,8 @@
 type Sample = {
-  <T>(arr: T[]): T
-  <T>(arr: T[], n: number): T[]
+  <T>(arr: ReadonlyArray<T>): T
+  <T>(arr: ReadonlyArray<T>, n: number): T[]
 }
-const sample: Sample = <T>(arr: T[], n?: number): any => {
+const sample: Sample = <T>(arr: ReadonlyArray<T>, n?: number): any => {
   if (n === undefined) {
     return arr[Math.floor(Math.random() * arr.length)]
   }
@@ -15,7 +15,7 @@ const sample: Sample = <T>(arr: T[], n?: number): any => {
   return ret.slice(ret.length - m)
 }
 
-const shuffle: <T>(arr: T[]) => T[] = (arr) => {
+const shuffle: <T>(arr: ReadonlyArray<T>) => T[] = (arr) => {
   const ret = [...arr]
   for (let i = ret.length - 1; i >= 0; i--) {
     const j = Math.floor(Math.random() * (i + 1))
@@ -26,9 +26,9 @@ const shuffle: <T>(arr: T[]) => T[] = (arr) => {
 
 type Uniq = {
   (str: string): string
-  <T>(arr: T[]): T[]
+  <T>(arr: ReadonlyArray<T>): T[]
 }
-const uniq: Uniq = <T>(obj: string | T[]): any => {
+const uniq: Uniq = <T>(obj: string | ReadonlyArray<T>): any => {
   if (typeof obj === 'string') {
     return uniq([...obj]).join('')
   }
@@ -37,9 +37,9 @@ const uniq: Uniq = <T>(obj: string | T[]): any => {
 
 type Permutation = {
   (str: string): string[]
-  <T>(arr: T[]): T[][]
+  <T>(arr: ReadonlyArray<T>): T[][]
 }
-const permutation: Permutation = <T>(obj: string | T[]): any => {
+const permutation: Permutation = <T>(obj: string | ReadonlyArray<T>): any => {
   if (typeof obj === 'string') {
     return permutation([...obj]).map((arr) => arr.join(''))
   }
@@ -56,10 +56,10 @@ const permutation: Permutation = <T>(obj: string | T[]): any => {
 
 type RepeatedPermutation = {
   (str: string, len: number): string[]
-  <T>(arr: T[], len: number): T[][]
+  <T>(arr: ReadonlyArray<T>, len: number): T[][]
 }
 const repeatedPermutation: RepeatedPermutation = <T>(
-  obj: string | T[],
+  obj: string | ReadonlyArray<T>,
   len: number
 ): any => {
   if (typeof obj === 'string') {
@@ -87,11 +87,11 @@ const fillArray2D: <T>(
   )
 
 export {
+  fillArray,
+  fillArray2D,
+  permutation,
+  repeatedPermutation,
   sample,
   shuffle,
   uniq,
-  permutation,
-  repeatedPermutation,
-  fillArray,
-  fillArray2D,
 }

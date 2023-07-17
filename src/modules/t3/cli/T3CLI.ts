@@ -21,7 +21,8 @@ const RESULT_MSG = {
   first: 'You win.',
   second: 'CPU wins.',
   draw: 'DRAW.',
-}
+} as const
+
 const t3 = new T3Model()
 
 for (;;) {

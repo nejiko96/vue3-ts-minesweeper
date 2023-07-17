@@ -1,19 +1,19 @@
 <script setup lang="ts">
   import { fillArray, sample } from '@/core/utils'
-  import { ref, computed } from 'vue'
+  import { computed, ref } from 'vue'
+  import FlagQuizPanel, { FlagQuizType } from '../components/FlagQuizPanel.vue'
+  import LanguageToggle, { LangType } from '../components/LanguageToggle.vue'
   import {
     FlagQuizSettingType,
-    getQuizSettingList,
     getFlagList,
+    getQuizSettingList,
   } from '../models/flagsModel'
-  import LanguageToggle, { LangType } from '../components/LanguageToggle.vue'
-  import FlagQuizPanel, { FlagQuizType } from '../components/FlagQuizPanel.vue'
 
   type FlagQuizResultType = {
     correct?: boolean
   } & FlagQuizType
 
-  const title = { ja: '国旗当てクイズ', en: 'National Flag Quiz' }
+  const title = { ja: '国旗当てクイズ', en: 'National Flag Quiz' } as const
 
   const settings = getQuizSettingList()
 

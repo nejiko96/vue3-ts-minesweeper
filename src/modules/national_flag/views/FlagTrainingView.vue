@@ -2,21 +2,21 @@
   import { onMounted, ref } from 'vue'
 
   import { fillArray, sample, shuffle } from '@/core/utils'
+  import FlagTrainingPanel from '../components/FlagTrainingPanel.vue'
+  import LanguageToggle, { LangType } from '../components/LanguageToggle.vue'
+  import TrainingSelectDialog from '../components/TrainingSelectDialog.vue'
   import {
     FlagGroupType,
     FlagType,
-    getGroupList,
     getFlagList,
+    getGroupList,
   } from '../models/flagsModel'
-  import LanguageToggle, { LangType } from '../components/LanguageToggle.vue'
-  import TrainingSelectDialog from '../components/TrainingSelectDialog.vue'
-  import FlagTrainingPanel from '../components/FlagTrainingPanel.vue'
 
   const trainingList = getGroupList()
 </script>
 
 <script setup lang="ts">
-  const title = { ja: '国旗暗記ツール', en: 'National Flag Training' }
+  const title = { ja: '国旗暗記ツール', en: 'National Flag Training' } as const
 
   const trainingObj = ref<FlagGroupType>(sample(trainingList))
 
