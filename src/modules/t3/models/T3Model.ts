@@ -27,12 +27,12 @@ class T3Model {
 
   static #states: Record<string, T3StateType> = {}
 
-  static solve = (t3: T3Model): T3StateType => {
+  static solve: (t3: T3Model) => T3StateType = (t3) => {
     T3Model.#states[t3.board] ||= T3Model.#dfs(t3)
     return T3Model.#states[t3.board]
   }
 
-  static #dfs = (t3: T3Model): T3StateType => {
+  static #dfs: (t3: T3Model) => T3StateType = (t3) => {
     let result = t3.check()
     let next: number[] = []
     if (result !== null) return { result, next }
@@ -71,12 +71,12 @@ class T3Model {
     }
   }
 
-  disp = (): string => this.board.replace(/.{3}/g, '$&\n')
+  disp: () => string = () => this.board.replace(/.{3}/g, '$&\n')
 
-  check = (): T3ResultType | null =>
+  check: () => T3ResultType | null = () =>
     T3Model.CHECKER_TBL.find((chk) => this.board.match(chk.pat))?.result || null
 
-  put = (k1: number): boolean => {
+  put: (k1: number) => boolean = (k1) => {
     const k = k1 - 1
     if (this.board[k] !== '-') return false
     this.board = this.board

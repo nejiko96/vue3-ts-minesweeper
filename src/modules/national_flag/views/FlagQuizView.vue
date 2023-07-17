@@ -23,7 +23,7 @@
 
   const qi = ref(-1)
 
-  const ccnt = computed(() => qs.value.filter((q) => q.correct).length)
+  const ccnt = computed((): number => qs.value.filter((q) => q.correct).length)
 
   const lang = ref<LangType>('ja')
 
@@ -142,7 +142,7 @@
         </div>
       </div>
     </Transition>
-    <div class="absolute top-2.5 right-2.5">
+    <div class="absolute right-2.5 top-2.5">
       <LanguageToggle v-model="lang"></LanguageToggle>
     </div>
   </div>

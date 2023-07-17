@@ -10,7 +10,7 @@
  */
 import NerdleHelper from '../models/NerdleHelper'
 
-const showUsageAndExit = () => {
+const showUsageAndExit: () => never = () => {
   console.error(
     'Usage: yarn node --experimental-specifier-resolution=node --loader ts-node/esm src/modules/nerdle/cli/NerdleCLI.ts <hints>'
   )

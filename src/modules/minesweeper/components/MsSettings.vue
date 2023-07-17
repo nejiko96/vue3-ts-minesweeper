@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts">
   import { computed } from 'vue'
   import { useSettingsStore } from '../store/settings'
   import { LevelType } from '../types'
@@ -23,7 +23,9 @@
     { id: 'hard', name: 'Hard' },
     { id: 'custom', name: 'Custom' },
   ] as const
+</script>
 
+<script setup lang="ts">
   const emit = defineEmits(['close'])
 
   const settings = useSettingsStore()
@@ -82,7 +84,7 @@
     <button
       type="button"
       aria-controls="drawer-right"
-      class="absolute top-2.5 right-2.5 inline-flex items-center rounded-lg bg-transparent p-1.5 text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white"
+      class="absolute right-2.5 top-2.5 inline-flex items-center rounded-lg bg-transparent p-1.5 text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white"
       @click="emit('close')"
     >
       <fa icon="fa-xmark" size="lg" />

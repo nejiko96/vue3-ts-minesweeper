@@ -46,18 +46,20 @@ const flagTbl: FlagType[] = flagTblRaw
   })
   .filter((o) => o.div !== '-')
 
-const areaFilter = (area: string | string[]): FlagFilterType => {
+const areaFilter: (area: string | string[]) => FlagFilterType = (area) => {
   const values = Array.isArray(area) ? area : [area]
   return (o: FlagType) =>
     values.includes(o.area) && ['-', '*'].includes(o.mainland[0])
 }
 
-const mainLandFilter = (mainland: string | string[]): FlagFilterType => {
+const mainLandFilter: (mainland: string | string[]) => FlagFilterType = (
+  mainland
+) => {
   const values = Array.isArray(mainland) ? mainland : [mainland]
   return (o: FlagType) => values.includes(o.mainland)
 }
 
-const idFilter = (id: string | string[]): FlagFilterType => {
+const idFilter: (id: string | string[]) => FlagFilterType = (id) => {
   const values = Array.isArray(id) ? id : [id]
   return (o: FlagType) => values.includes(o.id)
 }
@@ -86,7 +88,7 @@ const groupTbl: FlagGroupType[] = [
   ...designGroups,
 ]
 
-const quizSettingTbl = [
+const quizSettingTbl: FlagQuizSettingType[] = [
   {
     title: { ja: '2021 GDPトップ50', en: '2021 GDP top 50' },
     range: (o: FlagType) => o.rank <= 50,
@@ -113,10 +115,10 @@ const quizSettingTbl = [
   },
 ]
 
-const getGroupList = (): FlagGroupType[] => groupTbl
+const getGroupList: () => FlagGroupType[] = () => groupTbl
 
-const getQuizSettingList = (): FlagQuizSettingType[] => quizSettingTbl
+const getQuizSettingList: () => FlagQuizSettingType[] = () => quizSettingTbl
 
-const getFlagList = (f: FlagFilterType): FlagType[] => flagTbl.filter(f)
+const getFlagList: (f: FlagFilterType) => FlagType[] = (f) => flagTbl.filter(f)
 
 export { getGroupList, getQuizSettingList, getFlagList }

@@ -18,14 +18,14 @@
 
   const count = ref<number>(0)
 
-  const innerMode = computed(() => {
+  const innerMode = computed((): TimerModeType => {
     if (props.mode !== TimerModeEnum.RUNNING) return props.mode
     if (props.limit <= 0) return props.mode
     if (count.value < props.limit) return props.mode
     return TimerModeEnum.STOPPED
   })
 
-  const intervalMs = computed(() => {
+  const intervalMs = computed((): number => {
     const match =
       /^([0-9]+(?:\.[0-9]*)?)\s*(.*s)?$/.exec(props.interval.trim()) || []
     const num = (match[1] && parseFloat(match[1])) || 1000

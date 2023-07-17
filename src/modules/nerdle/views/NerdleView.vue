@@ -140,7 +140,7 @@
       </div>
 
       <div class="mb-10">
-        <ul class="mb-2 grid grid-cols-3 grid-rows-1 gap-x-2 gap-y-2">
+        <ul class="mb-2 grid grid-cols-3 grid-rows-1 gap-2">
           <a
             href="https://nerdlegame.com/"
             class="w-40 rounded-lg bg-slate-500 p-2 text-xl text-white hover:bg-slate-300"
@@ -172,7 +172,7 @@
           <h3 class="mb-2 text-2xl font-semibold">
             Search Result ({{ searchCount }})
           </h3>
-          <ul class="mb-2 grid grid-cols-3 grid-rows-5 gap-x-2 gap-y-2">
+          <ul class="mb-2 grid grid-cols-3 grid-rows-5 gap-2">
             <li
               v-for="w in searchList"
               :key="w"

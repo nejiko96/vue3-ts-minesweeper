@@ -50,7 +50,7 @@
 
 <template>
   <div class="flex flex-col items-center justify-center">
-    <div class="mb-4 grid grid-cols-3 gap-x-4 gap-y-4">
+    <div class="mb-4 grid grid-cols-3 gap-4">
       <div v-for="flag in shuffled" :key="flag.id">
         <FlagImage :id="flag.id" class="mb-2 h-[150px] w-[225px]"></FlagImage>
         <div
@@ -82,7 +82,7 @@
         :list="org"
         group="flags"
         item-key="id"
-        class="pool flex flex-row flex-wrap gap-x-2 gap-y-2"
+        class="pool flex flex-row flex-wrap gap-2"
         ghost-class="opacity-50"
         :move="checkMove"
         :sort="false"

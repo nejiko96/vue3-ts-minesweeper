@@ -38,23 +38,28 @@
 
   const timerMode = computed((): TimerModeType => timerModeTbl[game.status])
 
-  const handleRestart = () => game.restart()
+  const handleRestart: () => void = () => game.restart()
 
-  const handleMouseDown = (params: GridClickType): void =>
+  const handleMouseDown: (params: GridClickType) => void = (params) =>
     game.mouseDown(params)
 
-  const handleMouseUp = (params: GridPosType): void => game.mouseUp(params)
+  const handleMouseUp: (params: GridPosType) => void = (params) =>
+    game.mouseUp(params)
 
-  const handleMouseOver = (params: GridPosType): void => game.mouseOver(params)
+  const handleMouseOver: (params: GridPosType) => void = (params) =>
+    game.mouseOver(params)
 
-  const handleMouseOut = (params: GridPosType): void => game.mouseOut(params)
+  const handleMouseOut: (params: GridPosType) => void = (params) =>
+    game.mouseOut(params)
 
-  const handleTouchStart = (params: GridPosType): void =>
+  const handleTouchStart: (params: GridPosType) => void = (params) =>
     game.touchStart(params)
 
-  const handleTouchEnd = (params: GridPosType): void => game.touchEnd(params)
+  const handleTouchEnd: (params: GridPosType) => void = (params) =>
+    game.touchEnd(params)
 
-  const handleLongPress = (params: GridPosType): void => game.longPress(params)
+  const handleLongPress: (params: GridPosType) => void = (params) =>
+    game.longPress(params)
 
   onMounted(() => {
     game.changeSize(props.settings.board)
@@ -76,11 +81,11 @@
       {{ game.remain }}
     </span>
     {{ locale.remain2 }}
-    <span class="space"></span>
+    <span class="w-5" />
     {{ locale.timer1 }}
     <MsTimer class="text-box" interval="1s" :limit="999" :mode="timerMode" />
     {{ locale.timer2 }}
-    <span class="space"></span>
+    <span class="w-5" />
     <transition name="pyonpyon">
       <span v-if="game.status === GameStatusEnum.CLEARED">
         {{ locale.cleared }}
@@ -135,10 +140,6 @@
     padding-right: 2px;
     text-align: right;
     width: 40px;
-  }
-
-  .space {
-    width: 20px;
   }
 
   .pyonpyon-enter-active {

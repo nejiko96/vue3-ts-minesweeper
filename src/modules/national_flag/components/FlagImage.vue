@@ -6,7 +6,8 @@
   }>()
 
   const url = computed(
-    () => new URL(`../assets/images/${props.id}.svg`, import.meta.url).href
+    (): string =>
+      new URL(`../assets/images/${props.id}.svg`, import.meta.url).href
   )
 </script>
 

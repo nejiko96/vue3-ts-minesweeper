@@ -338,12 +338,21 @@ https://tailwindcss.com/docs/guides/vite
 
 1. VSCode の拡張機能「Tailwind CSS IntelliSense」を入れておくと便利
 
-1. prettier-plugin-tailwindcss の導入
+1. eslint-plugin-tailwindcss の導入
+
    - class の並び順をソートしてくれる  
      ずらずら並ぶのはそのまま
-   ```
-   yarn add --dev prettier-plugin-tailwindcss
-   ```
+   - パッケージ追加
+     ```
+     yarn add --dev eslint-plugin-tailwindcss
+     ```
+   - eslintrc.yml に設定追加
+     ```
+     extends:
+       ...
+       - plugin:tailwindcss/recommended
+       - prettier
+     ```
 
 ### srylelint (CSS コードチェッカー) の導入
 

@@ -9,7 +9,7 @@
  */
 import WordleHelper from '../models/WordleHelper'
 
-const showUsageAndExit = () => {
+const showUsageAndExit: () => never = () => {
   console.error(
     'Usage: yarn node --experimental-specifier-resolution=node --loader ts-node/esm src/modules/wordle/cli/WordleCLI.ts <hints>'
   )

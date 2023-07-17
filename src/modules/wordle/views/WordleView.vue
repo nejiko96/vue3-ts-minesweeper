@@ -87,7 +87,7 @@
       class="flex flex-col items-center justify-center md:flex-row md:items-start md:justify-evenly"
     >
       <div class="mb-10">
-        <div class="mb-2 grid grid-cols-5 grid-rows-6 gap-x-2 gap-y-2">
+        <div class="mb-2 grid grid-cols-5 grid-rows-6 gap-2">
           <template v-for="(_n, i) in 6" :key="i">
             <template v-for="(cell, j) in getCellProps(i)" :key="`${i}_${j}`">
               <div
@@ -108,7 +108,7 @@
       </div>
 
       <div class="mb-10">
-        <ul class="mb-2 grid grid-cols-3 grid-rows-1 gap-x-2 gap-y-2">
+        <ul class="mb-2 grid grid-cols-3 grid-rows-1 gap-2">
           <a
             href="https://www.nytimes.com/games/wordle/index.html"
             class="w-40 rounded-lg bg-slate-500 p-2 text-xl text-white hover:bg-slate-300"
@@ -134,7 +134,7 @@
         </ul>
 
         <h3 class="mb-2 text-2xl font-semibold">Suggestion</h3>
-        <ul class="mb-2 grid grid-cols-3 grid-rows-2 gap-x-2 gap-y-2">
+        <ul class="mb-2 grid grid-cols-3 grid-rows-2 gap-2">
           <li
             v-for="sg in suggestion"
             :key="sg.w"
@@ -150,7 +150,7 @@
         <h3 class="mb-2 text-2xl font-semibold">
           Search Result ({{ searchCount }})
         </h3>
-        <ul class="mb-2 grid grid-cols-3 grid-rows-4 gap-x-2 gap-y-2">
+        <ul class="mb-2 grid grid-cols-3 grid-rows-4 gap-2">
           <li
             v-for="w in searchList"
             :key="w"

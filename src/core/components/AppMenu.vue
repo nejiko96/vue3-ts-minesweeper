@@ -36,14 +36,12 @@
 
   const router = useRouter()
 
-  const currentPath = computed(() => router.currentRoute.value.path)
+  const currentPath = computed((): string => router.currentRoute.value.path)
 </script>
 
 <template>
   <Menu as="div" class="relative">
-    <MenuButton
-      class="rounded-md bg-black bg-opacity-0 px-4 py-2 hover:bg-opacity-30"
-    >
+    <MenuButton class="rounded-md bg-black/0 px-4 py-2 hover:bg-black/30">
       Menu
       <fa icon="fa-angle-down" />
     </MenuButton>
@@ -56,7 +54,7 @@
       leave-to-class="transform scale-95 opacity-0"
     >
       <MenuItems
-        class="absolute right-0 z-10 mt-2 w-44 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+        class="absolute right-0 z-10 mt-2 w-44 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none"
       >
         <div v-for="item in menuItems" :key="item.path" class="p-1">
           <MenuItem v-slot="{ active }" :disabled="item.path === currentPath">
@@ -66,7 +64,7 @@
                 'bg-teal-500 text-white': item.path !== currentPath && active,
                 'text-gray-900': item.path !== currentPath && !active,
               }"
-              class="group flex w-full items-center rounded-md px-2 py-2 text-sm"
+              class="group flex w-full items-center rounded-md p-2 text-sm"
               @click="() => router.push(item.path)"
             >
               {{ item.title }}

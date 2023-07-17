@@ -27,19 +27,19 @@ const IMG_FILE_PAT = /[0-9a-f]\/[0-9a-f]{2}\/[^/]+.svg/
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
-const sleep = (sec: number) =>
+const sleep: (sec: number) => Promise<unknown> = (sec) =>
   new Promise((resolve) => {
     setTimeout(resolve, sec * 1000)
   })
 
-const saveImage = (id: string, url: string) => {
+const saveImage: (id: string, url: string) => void = (id, url) => {
   const dlUrl = path.join(IMG_URL_BASE, url)
   const imgPath = path.join(__dirname, 'images', `${id}.svg`)
   console.log(imgPath)
   got.stream(dlUrl).pipe(createWriteStream(imgPath))
 }
 
-const saveData = (data: string) => {
+const saveData: (data: string) => void = (data) => {
   const dataPath = path.join(__dirname, 'ISO_3166-1.txt')
   console.log(dataPath)
   writeFileSync(dataPath, data)

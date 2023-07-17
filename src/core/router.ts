@@ -14,8 +14,10 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 //   ->フォルダ直下に.nojekyllファイルを置くとJekyllによる加工がスキップされて
 //     アンスコ付きファイルも読めるようになる
 
-const loadView = (module: string, view: string) => () =>
-  import(`@/modules/${module}/views/${view}.vue`)
+const loadView: (module: string, view: string) => Promise<unknown> = (
+  module,
+  view
+) => import(`@/modules/${module}/views/${view}.vue`)
 
 const routes = [
   { path: '/', redirect: '/ms' },
