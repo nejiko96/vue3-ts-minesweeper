@@ -33,7 +33,7 @@
     <input
       :id="id"
       :value="modelValue"
-      class="block w-full appearance-none rounded border border-gray-200 bg-gray-200 py-1 px-4 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
+      class="block w-full appearance-none rounded border border-gray-200 bg-gray-200 px-4 py-1 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
       v-bind="$attrs"
       type="number"
       @input="handleInput"

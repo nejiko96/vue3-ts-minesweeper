@@ -36,6 +36,8 @@ rules:
   no-param-reassign:
     - error
     - props: false
+  tailwindcss/no-custom-classname:
+    - off
 settings:
   import/resolver:
     typescript: []

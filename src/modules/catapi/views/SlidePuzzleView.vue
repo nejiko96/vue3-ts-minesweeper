@@ -109,7 +109,7 @@
       <Transition name="fade">
         <div
           v-show="!complete"
-          class="--grid-cols-4 ---grid-rows-4 absolute top-0 left-0 bottom-0 right-0 grid bg-gray-500"
+          class="--grid-cols-4 ---grid-rows-4 absolute inset-0 grid bg-gray-500"
           :style="{
             gridTemplateColumns: `repeat(${model.w}, minmax(0, 1fr))`,
             gridTemplateRows: `repeat(${model.h}, minmax(0, 1fr))`,

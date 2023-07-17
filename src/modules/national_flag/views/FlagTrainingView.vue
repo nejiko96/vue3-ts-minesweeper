@@ -70,7 +70,7 @@
       :flags="flags"
       :lang="lang"
     ></FlagTrainingPanel>
-    <div class="absolute top-2.5 right-2.5">
+    <div class="absolute right-2.5 top-2.5">
       <LanguageToggle v-model="lang"></LanguageToggle>
     </div>
   </div>

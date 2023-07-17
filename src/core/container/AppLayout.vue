@@ -18,7 +18,7 @@
             target="_blank"
             title="View source on GitHub"
             aria-label="View source on GitHub"
-            class="rounded-md bg-black bg-opacity-0 px-2 py-4 hover:bg-opacity-30"
+            class="rounded-md bg-black/0 px-2 py-4 hover:bg-black/30"
           >
             <fa icon="fa-brands fa-github" size="2xl" />
           </a>

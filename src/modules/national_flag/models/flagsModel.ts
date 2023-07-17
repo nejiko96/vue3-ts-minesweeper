@@ -82,13 +82,13 @@ const designGroups = designList.map(({ name, ids }) => ({
   filter: idFilter(ids.map((id) => id.split(':')[0])),
 }))
 
-const groupTbl: Readonly<FlagGroupType[]> = [
+const groupTbl: FlagGroupType[] = [
   ...areaGroups,
   ...mainlandGroups,
   ...designGroups,
 ]
 
-const quizSettingTbl: Readonly<FlagQuizSettingType[]> = [
+const quizSettingTbl: FlagQuizSettingType[] = [
   {
     title: { ja: '2021 GDPトップ50', en: '2021 GDP top 50' },
     range: (o: FlagType) => o.rank <= 50,
@@ -115,10 +115,9 @@ const quizSettingTbl: Readonly<FlagQuizSettingType[]> = [
   },
 ]
 
-const getGroupList: () => Readonly<FlagGroupType[]> = () => groupTbl
+const getGroupList: () => FlagGroupType[] = () => groupTbl
 
-const getQuizSettingList: () => Readonly<FlagQuizSettingType[]> = () =>
-  quizSettingTbl
+const getQuizSettingList: () => FlagQuizSettingType[] = () => quizSettingTbl
 
 const getFlagList: (f: FlagFilterType) => FlagType[] = (f) => flagTbl.filter(f)
 

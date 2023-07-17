@@ -31,7 +31,7 @@
         leave-from="opacity-100"
         leave-to="opacity-0"
       >
-        <div class="fixed inset-0 bg-black bg-opacity-25" />
+        <div class="fixed inset-0 bg-black/25" />
       </TransitionChild>
       <div class="fixed inset-0 overflow-y-auto">
         <div
@@ -47,7 +47,7 @@
             leave-to="opacity-0 scale-95"
           >
             <DialogPanel
-              class="w-full max-w-3xl transform overflow-hidden rounded-2xl bg-white p-6 align-middle shadow-xl transition-all"
+              class="w-full max-w-3xl overflow-hidden rounded-2xl bg-white p-6 align-middle shadow-xl transition-all"
             >
               <div class="flex justify-evenly">
                 <div v-for="i in 4" :key="i">
