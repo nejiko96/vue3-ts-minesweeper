@@ -18,6 +18,7 @@ extends:
   - airbnb-typescript/base
   - plugin:vue/vue3-recommended
   - '@vue/typescript/recommended'
+  - plugin:tailwindcss/recommended
   - prettier
 rules:
   '@typescript-eslint/semi':
