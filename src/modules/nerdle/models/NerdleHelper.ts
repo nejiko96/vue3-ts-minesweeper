@@ -16,11 +16,15 @@ export type NerdleHintType = {
   state: number
 }
 
-const escapeOps = (str: string): string => str.replace(/[*+/=]/g, '\\$&')
+const escapeOps: (str: string) => string = (str) =>
+  str.replace(/[*+/=]/g, '\\$&')
 
-const escapeMinus = (str: string): string => str.replace(/-/g, '\\$&')
+const escapeMinus: (str: string) => string = (str) => str.replace(/-/g, '\\$&')
 
-const intersection = <T>(setA: Set<T>, setB: Set<T>): Set<T> => {
+const intersection: <T>(setA: Set<T>, setB: Set<T>) => Set<T> = <T>(
+  setA: Set<T>,
+  setB: Set<T>
+) => {
   const ret = new Set<T>()
   setB.forEach((elem) => {
     if (setA.has(elem)) {
@@ -30,7 +34,10 @@ const intersection = <T>(setA: Set<T>, setB: Set<T>): Set<T> => {
   return ret
 }
 
-const difference = <T>(setA: Set<T>, setB: Set<T>): Set<T> => {
+const difference: <T>(setA: Set<T>, setB: Set<T>) => Set<T> = <T>(
+  setA: Set<T>,
+  setB: Set<T>
+) => {
   const ret = new Set<T>(setA)
   setB.forEach((elem) => {
     ret.delete(elem)

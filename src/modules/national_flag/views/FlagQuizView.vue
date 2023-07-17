@@ -23,7 +23,7 @@
 
   const qi = ref(-1)
 
-  const ccnt = computed(() => qs.value.filter((q) => q.correct).length)
+  const ccnt = computed((): number => qs.value.filter((q) => q.correct).length)
 
   const lang = ref<LangType>('ja')
 

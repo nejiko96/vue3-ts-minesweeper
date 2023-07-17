@@ -1,5 +1,6 @@
 import {
   GoogleAuthProvider,
+  UserCredential,
   onAuthStateChanged,
   signInWithPopup,
   signOut,
@@ -19,13 +20,13 @@ export type UserRefType = Ref<UserType | null | undefined>
 
 const userKey: InjectionKey<UserRefType> = Symbol('user')
 
-export const provideUser = (user: UserRefType) => {
+export const provideUser: (user: UserRefType) => void = (user) => {
   provide(userKey, user)
 }
 
-export const injectUser = () => inject(userKey)
+export const injectUser: () => UserRefType | undefined = () => inject(userKey)
 
-export const watchUser = (user: UserRefType) => {
+export const watchUser: (user: UserRefType) => void = (user) => {
   watchEffect((onCleanUp) => {
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       if (firebaseUser) {
@@ -53,9 +54,9 @@ export const watchUser = (user: UserRefType) => {
   })
 }
 
-export const login = () => {
+export const login: () => Promise<UserCredential> = () => {
   const provider = new GoogleAuthProvider()
   return signInWithPopup(auth, provider)
 }
 
-export const logout = () => signOut(auth)
+export const logout: () => Promise<void> = () => signOut(auth)

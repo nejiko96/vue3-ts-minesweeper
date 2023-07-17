@@ -15,7 +15,7 @@
     (e: 'update:modelValue', value: number | undefined): void
   }>()
 
-  const handleInput = (ev: Event): void => {
+  const handleInput: (ev: Event) => void = (ev) => {
     if (ev.target instanceof HTMLInputElement) {
       emits(
         'update:modelValue',

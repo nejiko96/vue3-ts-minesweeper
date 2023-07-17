@@ -8,7 +8,7 @@
 
   const waiting = ref(false)
 
-  const signIn = () => {
+  const signIn: () => void = () => {
     waiting.value = true
     login()
       .catch((error) => {

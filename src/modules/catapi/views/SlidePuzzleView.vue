@@ -18,7 +18,7 @@
 
   const path = ref<number[][] | null>(null)
 
-  const complete = computed(() => model.isComplete(grid.value))
+  const complete = computed((): boolean => model.isComplete(grid.value))
 
   const slideGrid = (i: number, j: number): void => {
     const move = model.slideAt(grid.value, i, j)
@@ -33,7 +33,7 @@
     }
   }
 
-  const handleRestart = (): void => {
+  const handleRestart: () => void = () => {
     isLoading.value = true
     grid.value = model.generateGrid()
     transitionName.value = ''
@@ -41,7 +41,7 @@
     updateImage()
   }
 
-  const handleClick = (i: number, j: number): void => {
+  const handleClick: (i: number, j: number) => void = (i, j) => {
     if (path.value) return
     slideGrid(i, j)
   }
@@ -76,7 +76,7 @@
 
   const bgheight = ref<number>(500)
 
-  const bgimg = computed(() => `url('${imgUrl.value}')`)
+  const bgimg = computed((): string => `url('${imgUrl.value}')`)
 
   const bgpos = (v: number): string => {
     const [i, j] = model.pos2D(v - 1)

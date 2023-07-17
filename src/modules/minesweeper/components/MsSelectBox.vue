@@ -15,7 +15,7 @@
     (e: 'update:modelValue', value: string): void
   }>()
 
-  const handleChange = (ev: Event): void => {
+  const handleChange: (ev: Event) => void = (ev) => {
     if (ev.target instanceof HTMLSelectElement) {
       emits('update:modelValue', ev.target.value)
     }

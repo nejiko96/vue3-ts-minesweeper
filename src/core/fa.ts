@@ -9,7 +9,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { faGithub } from '@fortawesome/free-brands-svg-icons'
 
-const initializeFA = () => {
+const initializeFA: () => void = () => {
   library.add(faAngleDown)
   library.add(faArrowUpRightFromSquare)
   library.add(faGear)

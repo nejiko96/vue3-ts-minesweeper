@@ -36,7 +36,7 @@
 
   const router = useRouter()
 
-  const currentPath = computed(() => router.currentRoute.value.path)
+  const currentPath = computed((): string => router.currentRoute.value.path)
 </script>
 
 <template>

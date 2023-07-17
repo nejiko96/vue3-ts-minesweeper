@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts">
   import { computed } from 'vue'
   import { useSettingsStore } from '../store/settings'
   import { LevelType } from '../types'
@@ -23,7 +23,9 @@
     { id: 'hard', name: 'Hard' },
     { id: 'custom', name: 'Custom' },
   ] as const
+</script>
 
+<script setup lang="ts">
   const emit = defineEmits(['close'])
 
   const settings = useSettingsStore()

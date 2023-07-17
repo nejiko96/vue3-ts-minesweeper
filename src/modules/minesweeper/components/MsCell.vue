@@ -4,7 +4,20 @@
   import { ThemeSettingType, GridClickType, GridPosType } from '../types'
   import { styleIdx } from '../models/cellModel'
 
+  const calcBgPos: (s: number, v: number) => string = (s, v) => {
+    const i = styleIdx(v)
+    const x = -s * (i % 3)
+    const y = -s * ((i / 3) | 0)
+    return `${x}px ${y}px`
+  }
+
   const bgPosCache: Record<number, Record<number, string>> = {}
+
+  const getBgPos: (s: number, v: number) => string = (s, v) => {
+    bgPosCache[s] ??= {}
+    bgPosCache[s][v] ??= calcBgPos(s, v)
+    return bgPosCache[s][v]
+  }
 </script>
 
 <script setup lang="ts">
@@ -32,19 +45,7 @@
     return `${name}-${size}`.toLowerCase()
   })
 
-  const bgpos = computed((): string => {
-    const { size } = props.theme
-    bgPosCache[size] ??= {}
-    const v = props.value
-    if (bgPosCache[size][v] === undefined) {
-      const i = styleIdx(v)
-      const x = -size * (i % 3)
-      const y = -size * ((i / 3) | 0)
-      bgPosCache[size][v] = `${x}px ${y}px`
-    }
-
-    return bgPosCache[size][v]
-  })
+  const bgpos = computed((): string => getBgPos(props.theme.size, props.value))
 
   const timeoutObj = {
     timeoutId: 0,
@@ -61,25 +62,25 @@
     },
   }
 
-  const handleMouseDown = (ev: MouseEvent): void => {
+  const handleMouseDown: (ev: MouseEvent) => void = (ev) => {
     emits('mousedown', {
       button: ev.button,
       ...props,
     })
   }
 
-  const handleMouseUp = (): void => emits('mouseup', props)
+  const handleMouseUp: () => void = () => emits('mouseup', props)
 
-  const handleMouseEnter = (): void => emits('mouseover', props)
+  const handleMouseEnter: () => void = () => emits('mouseover', props)
 
-  const handleMouseLeave = (): void => emits('mouseout', props)
+  const handleMouseLeave: () => void = () => emits('mouseout', props)
 
-  const handleTouchStart = (): void => {
+  const handleTouchStart: () => void = () => {
     emits('touchstart', props)
     touched.value = true
   }
 
-  const handleTouchEnd = (): void => {
+  const handleTouchEnd: () => void = () => {
     if (!touched.value) return
     touched.value = false
     emits('touchend', props)

@@ -4,7 +4,7 @@ import * as readline from 'readline'
 import { sample } from '../../../core/utils'
 import T3Model from '../models/T3Model'
 
-const getInput = (prompt: string): Promise<string> => {
+const getInput: (prompt: string) => Promise<string> = (prompt) => {
   const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
