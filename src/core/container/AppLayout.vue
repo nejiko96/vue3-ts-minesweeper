@@ -1,6 +1,7 @@
 <script setup lang="ts">
   import AppMenu from '@/core/components/AppMenu.vue'
   import UserMenu from '@/core/components/UserMenu.vue'
+  import { RouterLink } from 'vue-router'
 </script>
 
 <template>
@@ -10,9 +11,9 @@
         class="container mx-auto flex h-16 items-center justify-between px-2 py-4"
       >
         <h1>
-          <span class="mr-2 text-xl font-semibold">
+          <RouterLink to="/" class="mr-2 text-xl font-semibold">
             Vue3 + TypeScript demo page
-          </span>
+          </RouterLink>
           <a
             href="https://github.com/nejiko96/vue3-ts-minesweeper"
             target="_blank"

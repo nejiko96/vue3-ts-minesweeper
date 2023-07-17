@@ -24,6 +24,7 @@
    ```
    yarn create vite vue-ts-minesweeper --template vue-ts
    cd vue-ts-minesweeper
+   yarn
    ```
 
 1. Git リポジトリも作っておく
@@ -45,7 +46,7 @@
 1. 依存パッケージの初期化
    ```
    cd vue3-ts-minesweeper
-   yarn install
+   yarn
    ```
 
 ## 開発の流れ
