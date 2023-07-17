@@ -1,0 +1,32 @@
+{
+  // ESLint・Stylelintに対応しているファイルは保存時に修正
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true,
+    "source.fixAll.stylelint": true
+  },
+
+  // VSCode本体のcssチェックがstylelintとかぶるので無効化
+  "css.validate": false,
+  "stylelint.validate": ["css", "vue"],
+
+  // ESLintのフォーマット機能を無効化
+  "eslint.format.enable": false,
+
+  // 保存時にPrettierによる整形を行う
+  "editor.formatOnSave": true,
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[vue]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json][jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
+}
