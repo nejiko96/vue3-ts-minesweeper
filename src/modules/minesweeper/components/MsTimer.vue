@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ref, computed, watch } from 'vue'
+  import { computed, ref, watch } from 'vue'
 
   import { TimerModeEnum, TimerModeType } from '../types'
 

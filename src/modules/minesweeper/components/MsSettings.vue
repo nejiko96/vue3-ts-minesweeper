@@ -31,12 +31,12 @@
   const settings = useSettingsStore()
 
   const lang = computed({
-    get: () => settings.lang,
+    get: (): string => settings.lang,
     set: (value: string) => settings.changeLang(value),
   })
 
   const theme = computed({
-    get: () => `${settings.theme.name}_${settings.theme.size}`,
+    get: (): string => `${settings.theme.name}_${settings.theme.size}`,
     set: (value: string) => {
       const [name, size] = value.split('_')
       settings.changeTheme(name, Number(size))
@@ -44,22 +44,22 @@
   })
 
   const level = computed({
-    get: () => settings.board.level,
+    get: (): LevelType => settings.board.level,
     set: (value: LevelType) => settings.changeLevel(value),
   })
 
   const width = computed({
-    get: () => settings.board.width,
+    get: (): number | undefined => settings.board.width,
     set: (value: number | undefined) => settings.changeWidth(value),
   })
 
   const height = computed({
-    get: () => settings.board.height,
+    get: (): number | undefined => settings.board.height,
     set: (value: number | undefined) => settings.changeHeight(value),
   })
 
   const mines = computed({
-    get: () => settings.board.mines,
+    get: (): number | undefined => settings.board.mines,
     set: (value: number | undefined) => settings.changeMines(value),
   })
 </script>

@@ -63,7 +63,7 @@ const toggleMark: (f: number) => [number, number] = (f) => {
 const forceMark: (f: number) => number = (f) =>
   (f & ~valueFlags.HID_PENDING) | valueFlags.MARKED
 
-const open: (f: number, byClick: boolean) => [number, number] = (
+const open: (f: number, byClick?: boolean) => [number, number] = (
   f,
   byClick = true
 ) => {

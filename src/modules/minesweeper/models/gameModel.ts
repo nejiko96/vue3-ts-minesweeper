@@ -1,26 +1,26 @@
 import { fillArray, fillArray2D, noop } from '@/core/utils'
 import {
-  SizeSettingType,
-  SizeStateType,
   BoardStateType,
   GameModelStateType,
   GameStatusEnum,
   GameStatusFlags,
+  SizeSettingType,
+  SizeStateType,
 } from '../types'
 import * as cell from './cellModel'
 import { calcSize } from './sizeModel'
 
-const isEnabled: (state: GameModelStateType) => boolean = (state) =>
+const isEnabled: (state: Readonly<GameModelStateType>) => boolean = (state) =>
   (state.status & GameStatusFlags.ENABLED) > 0
 
-const isHidden: (state: GameModelStateType, i: number, j: number) => boolean = (
-  state,
-  i,
-  j
-) => cell.isHidden(state.grid[i][j])
+const isHidden: (
+  state: Readonly<GameModelStateType>,
+  i: number,
+  j: number
+) => boolean = (state, i, j) => cell.isHidden(state.grid[i][j])
 
 const relatives: (
-  state: GameModelStateType,
+  state: Readonly<GameModelStateType>,
   i: number,
   j: number,
   diffs: number[][]
@@ -30,7 +30,7 @@ const relatives: (
     .filter(([i2, j2]) => state.grid[i2] && state.grid[i2][j2])
 
 const surroundings: (
-  state: GameModelStateType,
+  state: Readonly<GameModelStateType>,
   i: number,
   j: number
 ) => number[][] = (state, i, j) =>
@@ -46,7 +46,7 @@ const surroundings: (
   ])
 
 const neighbors: (
-  state: GameModelStateType,
+  state: Readonly<GameModelStateType>,
   i: number,
   j: number
 ) => number[][] = (state, i, j) =>
@@ -185,7 +185,7 @@ const gameOver: (state: GameModelStateType) => void = (state) => {
   })
 }
 
-const initBoard: (size: SizeStateType) => BoardStateType = ({
+const initBoard: (size: Readonly<SizeStateType>) => BoardStateType = ({
   width,
   height,
   mines,
@@ -197,7 +197,9 @@ const initBoard: (size: SizeStateType) => BoardStateType = ({
   countDown: width * height - mines,
 })
 
-const initAll: (param: SizeSettingType) => GameModelStateType = (param) => {
+const initAll: (param: Readonly<SizeSettingType>) => GameModelStateType = (
+  param
+) => {
   const size = calcSize(param)
   return {
     ...size,
@@ -371,21 +373,21 @@ const handleLongPress: (
 }
 
 export {
+  handleBothMouseDown,
+  handleBothMouseOut,
+  handleBothMouseOver,
+  handleBothMouseUp,
+  handleLeftMouseDown,
+  handleLeftMouseOut,
+  handleLeftMouseOver,
+  handleLeftMouseUp,
+  handleLongPress,
+  handleRightMouseDown,
+  handleRightMouseOut,
+  handleRightMouseOver,
+  handleRightMouseUp,
+  handleTouchEnd,
+  handleTouchStart,
   initAll,
   initBoard,
-  handleLeftMouseDown,
-  handleLeftMouseOver,
-  handleLeftMouseOut,
-  handleLeftMouseUp,
-  handleRightMouseDown,
-  handleRightMouseOver,
-  handleRightMouseOut,
-  handleRightMouseUp,
-  handleBothMouseDown,
-  handleBothMouseOver,
-  handleBothMouseOut,
-  handleBothMouseUp,
-  handleTouchStart,
-  handleTouchEnd,
-  handleLongPress,
 }

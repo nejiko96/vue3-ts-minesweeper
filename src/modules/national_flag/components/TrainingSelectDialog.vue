@@ -2,13 +2,13 @@
   import {
     Dialog,
     DialogPanel,
-    TransitionRoot,
     TransitionChild,
+    TransitionRoot,
   } from '@headlessui/vue'
   import { FlagGroupType } from '../models/flagsModel'
 
   defineProps<{
-    trainings: FlagGroupType[]
+    trainings: ReadonlyArray<FlagGroupType>
     lang: string
     isOpen: boolean
   }>()

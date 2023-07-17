@@ -1,13 +1,13 @@
 <script setup lang="ts">
-  type SelectOptionType = {
+  type SelectOptionType = Readonly<{
     id: string
     name: string
-  }
+  }>
 
   defineProps<{
     id: string
     label: string
-    options: Readonly<SelectOptionType[]>
+    options: ReadonlyArray<SelectOptionType>
     modelValue: string
   }>()
 

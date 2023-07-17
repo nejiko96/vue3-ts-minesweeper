@@ -20,7 +20,7 @@
     state: 9,
   } as const
 
-  const stateTbl = [
+  const stateTbl: Readonly<Record<number, StatePropType>> = [
     { state: 0, label: 'absent', class: 'absent' },
     { state: 1, label: 'present', class: 'present' },
     { state: 2, label: 'correct', class: 'correct' },

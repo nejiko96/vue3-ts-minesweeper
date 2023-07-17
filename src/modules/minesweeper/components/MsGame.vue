@@ -1,28 +1,27 @@
 <script lang="ts">
-  import { computed, watch, onMounted } from 'vue'
+  import { computed, onMounted, watch } from 'vue'
 
   import {
-    SettingsType,
     GameStatusEnum,
-    GameStatusType,
     GridClickType,
     GridPosType,
+    SettingsType,
     TimerModeEnum,
     TimerModeType,
   } from '@/modules/minesweeper/types'
-  import { initLocale } from '../utils/locale'
   import { useGameStore } from '../store/game'
+  import { initLocale } from '../utils/locale'
 
-  import MsTimer from './MsTimer.vue'
   import MsBoard from './MsBoard.vue'
   import MsCell from './MsCell.vue'
+  import MsTimer from './MsTimer.vue'
 
-  const timerModeTbl: Readonly<Record<GameStatusType, TimerModeType>> = {
+  const timerModeTbl = {
     [GameStatusEnum.READY]: TimerModeEnum.READY,
     [GameStatusEnum.RUNNING]: TimerModeEnum.RUNNING,
     [GameStatusEnum.CLEARED]: TimerModeEnum.STOPPED,
     [GameStatusEnum.GAMEOVER]: TimerModeEnum.STOPPED,
-  }
+  } as const
 </script>
 
 <script setup lang="ts">
