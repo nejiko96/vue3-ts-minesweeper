@@ -15,13 +15,13 @@
     v-if="dummy"
     class="w-[205px] rounded-lg border-2 border-dashed border-gray-400 bg-transparent py-1"
   >
-    <slot></slot>
+    <slot />
   </div>
   <div
     v-else
     class="w-[205px] cursor-move rounded-lg bg-gray-300 py-2 text-black"
     @click="emit('click')"
   >
-    <slot></slot>
+    <slot />
   </div>
 </template>

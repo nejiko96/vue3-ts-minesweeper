@@ -32,7 +32,7 @@
   <div
     class="flex flex-col items-center justify-center gap-y-6 md:flex-row md:gap-x-6"
   >
-    <FlagImage :id="q.answer.id" class="h-[280px] w-[420px]"></FlagImage>
+    <FlagImage :id="q.answer.id" class="h-[280px] w-[420px]" />
 
     <div class="flex flex-col gap-y-2">
       <button

@@ -75,7 +75,7 @@
             </DialogPanel>
           </TransitionChild>
         </div>
-      </div></Dialog
-    ></TransitionRoot
-  >
+      </div>
+    </Dialog>
+  </TransitionRoot>
 </template>
