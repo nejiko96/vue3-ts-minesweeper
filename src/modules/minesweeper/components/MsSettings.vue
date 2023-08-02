@@ -1,7 +1,7 @@
 <script lang="ts">
   import { computed } from 'vue'
   import { useSettingsStore } from '../store/settings'
-  import { LevelType } from '../types'
+  import type { LevelType } from '../types'
   import MsNumberInput from './MsNumberInput.vue'
   import MsSelectBox from './MsSelectBox.vue'
 

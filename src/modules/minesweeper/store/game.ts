@@ -1,14 +1,14 @@
 import { defineStore } from 'pinia'
 
-import {
-  SizeSettingType,
+import * as gameModel from '../models/gameModel'
+import { makeWrapper } from '../models/mouseEventModel'
+import type {
   GameStoreStateType,
   GridClickType,
   GridPosType,
-  GameStatusFlags,
+  SizeSettingType,
 } from '../types'
-import * as gameModel from '../models/gameModel'
-import { makeWrapper } from '../models/mouseEventModel'
+import { GameStatusFlags } from '../types'
 
 const mouseModel = makeWrapper(gameModel)
 

@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { ref, computed, watch } from 'vue'
+  import { computed, ref, watch } from 'vue'
 
-  import { ThemeSettingType, GridClickType, GridPosType } from '../types'
   import { styleIdx } from '../models/cellModel'
+  import type { GridClickType, GridPosType, ThemeSettingType } from '../types'
 
   const calcBgPos: (s: number, v: number) => string = (s, v) => {
     const i = styleIdx(v)

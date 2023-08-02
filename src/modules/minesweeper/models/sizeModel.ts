@@ -1,4 +1,4 @@
-import { SizeSettingType, SizeStateType } from '../types'
+import type { SizeSettingType, SizeStateType } from '../types'
 
 type SizeRangeType = Readonly<{
   min: number
