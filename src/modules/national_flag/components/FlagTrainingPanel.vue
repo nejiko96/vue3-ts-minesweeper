@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { watch, ref } from 'vue'
+  import { ref, watch } from 'vue'
   import draggable, { MoveEvent } from 'vuedraggable'
 
   import { shuffle } from '@/core/utils'
@@ -52,7 +52,7 @@
   <div class="flex flex-col items-center justify-center">
     <div class="mb-4 grid grid-cols-3 gap-4">
       <div v-for="flag in shuffled" :key="flag.id">
-        <FlagImage :id="flag.id" class="mb-2 h-[150px] w-[225px]"></FlagImage>
+        <FlagImage :id="flag.id" class="mb-2 h-[150px] w-[225px]" />
         <div
           class="mx-auto h-auto w-[225px] border-2 border-orange-300 bg-orange-100 p-2"
         >

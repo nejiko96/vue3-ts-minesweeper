@@ -1,12 +1,11 @@
 import { fillArray, fillArray2D, noop } from '@/core/utils'
-import {
+import type {
   BoardStateType,
   GameModelStateType,
-  GameStatusEnum,
-  GameStatusFlags,
   SizeSettingType,
   SizeStateType,
 } from '../types'
+import { GameStatusEnum, GameStatusFlags } from '../types'
 import * as cell from './cellModel'
 import { calcSize } from './sizeModel'
 

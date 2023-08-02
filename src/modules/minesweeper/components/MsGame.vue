@@ -1,15 +1,14 @@
 <script lang="ts">
   import { computed, onMounted, watch } from 'vue'
 
-  import {
-    GameStatusEnum,
-    GridClickType,
-    GridPosType,
-    SettingsType,
-    TimerModeEnum,
-    TimerModeType,
-  } from '@/modules/minesweeper/types'
   import { useGameStore } from '../store/game'
+  import type {
+    GridClickActionType,
+    GridPosActionType,
+    SettingsType,
+    TimerModeType,
+  } from '../types'
+  import { GameStatusEnum, TimerModeEnum } from '../types'
   import { initLocale } from '../utils/locale'
 
   import MsBoard from './MsBoard.vue'
@@ -39,26 +38,21 @@
 
   const handleRestart: () => void = () => game.restart()
 
-  const handleMouseDown: (params: GridClickType) => void = (params) =>
+  const handleMouseDown: GridClickActionType = (params) =>
     game.mouseDown(params)
 
-  const handleMouseUp: (params: GridPosType) => void = (params) =>
-    game.mouseUp(params)
+  const handleMouseUp: GridPosActionType = (params) => game.mouseUp(params)
 
-  const handleMouseOver: (params: GridPosType) => void = (params) =>
-    game.mouseOver(params)
+  const handleMouseOver: GridPosActionType = (params) => game.mouseOver(params)
 
-  const handleMouseOut: (params: GridPosType) => void = (params) =>
-    game.mouseOut(params)
+  const handleMouseOut: GridPosActionType = (params) => game.mouseOut(params)
 
-  const handleTouchStart: (params: GridPosType) => void = (params) =>
+  const handleTouchStart: GridPosActionType = (params) =>
     game.touchStart(params)
 
-  const handleTouchEnd: (params: GridPosType) => void = (params) =>
-    game.touchEnd(params)
+  const handleTouchEnd: GridPosActionType = (params) => game.touchEnd(params)
 
-  const handleLongPress: (params: GridPosType) => void = (params) =>
-    game.longPress(params)
+  const handleLongPress: GridPosActionType = (params) => game.longPress(params)
 
   onMounted(() => {
     game.changeSize(props.settings.board)

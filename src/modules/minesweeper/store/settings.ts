@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 
-import { SettingsType, LevelType } from '../types'
+import type { LevelType, SettingsType } from '../types'
 
 const useSettingsStore = defineStore('settings', {
   state: (): SettingsType => ({

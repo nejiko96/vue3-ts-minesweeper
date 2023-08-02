@@ -1,7 +1,8 @@
 <script lang="ts">
   import { computed, ref, watch } from 'vue'
 
-  import { TimerModeEnum, TimerModeType } from '../types'
+  import type { TimerModeType } from '../types'
+  import { TimerModeEnum } from '../types'
 
   const timeUnitTbl: Readonly<Record<string, number>> = {
     ms: 1,

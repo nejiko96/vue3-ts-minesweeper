@@ -8,7 +8,7 @@ https://nejiko96.github.io/vue3-ts-minesweeper/
 
 ## Documents
 
-- [Development](Development.md)
+- [Development Guide](https://github.com/nejiko96/vue3-ts-minesweeper/wiki/Development-Guide)
 
 ---
 

@@ -69,9 +69,9 @@
       :key="i"
       :flags="flags"
       :lang="lang"
-    ></FlagTrainingPanel>
+    />
     <div class="absolute right-2.5 top-2.5">
-      <LanguageToggle v-model="lang"></LanguageToggle>
+      <LanguageToggle v-model="lang" />
     </div>
   </div>
   <TrainingSelectDialog
